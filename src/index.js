@@ -8,13 +8,23 @@ import "assets/scss/argon-dashboard-react.scss";
 
 import AdminLayout from "layouts/Admin.js";
 import AuthLayout from "layouts/Auth.js";
-import {getToken} from "../src/Utils/Common";
+import { getToken } from "../src/Utils/Common";
+import ProtectedRoute from "../src/Utils/protectedRoute";
 
 ReactDOM.render(
   <BrowserRouter>
     <Switch>
-      <Route path="/admin" render={(props) => getToken() ? <AdminLayout {...props} /> : <Redirect to={{ pathname: '/login', state: { from: props.location } }} /> } />
-      <Route path="/auth" render={(props) => !getToken() ? <AuthLayout {...props} /> : <Redirect to={{ pathname: '/admin' }} />} />
+      <ProtectedRoute path="/admin" component={AdminLayout} />
+      <Route
+        path="/auth"
+        render={(props) =>
+          !getToken() ? (
+            <AuthLayout {...props} />
+          ) : (
+            <Redirect to={{ pathname: "/admin" }} />
+          )
+        }
+      />
       <Redirect from="/" to="/auth/login" />
     </Switch>
   </BrowserRouter>,
