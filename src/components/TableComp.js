@@ -63,24 +63,24 @@ const TableComp = ({data,modal,remove}) => {
                           <td>
                             <div className="btn-group">
                               <Button
-                                color="info"
+                                color="success"
                                 type="button"
                                 size="sm"
                                 onClick={() =>
                                   modal("exampleModal", post)
                                 }
                               >
-                                <i className="fa fa-plus"></i> Update
+                                <i className="fa fa-plus"></i> Tambah
                               </Button>
                               &nbsp;
-                              <Button
+                              {/* <Button
                                 color="danger"
                                 type="button"
                                 size="sm"
                                 onClick={() => remove(post.idguru)}
                               >
                                 <i className="fa fa-trash"></i> Delete
-                              </Button>
+                              </Button> */}
                             </div>
                           </td>
                         </tr>

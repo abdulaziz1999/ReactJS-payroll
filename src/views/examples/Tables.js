@@ -18,7 +18,7 @@ import {
 import './css/Style.css';
 import TableComp from "components/TableComp";
 import API from '../../service';
-import Swal from 'sweetalert2'
+// import Swal from 'sweetalert2'
 import axios from "axios";
 
 class Kredit extends Component {
@@ -26,11 +26,15 @@ class Kredit extends Component {
     post: [],
     formPegawai: {
       id: "",
-      idguru: "",
+      idpegawai: "",
       nama: "",
       nama_lembaga: "",
       total: "",
       idstatus: "",
+    },
+    formupdate:{
+      idpegawai: "",
+      total: ""
     },
     isUpdate: false,
   };
@@ -45,7 +49,6 @@ class Kredit extends Component {
 
   getKreditAPI = () => {
     const config = {headers : {Authorization: `Bearer ` + localStorage.token}}
-    // API.kreditPegawai(config)
     axios.get('http://127.0.0.1:8000/api/kredit',config)
     .then((result) => {
       this.setState({
@@ -58,18 +61,23 @@ class Kredit extends Component {
 }
 
   postDataToAPI = () => {
-    API.postPegawai(this.state.formPegawai).then((res) => {
-        this.getPostAPI();
-        this.hadleFromClear();
-      });
-    // const config = {headers : {Authorization: `Bearer ` + localStorage.token}}
-    // API.postKredit(config,this.state.formPegawai).then((res) =>{
-    //     console.log(res)
-    // })
+    const postData = {
+      idpegawai: this.state.formPegawai.idguru,
+      total: this.state.formPegawai.total,
+    };
+    const config = {headers : {Authorization: `Bearer ` + localStorage.token}}
+    axios.post('http://127.0.0.1:8000/api/kredit',postData, config).then((res) =>{
+          this.getKreditAPI();
+          this.hadleFromClear();
+    })
   };
 
   putDataToAPI = () => {
-    API.putPegawai(this.state.formPegawai,this.state.formPegawai.id).then((res) => {
+    const postData = {
+      idpegawai: this.state.formPegawai.idguru,
+      total: this.state.formPegawai.total,
+    };
+    API.putPegawai(postData,this.state.formPegawai.idguru).then((res) => {
         this.getPostAPI();
         this.hadleFromClear();
       });
@@ -77,9 +85,9 @@ class Kredit extends Component {
 
   handleRemove = (data) => {
     console.log(data);
-    // API.deletePegawai(data).then((res) => {
-    //   this.getPostAPI();
-    // });
+    API.deletePegawai(data).then((res) => {
+      this.getPostAPI();
+    });
   };
 
   handleUpdate = (data) => {
@@ -106,17 +114,11 @@ class Kredit extends Component {
 
   handleSimpan = (modal) => {
     if (this.state.isUpdate) {
-      // this.putDataToAPI();
       this.postDataToAPI()
+      console.log(this.state.formPegawai)
       this.toggleClose(modal);
-      Swal.fire({
-        icon: 'success',
-        title: 'Kredit Berhasil Di Simpan',
-        showConfirmButton: false,
-        timer: 1500
-      })
     } else {
-      this.postDataToAPI();
+      this.putDataToAPI()
     }
   };
 
@@ -126,7 +128,7 @@ class Kredit extends Component {
       formPegawai: {
         nama: "",
         nama_lembaga: "",
-        kredit: "",
+        total: "",
         idstatus: "",
       },
     }); 
@@ -142,14 +144,10 @@ class Kredit extends Component {
     this.setState({
       exampleModal: !this.state[state],
     });
-    console.log(post)
     this.setState({
       formPegawai: post,
       isUpdate: true,
-    },
-    (err) => {
-      console.log('error : ', err)
-  });
+    });
   
   };
 
@@ -194,7 +192,7 @@ class Kredit extends Component {
                   <h3 className="mb-0">Data Kredit Pegawai</h3>
                 </CardHeader>
                 <CardBody>
-                 <TableComp data={datapost} modal={this.toggleModal} remove={this.handleRemove}/>
+                 <TableComp data={datapost} modal={this.toggleModal} />
                 </CardBody>
               </Card>
             </div>
