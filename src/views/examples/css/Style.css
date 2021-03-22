@@ -11,7 +11,7 @@ table.scroll tbody {
     height:auto;
     min-height:30px;
     max-height: 550px;
-    overflow:auto;
+    overflow-y:auto;
     float:left;
     width:100%;
 }
@@ -21,5 +21,19 @@ table.scroll tbody tr {
 }
 table.scroll th, td {
     width:33%;
-    padding:8px;
+    /* padding:8px; */
 }
+
+tbody {
+    display:block;
+    max-height:500px;
+    overflow-y:auto;
+}
+thead, tbody tr {
+    display:table;
+    width:100%;
+    table-layout:fixed;
+}
+
+
+

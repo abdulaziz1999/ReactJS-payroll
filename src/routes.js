@@ -6,6 +6,7 @@ import Login from "views/examples/Login.js";
 import Kredit from "views/examples/Tables.js";
 import Insentif from "views/examples/Tablesnew.js";
 import User from "views/examples/User";
+import Review from "views/examples/Review";
 // import Icons from "views/examples/Icons.js";
 
 var routes = [
@@ -49,6 +50,13 @@ var routes = [
     name: "Insentif",
     icon: "fa fa-money-bill-alt text-green",
     component: Insentif,
+    layout: "/admin",
+  },
+  {
+    path: "/review",
+    name: "Review",
+    icon: "fa fa-money-bill-alt text-green",
+    component: Review,
     layout: "/admin",
   },
   {
