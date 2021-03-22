@@ -9,7 +9,9 @@ import "assets/scss/argon-dashboard-react.scss";
 import AdminLayout from "layouts/Admin.js";
 import AuthLayout from "layouts/Auth.js";
 import { getToken } from "../src/Utils/Common";
-import ProtectedRoute from "../src/Utils/protectedRoute";
+import ProtectedRoute from "./Utils/protectedRoute";
+import Dash from "views/Dash";
+import Icons from "views/examples/Icons";
 
 ReactDOM.render(
   <BrowserRouter>
@@ -25,6 +27,8 @@ ReactDOM.render(
           )
         }
       />
+      <Route path="/dash" component={Dash}/>
+      <Route path="/icon" component={Icons}/>
       <Redirect from="/" to="/auth/login" />
     </Switch>
   </BrowserRouter>,
