@@ -21,19 +21,13 @@ table.scroll tbody tr {
 }
 table.scroll th, td {
     width:33%;
-    /* padding:8px; */
+    padding:8px;
 }
 
-tbody {
-    display:block;
-    max-height:500px;
-    overflow-y:auto;
-}
-thead, tbody tr {
-    display:table;
-    width:100%;
-    table-layout:fixed;
+.table-responsive {
+    max-height:600px;
 }
 
+.table-responsive thead th { position: sticky; top: 0; }
 
 
