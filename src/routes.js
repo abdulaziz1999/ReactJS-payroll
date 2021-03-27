@@ -3,10 +3,11 @@ import Index from "views/Index.js";
 // import Maps from "views/examples/Maps.js";
 // import Register from "views/examples/Register.js";
 import Login from "views/examples/Login.js";
-import Kredit from "views/examples/Tables.js";
-import Insentif from "views/examples/Tablesnew.js";
-import User from "views/examples/User";
-import Review from "views/examples/Review";
+import Kredit from "views/kredit/Kredit";
+import Insentif from "views/insentif/Insentif";
+import User from "views/user/User";
+import Review from "views/review/Review";
+import Cutoff from "views/cutoff/CutOff";
 // import Icons from "views/examples/Icons.js";
 
 var routes = [
@@ -39,24 +40,31 @@ var routes = [
   //   layout: "/admin",
   // },
   {
-    path: "/tables",
+    path: "/cutoff",
+    name: "Cutoff",
+    icon: "ni ni-scissors text-blue",
+    component: Cutoff,
+    layout: "/admin",
+  },
+  {
+    path: "/review",
+    name: "Review",
+    icon: "ni ni-map-big text-blue",
+    component: Review,
+    layout: "/admin",
+  },
+  {
+    path: "/kredit",
     name: "Kredit",
     icon: "ni ni-credit-card text-red",
     component: Kredit,
     layout: "/admin",
   },
   {
-    path: "/tablesnew",
+    path: "/insentif",
     name: "Insentif",
     icon: "fa fa-money-bill-alt text-green",
     component: Insentif,
-    layout: "/admin",
-  },
-  {
-    path: "/review",
-    name: "Review",
-    icon: "fa fa-money-bill-alt text-green",
-    component: Review,
     layout: "/admin",
   },
   {
