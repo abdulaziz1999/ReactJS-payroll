@@ -12,14 +12,17 @@ import {
   Row
 } from "reactstrap";
 
-const Calendar = () => {
+const Calendar = (props) => {
   const [startDate, setStartDate] = useState()
   const [endDate, setEndDate] = useState()
   const [focus, setFocus] = useState(START_DATE)
-  const handleFocusChange = newFocus => {
+  const handleFocusChange = (newFocus) => {
     setFocus(newFocus || START_DATE)
   }
- 
+
+  // console.log(startDate ? format(startDate, 'yyyy-MM-dd', { locale: enGB }) : 'none')
+  // console.log(endDate ? format(endDate, 'yyyy-MM-dd', { locale: enGB }) : 'none')
+  // console.log(props.tglnow)
   return (
     <div>
       {/* <p>Currently selecting: {focus}.</p> */}
@@ -28,9 +31,12 @@ const Calendar = () => {
                             <FormGroup>
                                 <label>Start Date :</label>
                                 <Input
-                                name="start"
-                                type="text"
-                                value={startDate ? format(startDate, 'dd MMM yyyy', { locale: enGB }) : 'none'}
+                                id="starTgl"
+                                name="startDate"
+                                type="date"
+                                readOnly
+                                value={startDate ? format(startDate, 'yyyy-MM-dd', { locale: enGB }) : ''}
+                                // onChange={props.ubah}
                                 />
                             </FormGroup>
                         </Col>
@@ -38,9 +44,13 @@ const Calendar = () => {
                             <FormGroup>
                             <label>End Date :</label>
                                 <Input
-                                name="end"
-                                type="text"
-                                value={endDate ? format(endDate, 'dd MMM yyyy', { locale: enGB }) : 'none'}
+                                id="endTgl"
+                                name="endDate"
+                                type="date"
+                                readOnly
+                                value={endDate ? format(endDate, 'yyyy-MM-dd', { locale: enGB }) : ''}
+                                // readOnly
+                                // onChange={props.ubah}
                                 />
                             </FormGroup>
                         </Col>
