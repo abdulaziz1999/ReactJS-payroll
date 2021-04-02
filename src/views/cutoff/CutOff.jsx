@@ -1,36 +1,111 @@
 import React, { Component } from "react";
-// import ReactDatetime from "react-datetime";
-// import axios from "axios";
+import axios from "axios";
 // reactstrap components
 import {
   Card,
   CardHeader,
-    // Modal,
-    Button,
+  Button,
   Container,
   FormGroup,
-//   InputGroupAddon,
-//   InputGroupText,
-//   InputGroup,
   Col,
   Input,
   Row,
   CardBody,
+  Badge
 } from "reactstrap";
 // core components
 import "../examples/css/Style.css";
 import Calendar from "../../components/Calendar/Calendar";
-// import Cal from "components/Calendar/Cal";
-
 class CutOff extends Component {
-  componentDidMount() {}
+  
   state = {
-    startDate : "",
-    endDate : ""
+      formDate: {
+        startDate : "",
+        endDate : "",
+      },
+      holiday: [],
+      dayEfektif : "",
   };
+
+  postDataToAPI = () => {
+    let startValue = document.getElementById("starTgl").value;
+    let endValue = document.getElementById("endTgl").value;
+    const postData = {
+      start: startValue,
+      end: endValue,
+      holidays: this.state.holiday,
+      status: 1
+    };
+    const config = {headers : {Authorization: `Bearer ` + localStorage.token}}
+    axios.post('http://127.0.0.1:8000/api/cutoff',postData, config).then((res) =>{
+          console.log(res)
+    })
+    // return postData;
+  };
+
+  saveInput = (e) => {
+    this.setState({ input: e.target.value });
+  };
+
+  addNewHoliday = (e) => {
+    this.setState({ input: e.target.value });
+    let { holiday, input } = this.state;
+    holiday.push(input);
+  };
+
+  handleDayEfektif = () => {
+    if(this.state.endDate !== ""){
+      this.setState({
+        day_efektif : 5
+      })
+    }
+    console.log(this.state)
+  }
+
+  handleUpdate = (event) => {
+    let formDateNew = { ...this.state.formDate };
+    formDateNew[event.target.name] = event.target.value;
+    this.setState(
+      {formDate : formDateNew}, 
+      () => {this.handleDiff()});
+  };
+
+  handleConsole = () => {
+    console.log(this.postDataToAPI);
+  }
+
+  handleStartDate = (value) => {
+    this.setState({ startDate: value });
+  }
+
+  handleDiff = () => {
+     let dateI1 = this.state.formDate.startDate
+     let dateI2 = this.state.formDate.endDate
+     let date1 = new Date(dateI1);
+     let date2 = new Date(dateI2);
+     let time_difference = date2.getTime() - date1.getTime();
+     let result = time_difference / (1000 * 60 * 60 * 24);
+     this.setState({
+       dayEfektif : result
+     })
+                
+  }
+
+  Datenow = () => {
+    let today = new Date();
+    let dd = String(today.getDate()).padStart(2, '0');
+    let mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+    let yyyy = today.getFullYear();
+
+    today = yyyy + '-' + mm + '-' + dd;
+    return today;
+  }
+
+  componentDidMount() {
+    
+  }
   render() {
-      console.log(this.state.startDate._d);
-      console.log(this.state.endDate._d);
+      
     return (
       <>
         <div className="header bg-gradient-info pb-8 pt-5 pt-md-8"></div>
@@ -43,13 +118,12 @@ class CutOff extends Component {
                   <h3 className="mb-0">Cut Off Payroll</h3>
                 </CardHeader>
                 <CardBody>
-              
                     <CardBody>
                     <Row>
                         <Col sm={6}>
                             <Card>
                             <CardBody className="bg-secondary">
-                                <Calendar />
+                                <Calendar ubah={this.handleUpdate} tglnow={this.Datenow()} />
                             </CardBody>
                             </Card>
                         </Col>
@@ -57,29 +131,50 @@ class CutOff extends Component {
                             <FormGroup>
                                 <label>Hari Efektif :</label>
                                 <Input
-                                name="efektif"
+                                name="dayEfektif"
                                 id="exampleFormControlInput1"
                                 placeholder="Hari Efektif"
                                 type="text"
+                                readOnly
+                                value={ isNaN(this.state.dayEfektif) ? '' : this.state.dayEfektif+" Hari"}
+                                // onChange={this.handleUpdate}
                                 />
                             </FormGroup>
-                            <FormGroup>
-                            <label>Hari Libur :</label>
-                                <Input
-                                placeholder="Hari Libur"
-                                name="holiday"
-                                type="text"
-                                />
-                            </FormGroup>
+                            <Row>
+                            <Col sm={6}>
+                              <label>Hari Libur :</label>
+                              <FormGroup>
+                                  <Input
+                                  placeholder="Hari Libur"
+                                  name="holiday"
+                                  type="date"
+                                  onChange={this.saveInput}
+                                  />
+                              </FormGroup>
+                            </Col>
+                            <Col sm={6}>
+                              <Button className="mb--6" onClick={this.addNewHoliday} color="success" size="md"  type="button"> Tambah</Button>
+                            </Col>
+                            </Row>
+                            <ol>
+                              {
+                                this.state.holiday.map((subItems, sIndex) => {
+                                return <li key={`${subItems}${sIndex}`}>
+                                <Badge className="badge-danger" pill>
+                                {subItems}
+                                </Badge>
+                                </li>;
+                                })
+                              }
+                            </ol>
                         </Col>
                         <Col className="modal-footer">
-                        <Button  color="success" size="md"  type="button">
+                        <Button  color="success" size="md" onClick={this.postDataToAPI}  type="button">
                         Simpan & Lanjutkan
                         </Button>
                         </Col>
                     </Row>
                     </CardBody>
-               
                 </CardBody>
               </Card>
             </div>
