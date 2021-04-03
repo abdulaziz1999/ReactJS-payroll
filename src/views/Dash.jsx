@@ -16,7 +16,7 @@ import {
   // Row,
   // Col,
 } from "reactstrap";
-import Dash1 from "components/Table/Dash1";
+import Dash1 from "components/Example/Dash1";
 // import Dash2 from "components/Table/Dash2";
 import Tables from "../views/examples/Tables";
 

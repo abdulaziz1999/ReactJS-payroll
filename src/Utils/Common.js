@@ -10,6 +10,10 @@ export const getToken = () => {
   return localStorage.getItem('token') || null;
 }
 
+export const getRole = () => {
+  return JSON.parse(localStorage.getItem("user"))['role'] || null;
+}
+
 // remove the token and user from the local storage
 export const removeUserSession = () => {
   localStorage.removeItem('token');

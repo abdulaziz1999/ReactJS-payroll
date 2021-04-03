@@ -16,7 +16,7 @@ import {
 } from "reactstrap";
 // core components
 import './css/Style.css';
-import TableComp from "components/InsentifComp";
+import TableComp from "components/Table/TableInsentif";
 import API from '../../service';
 import Swal from 'sweetalert2'
 

@@ -36,21 +36,37 @@ const Login = (props) => {
     axios.post('http://127.0.0.1:8000/api/login', { email: username.value, password: password.value }).then(response => {
       setLoading(false);
       setUserSession(response.data.success.token, response.data.success.data);
-      // console.log(response.data.success.data)
-      props.history.push('/admin/index');
+      // console.log(response.data.success.data.role)
+      let session = response.data.success.data.role;
+      if(session === 'admin'){
+        props.history.push('/admin/index');
+      }else if(session === 'dqmart'){
+        props.history.push('/dqmart/index');
+      }else if(session === 'keuangan'){
+        props.history.push('/keuangan/index');
+      }
     }).catch(error => {
       setLoading(false);
       if (error.response.status === 200) setError(error.response.data.message);
       else setError("Something went wrong. Please try again later.");
     });
   }
+  
+ 
   return (
     <>
       <Col lg="5" md="7">
         <Card className="bg-secondary shadow border-0">
           <CardBody className="px-lg-5 py-lg-5">
-            <div className="text-center text-black mb-4">
-              <strong>Login</strong>
+            <div className="text-center text-black mb-1">
+            <img
+                    alt="..."
+                    width="250"
+                    src={
+                      require("../../assets/img/brand/argon-react.png")
+                        .default
+                    }
+                  />
             </div>
             {error && <><small style={{ color: 'red' }}>{error}</small><br /></>}<br />
             <Form role="form" onSubmit={onFormSubmit}>
@@ -85,7 +101,7 @@ const Login = (props) => {
                 </InputGroup>
               </FormGroup>
               <div className="text-center">
-                <Button className="my-1" color="primary" type="submit" value={loading ? 'Loading...' : 'Login'} onClick={handleLogin} >
+                <Button className="my-1" color="info" type="submit" value={loading ? 'Loading...' : 'Login'} onClick={handleLogin} >
                   Login
                 </Button>
               </div>

@@ -2,10 +2,10 @@
 
 import React from "react";
 import { useState } from "react";
-import { Col, Form, FormGroup , Input,InputGroup, InputGroupAddon,InputGroupText, Row, Table, Badge,Button} from "reactstrap";
+import { Col, Form, FormGroup , Input,InputGroup, InputGroupAddon,InputGroupText, Row, Table} from "reactstrap";
 
 
-const TableComp = ({data,modal,remove}) => {
+const TableGapok = ({data,modal,remove}) => {
     // console.log(data)
     const [searchTerm, setSearchTerm] = useState("")
     
@@ -34,7 +34,8 @@ const TableComp = ({data,modal,remove}) => {
                     </Col>
                 </Row>
             </Form>
-            <Table className="table-flush " responsive>
+            <div className="table-responsive">
+              <Table className="align-items-center table-flush" responsive>
                   <thead className="thead-light">
                     <tr>
                       <th scope="col"><b>Nama Pegawai</b></th>
@@ -63,19 +64,15 @@ const TableComp = ({data,modal,remove}) => {
                           <td><b>125</b></td>
                           <td><b>12</b></td>
                           <td><b>PTT</b></td>
-                          <td>
-                            <Badge color="" className="badge-dot">
-                              <i className="bg-info" />
-                               <b>{post.total != null ? 'Rp. '+post.total : '-'}</b>
-                            </Badge>
-                          </td>
+                          <td><b>Rp. 8000.000</b></td>
                         </tr>
                       );
                     })}
                   </tbody>
                 </Table>
+            </div>
         </div>
     )
 }
 
-export default TableComp;
+export default TableGapok;

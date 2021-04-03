@@ -4,19 +4,18 @@ import React, { Component } from "react";
 import {
   Card,
   CardHeader,
-  Modal,
-  Button,
+  // Button,
   Container,
-  FormGroup,
-  Form,
-  Input,
-  Col,
+  // FormGroup,
+  // Form,
+  // Input,
+  // Col,
   Row,
   CardBody,
 } from "reactstrap";
 // core components
-import './css/Style.css';
-import ReviewGapok from "components/Table/ReviewGapok";
+import '../examples/css/Style.css';
+import ReviewGapok from "components/Table/ReviewTotal";
 import API from '../../service';
 // import Swal from 'sweetalert2'
 import axios from "axios";
@@ -165,19 +164,19 @@ class Review extends Component {
 
   render() {
     const datapost = this.state.post
-    const formdata = this.state.formPegawai
-    let nama
-    let nama_lembaga
-    let total
-    if(formdata){
-      nama = formdata.nama
-      nama_lembaga = formdata.nama_lembaga
-      total = formdata.total
-    }else{
-      nama = ""
-      nama_lembaga = ""
-      total = ""
-    }
+    // const formdata = this.state.formPegawai
+    // let nama
+    // let nama_lembaga
+    // let total
+    // if(formdata){
+    //   nama = formdata.nama
+    //   nama_lembaga = formdata.nama_lembaga
+    //   total = formdata.total
+    // }else{
+    //   nama = ""
+    //   nama_lembaga = ""
+    //   total = ""
+    // }
 
     return (
       <>
@@ -189,7 +188,7 @@ class Review extends Component {
             <div className="col">
               <Card className="shadow">
                 <CardHeader className="border-0">
-                  <h3 className="mb-0">Data Review</h3>
+                  <h3 className="mb-0">Data Review Jam Tambahan</h3>
                 </CardHeader>
                 <CardBody>
                  <ReviewGapok data={datapost} modal={this.toggleModal} />
@@ -199,101 +198,6 @@ class Review extends Component {
           </Row>
         </Container>
 
-
-        <Modal
-          className="modal-dialog-centered"
-          isOpen={this.state.exampleModal}
-          toggle={() => this.toggleModal("exampleModal")}
-          size="lg"
-        >
-          <div className="modal-header">
-            <h5 className="modal-title" id="exampleModalLabel">
-              Update data kredit
-            </h5>
-            <button
-              aria-label="Close"
-              className="close"
-              data-dismiss="modal"
-              type="button"
-              onClick={() => this.toggleClose("exampleModal")}
-            >
-              <span aria-hidden={true}>×</span>
-            </button>
-          </div>
-          <div className="modal-body">
-            <Form>
-              <Row>
-                <Col md="6">
-                  <FormGroup>
-                    <label>Nama Pegawai :</label>
-                    <Input
-                      disabled
-                      name="nama"
-                      id="exampleFormControlInput1"
-                      placeholder="nama"
-                      value={nama}
-                      onChange={this.hadleUbah}
-                      type="text"
-                    />
-                  </FormGroup>
-                </Col>
-                <Col md="6">
-                  <FormGroup>
-                  <label>Nama Lembaga :</label>
-                    <Input
-                      disabled        
-                      placeholder="Regular"
-                      name="nama_lembaga"
-                      type="text"
-                      onChange={this.hadleUbah}
-                      value={nama_lembaga}
-                    />
-                  </FormGroup>
-                </Col>
-              </Row>
-              <Row>
-                <Col md="12">
-                  <FormGroup>
-                  <label>Jumlah Kredit :</label>
-                    <Input
-                      placeholder="Kredit"
-                      name="total"
-                      type="text"
-                      onChange={this.hadleUbah}
-                      value={total}
-                    />
-                  </FormGroup>
-                </Col>
-              </Row>
-            </Form>
-          </div>
-          <div className="modal-footer">
-            <Button
-              color="danger"
-              data-dismiss="modal"
-              type="button"
-              size="sm"
-              onClick={() => this.toggleClose("exampleModal")}
-            >
-              Close
-            </Button>
-            <Button
-              color="info"
-              type="button"
-              size="sm"
-              onClick={() => this.handleSimpan("exampleModal")}
-            >
-              <i className="ni ni-air-baloon"></i> Update
-            </Button>
-          </div>
-        </Modal>
-        {/* <ModalPop
-        modalClouse={this.toggleClose()}
-        modal={this.toggleModal()}
-        save={this.handleSimpan()}
-        ubah={this.hadleUbah()}
-        formPegawai={this.state.formPegawai}
-        /> */}
       </>
     );
   }

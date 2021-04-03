@@ -16,7 +16,7 @@ import {
 } from "reactstrap";
 // core components
 import './css/Style.css';
-import TableComp from "components/TableComp";
+import TableComp from "components/Table/TableKredit";
 import API from '../../service';
 // import Swal from 'sweetalert2'
 import axios from "axios";
@@ -198,7 +198,6 @@ class Kredit extends Component {
             </div>
           </Row>
         </Container>
-
 
         <Modal
           className="modal-dialog-centered"

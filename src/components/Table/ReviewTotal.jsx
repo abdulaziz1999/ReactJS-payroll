@@ -2,10 +2,10 @@
 
 import React from "react";
 import { useState } from "react";
-import { Col, Form, FormGroup , Input,InputGroup, InputGroupAddon,InputGroupText, Row, Table, Badge,Button} from "reactstrap";
+import { Col, Form, FormGroup , Input,InputGroup, InputGroupAddon,InputGroupText, Row, Table} from "reactstrap";
 
 
-const TableComp = ({data,modal,remove}) => {
+const TableGapok = ({data,modal,remove}) => {
     // console.log(data)
     const [searchTerm, setSearchTerm] = useState("")
     
@@ -34,12 +34,17 @@ const TableComp = ({data,modal,remove}) => {
                     </Col>
                 </Row>
             </Form>
-            <Table className="align-items-center table-flush scroll" responsive>
+            <div className="table-responsive">
+              <Table className="align-items-center table-flush" responsive>
                   <thead className="thead-light">
                     <tr>
-                      <th scope="col">Nama Pegawai</th>
-                      <th scope="col">Kredit</th>
-                      <th scope="col">Act</th>
+                      <th scope="col"><b>Nama Pegawai</b></th>
+                      <th scope="col"><b>Total Keseluruhan</b></th>
+                      <th scope="col"><b>Total Quran</b></th>
+                      <th scope="col"><b>Total Kelas</b></th>
+                      <th scope="col"><b>Total Asrama</b></th>
+                      <th scope="col"><b>Total Transport</b></th>
+                      <th scope="col"><b>Lainnya</b></th>
                     </tr>
                   </thead>
                   <tbody >
@@ -53,43 +58,21 @@ const TableComp = ({data,modal,remove}) => {
                     }).map((post, index) => {
                       return (
                         <tr key={index}>
-                          <td>{post.nama}</td>
-                          <td>
-                            <Badge color="" className="badge-dot">
-                              <i className="bg-info" />
-                               <b>{post.kredit != null ? 'Rp. '+post.kredit : '-'}</b>
-                            </Badge>
-                          </td>
-                          <td>
-                            <div className="btn-group">
-                              <Button
-                                color="info"
-                                type="button"
-                                size="sm"
-                                onClick={() =>
-                                  modal("exampleModal", post)
-                                }
-                              >
-                                <i className="fa fa-plus"></i> Update
-                              </Button>
-                              &nbsp;
-                              <Button
-                                color="danger"
-                                type="button"
-                                size="sm"
-                                onClick={() => remove(post.id)}
-                              >
-                                <i className="fa fa-trash"></i> Delete
-                              </Button>
-                            </div>
-                          </td>
+                          <td><b>{post.nama}</b></td>
+                          <td><b>99</b></td>
+                          <td><b>99</b></td>
+                          <td><b>99</b></td>
+                          <td><b>99</b></td>
+                          <td><b>99</b></td>
+                          <td><b>Rp. 8000.000</b></td>
                         </tr>
                       );
                     })}
                   </tbody>
                 </Table>
+            </div>
         </div>
     )
 }
 
-export default TableComp;
+export default TableGapok;

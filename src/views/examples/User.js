@@ -16,7 +16,7 @@ import {
 } from "reactstrap";
 // core components
 import './css/Style.css';
-import TableUser from "components/TableUser";
+import TableUser from "components/Table/TableUser";
 import API from '../../service';
 // import ModalPop from "components/ModalPop";
 

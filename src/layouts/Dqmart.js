@@ -8,7 +8,7 @@ import AdminNavbar from "components/Navbars/AdminNavbar.js";
 import AdminFooter from "components/Footers/AdminFooter.js";
 import Sidebar from "components/Sidebar/Sidebar.js";
 
-import routes from "routes.js";
+import routes from "routes/MenuDqmart";
 
 const Dqmart = (props) => {
   const mainContent = React.useRef(null);
@@ -53,7 +53,7 @@ const Dqmart = (props) => {
         {...props}
         routes={routes}
         logo={{
-          innerLink: "/admin/index",
+          innerLink: "/dqmart/index",
           imgSrc: require("../assets/img/brand/argon-react.png").default,
           imgAlt: "...",
         }}
@@ -65,7 +65,7 @@ const Dqmart = (props) => {
         />
         <Switch>
           {getRoutes(routes)}
-          <Redirect from="*" to="/admin/index" />
+          <Redirect from="*" to="/dqmart/index" />
         </Switch>
         <Container fluid>
           <AdminFooter />
