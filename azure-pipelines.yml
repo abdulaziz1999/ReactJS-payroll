@@ -31,3 +31,13 @@ steps:
     PathtoPublish: '$(Build.ArtifactStagingDirectory)'
     ArtifactName: 'drop'
     publishLocation: 'Container'
+- task: SSH@0
+  inputs:
+    runOptions: 'inline'
+    inline: |
+      curl -H "X-Auth-Token: UP0d2QYNo6h-uACy7RqusNXk2WqpsvuMbxfKbNg9wV3" \
+           -H "X-User-Id: 8wgrd9ejmL5cdhHta" \
+           -H "Content-type:application/json" \
+           https://chat.dqakses.id/api/v1/chat.postMessage \
+           -d '{ "roomId": "BXeCKdgk3wzpHWrR4", "text": "New Frontend build success!", "avatar": "https://th.bing.com/th/id/OIP.I22DSuPZrzvbVG5k3acgsAAAAA?pid=ImgDet&rs=1", "alias": "REPO NEWS!" }'
+    readyTimeout: '20000'
