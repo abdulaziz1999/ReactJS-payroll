@@ -1,7 +1,7 @@
-import React,{ useState} from 'react';
-import axios from 'axios';
-import { setUserSession } from '../../Utils/Common';
-
+import React, { useState } from "react";
+import axios from "axios";
+import { setUserSession } from "../../Utils/Common";
+import { RootOnline, Rootpath } from "../../service/Config";
 // reactstrap components
 import {
   Button,
@@ -20,55 +20,64 @@ import {
 
 const Login = (props) => {
   const [loading, setLoading] = useState(false);
-  const username = useFormInput('');
-  const password = useFormInput('');
+  const username = useFormInput("");
+  const password = useFormInput("");
   const [error, setError] = useState(null);
 
   const onFormSubmit = (e) => {
     e.preventDefault();
-    handleLogin()
-  }
-  
+    handleLogin();
+  };
+
   // handle button click of login form
   const handleLogin = () => {
     setError(null);
     setLoading(true);
-    axios.post('http://127.0.0.1:8000/api/login', { email: username.value, password: password.value }).then(response => {
-      setLoading(false);
-      setUserSession(response.data.success.token, response.data.success.data);
-      // console.log(response.data.success.data.role)
-      let session = response.data.success.data.role;
-      if(session === 'admin'){
-        props.history.push('/admin/index');
-      }else if(session === 'dqmart'){
-        props.history.push('/dqmart/index');
-      }else if(session === 'keuangan'){
-        props.history.push('/keuangan/index');
-      }
-    }).catch(error => {
-      setLoading(false);
-      if (error.response.status === 200) setError(error.response.data.message);
-      else setError("Something went wrong. Please try again later.");
-    });
-  }
-  
- 
+    axios
+      .post(RootOnline + "/login", {
+        email: username.value,
+        password: password.value,
+      })
+      .then((response) => {
+        setLoading(false);
+        setUserSession(response.data.success.token, response.data.success.data);
+        // console.log(response.data.success.data.role)
+        let session = response.data.success.data.role;
+        if (session === "admin") {
+          props.history.push("/admin/index");
+        } else if (session === "dqmart") {
+          props.history.push("/dqmart/index");
+        } else if (session === "keuangan") {
+          props.history.push("/keuangan/index");
+        }
+      })
+      .catch((error) => {
+        setLoading(false);
+        if (error.response.status === 200)
+          setError(error.response.data.message);
+        else setError("Something went wrong. Please try again later.");
+      });
+  };
+
   return (
     <>
       <Col lg="5" md="7">
         <Card className="bg-secondary shadow border-0">
           <CardBody className="px-lg-5 py-lg-5">
             <div className="text-center text-black mb-1">
-            <img
-                    alt="..."
-                    width="250"
-                    src={
-                      require("../../assets/img/brand/argon-react.png")
-                        .default
-                    }
-                  />
+              <img
+                alt="..."
+                width="250"
+                src={require("../../assets/img/brand/argon-react.png").default}
+              />
             </div>
-            {error && <><small style={{ color: 'red' }}>{error}</small><br /></>}<br />
+            {error && (
+              <>
+                <small style={{ color: "red" }}>{error}</small>
+                <br />
+              </>
+            )}
+            <br />
             <Form role="form" onSubmit={onFormSubmit}>
               <FormGroup className="mb-3">
                 <InputGroup className="input-group-alternative">
@@ -101,7 +110,13 @@ const Login = (props) => {
                 </InputGroup>
               </FormGroup>
               <div className="text-center">
-                <Button className="my-1" color="info" type="submit" value={loading ? 'Loading...' : 'Login'} onClick={handleLogin} >
+                <Button
+                  className="my-1"
+                  color="info"
+                  type="submit"
+                  value={loading ? "Loading..." : "Login"}
+                  onClick={handleLogin}
+                >
                   Login
                 </Button>
               </div>
@@ -113,16 +128,16 @@ const Login = (props) => {
   );
 };
 
-const useFormInput = initialValue => {
+const useFormInput = (initialValue) => {
   const [value, setValue] = useState(initialValue);
 
-  const handleChange = e => {
+  const handleChange = (e) => {
     setValue(e.target.value);
-  }
+  };
   return {
     value,
-    onChange: handleChange
-  }
-}
+    onChange: handleChange,
+  };
+};
 
 export default Login;
