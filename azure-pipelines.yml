@@ -38,4 +38,4 @@ steps:
            -H "X-User-Id: 8wgrd9ejmL5cdhHta" \
            -H "Content-type:application/json" \
            https://chat.dqakses.id/api/v1/chat.postMessage \
-           -d '{ "roomId": "BXeCKdgk3wzpHWrR4", "text": "New Backend deploy!", "avatar": "https://th.bing.com/th/id/OIP.I22DSuPZrzvbVG5k3acgsAAAAA?pid=ImgDet&rs=1", "alias": "REPO NEWS!" }'
+           -d '{ "roomId": "BXeCKdgk3wzpHWrR4", "text": "New Frontend Build ($(Build.BuildId)) Success!", "avatar": "https://th.bing.com/th/id/OIP.I22DSuPZrzvbVG5k3acgsAAAAA?pid=ImgDet&rs=1", "alias": "REPO NEWS!" }'
