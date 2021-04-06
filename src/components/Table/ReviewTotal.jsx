@@ -59,11 +59,11 @@ const TableGapok = ({data,modal,remove}) => {
                       return (
                         <tr key={index}>
                           <td><b>{post.nama}</b></td>
-                          <td><b>99</b></td>
-                          <td><b>99</b></td>
-                          <td><b>99</b></td>
-                          <td><b>99</b></td>
-                          <td><b>99</b></td>
+                          <td><b>{post.total_jam}</b></td>
+                          <td><b>{post.quran}</b></td>
+                          <td><b>{post.kelas}</b></td>
+                          <td><b>{post.asrama}</b></td>
+                          <td><b>{post.transport}</b></td>
                           <td><b>Rp. 8000.000</b></td>
                         </tr>
                       );

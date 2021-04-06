@@ -55,7 +55,7 @@ class Kredit extends Component {
       this.setState({
         post: result.data
       });
-      // console.log(result.data)
+      console.log(result.data[2]['nama'])
     }).catch((err) => {
       console.log("ini eror :"+err)
   })
@@ -70,6 +70,11 @@ class Kredit extends Component {
     axios.post(RootOnline + '/kredit',postData, config).then((res) =>{
           this.getKreditAPI();
           this.hadleFromClear();
+        //   Swal.fire(
+        //     'Success!',
+        //     'User '+res.data['nama']+' <br> Tes.',
+        //     'success'
+        // )
     })
   };
 

@@ -24,44 +24,45 @@ class Review extends Component {
     namaLembaga : "",
   };
 
-  getReviewGapok = () => {
+  getReviewGapok = async() => {
     let URL= this.props.location.pathname
     let arr= URL.split('/')
     let id = arr[3]
     const config = {headers : {Authorization: `Bearer ` + localStorage.token}}
-    axios.get(RootOnline +'/gapok/'+id ,config).then((result) => {
+    const result = await axios.get(RootOnline +'/gapok/'+id ,config)
+     try{
       this.setState({
         post: result.data
       })
-    }).catch((err) => {
+    }catch(err) {
       console.log("ini eror :"+err)
-    })
+    }
   }
 
   simpanGapok = () => {
     let URL= this.props.location.pathname
     let arr= URL.split('/')
     let id = arr[3];
-    const config = {headers : {Authorization: `Bearer ` + localStorage.token}}
-    axios.post(RootOnline +'/gapok/'+id ,config).then((result) => {
-      console.log(result.data)
+    axios.defaults.headers.common['Authorization'] = `Bearer ` + localStorage.token
+    axios.post(RootOnline +'/gapok/'+id ).then((result) => {
       this.props.history.push('/admin/reviewtotal/'+id)
     }).catch((err) => {
       console.log("ini eror : "+err)
     })
   }
 
-  getNamaLembaga = () => {
+  getNamaLembaga = async() => {
     let URL= this.props.location.pathname
     let arr= URL.split('/')
     let id = arr[3];
-    axios.get('https://kepegawaian.dqakses.id/api/lembagaById/'+id).then((result) => {
+    const result = await axios.get('https://kepegawaian.dqakses.id/api/lembagaById/'+id)
+    try {
       this.setState({
         namaLembaga : result.data[0]['nama_lembaga']
       })
-    }).catch((err) => {
+    }catch(err)  {
       console.log("ini eror :"+err)
-    })
+    }
   }
   
   format = (amount) => {
@@ -71,8 +72,15 @@ class Review extends Component {
   };
   
   componentDidMount() {
-    this.getReviewGapok()
-    this.getNamaLembaga()
+    let URL= this.props.location.pathname
+    let arr= URL.split('/')
+    let id = arr[3];
+    if(!id){
+
+    }else{
+      this.getReviewGapok()
+      this.getNamaLembaga()
+    }
   }
 
   render() {

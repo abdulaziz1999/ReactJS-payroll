@@ -2,11 +2,11 @@
 
 import React from "react";
 import { useState } from "react";
-import { Button, Col, Form, FormGroup , Input,InputGroup, InputGroupAddon,InputGroupText, Row, Table} from "reactstrap";
+import { Col, Form, FormGroup , Input,InputGroup, InputGroupAddon,InputGroupText, Row, Table} from "reactstrap";
 
 
 const TableGapok = ({data,save}) => {
-    console.log(save)
+    // console.log(save)
     const [searchTerm, setSearchTerm] = useState("")
     
     return (

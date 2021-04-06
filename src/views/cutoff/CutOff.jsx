@@ -16,10 +16,12 @@ import {
 // core components
 import "../examples/css/Style.css";
 import Calendar from "../../components/Calendar/Calendar";
+import Swal from 'sweetalert2'
 import { RootOnline } from "service/Config";
 class CutOff extends Component {
   
   state = {
+      post: [],
       formDate: {
         startDate : "",
         endDate : "",
@@ -40,8 +42,27 @@ class CutOff extends Component {
     const config = {headers : {Authorization: `Bearer ` + localStorage.token}}
     axios.post(RootOnline +'/cutoff',postData, config).then((res) =>{
           console.log(res)
+          Swal.fire(
+                'Success!',
+                'Data Cut Off <br> Berhasil Diinput.',
+                'success'
+            )
+          this.props.history.push('/admin/unit')
     })
   };
+
+  getDataCutOff = () => {
+    const config = {headers : {Authorization: `Bearer ` + localStorage.token}}
+    axios.get(RootOnline + '/cutoff',config).then((res) => {
+      let last = res.data.length - 1;
+      console.log(res.data[last]['start'])
+      // document.getElementById("starTgl").value = res.data[last]['start']
+      // document.getElementById("endTgl").value = res.data[last]['end']
+      this.setState({
+        post : res.data
+      })
+    })
+  }
 
   saveInput = (e) => {
     this.setState({ input: e.target.value });
@@ -102,9 +123,9 @@ class CutOff extends Component {
   }
 
   componentDidMount() {
+    this.getDataCutOff()
   }
   render() {
-      
     return (
       <>
         <div className="header bg-gradient-info pb-8 pt-5 pt-md-8"></div>

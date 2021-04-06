@@ -21,20 +21,19 @@ class Unit extends Component {
     isUpdate: false,
   };
  
-  getLembaga = () => {
-    axios.get('https://kepegawaian.dqakses.id/api/lembaga').then((res) => {
+  getLembaga = async() => {
+    const res = await axios.get('https://kepegawaian.dqakses.id/api/lembaga')
       this.setState({
         post : res.data
       })
-    })
   };
 
-  getReviewLembaga = (event) => {
+  getReviewLembaga = async(event) => {
     let id = event.target.id
     const config = {headers : {Authorization: `Bearer ` + localStorage.token}}
     axios.get(RootOnline + '/gapok/' +id,config)
     .then((result) => {
-      console.log(result)
+      // console.log(result)
       this.props.history.push('/admin/review/'+id)
     }).catch((err) => {
       console.log("ini eror :"+err)

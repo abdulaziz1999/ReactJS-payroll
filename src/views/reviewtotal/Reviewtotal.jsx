@@ -35,20 +35,20 @@ class Review extends Component {
       });
   };
 
-  getKreditAPI = () => {
+  getDataSummary = async() => {
     let URL= this.props.location.pathname;
     let arr=URL.split('/');
     let id = arr[3];
-    const config = {headers : {Authorization: `Bearer ` + localStorage.token}}
-    axios.get(RootOnline +'/summary/'+id ,config)
-    .then((result) => {
-      // this.setState({
-      //   post: result.data
-      // });
+    axios.defaults.headers.common['Authorization'] = `Bearer ` + localStorage.token
+    const result = await axios.get(RootOnline +'/summary/'+id )
+    try{
+      this.setState({
+        post: result.data
+      });
       console.log(result.data)
-    }).catch((err) => {
+    }catch(err) {
       console.log("ini eror :"+err)
-  })
+  }
 }
 
 
@@ -61,7 +61,14 @@ class Review extends Component {
 
   
   componentDidMount() {
-    this.getKreditAPI();
+    let URL= this.props.location.pathname
+    let arr= URL.split('/')
+    let id = arr[3];
+    if(!id){
+
+    }else{
+      this.getDataSummary();
+    }
 
   }
 
