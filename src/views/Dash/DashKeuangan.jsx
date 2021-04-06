@@ -32,6 +32,7 @@ import {
 } from "variables/charts.js";
 
 import Header from "components/Headers/HeaderKeuangan";
+import { getToken,getRole } from "../../Utils/Common";
 
 const Keuangan = (props) => {
   const [activeNav, setActiveNav] = useState(1);
@@ -47,9 +48,9 @@ const Keuangan = (props) => {
     setChartExample1Data("data" + index);
   };
 
-  
-
-
+  if(getToken() && getRole() !== 'keuangan') {
+    props.history.push('/');
+  }
   return (
     <>
       <Header />

@@ -30,7 +30,7 @@ import {
   chartExample1,
   // chartExample2,
 } from "variables/charts.js";
-
+import { getToken,getRole } from "../../Utils/Common";
 import Header from "components/Headers/HeaderDqmart";
 
 const Dqmart = (props) => {
@@ -47,7 +47,9 @@ const Dqmart = (props) => {
     setChartExample1Data("data" + index);
   };
 
-
+  if(getToken() && getRole() !== 'dqmart') {
+    props.history.push('/');
+  }
   return (
     <>
       <Header />

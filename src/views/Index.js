@@ -8,16 +8,12 @@ import Chart from "chart.js";
 import { Line } from "react-chartjs-2";
 // reactstrap components
 import {
-  // Button,
   Card,
   CardHeader,
   CardBody,
   NavItem,
   NavLink,
   Nav,
-  // Progress,
-  // Table,
-  // CardTitle,
   Container,
   Row,
   Col,
@@ -32,6 +28,7 @@ import {
 } from "variables/charts.js";
 
 import Header from "components/Headers/Header.js";
+import { getToken,getRole } from "../Utils/Common";
 
 const Index = (props) => {
   const [activeNav, setActiveNav] = useState(1);
@@ -47,9 +44,9 @@ const Index = (props) => {
     setChartExample1Data("data" + index);
   };
 
-  
-
-
+  if(getToken() && getRole() !== 'admin') {
+        props.history.push('/');
+    }
   return (
     <>
       <Header />

@@ -16,6 +16,7 @@ import {
 // core components
 import "../examples/css/Style.css";
 import Calendar from "../../components/Calendar/Calendar";
+import { RootOnline } from "service/Config";
 class CutOff extends Component {
   
   state = {
@@ -37,10 +38,9 @@ class CutOff extends Component {
       status: 1
     };
     const config = {headers : {Authorization: `Bearer ` + localStorage.token}}
-    axios.post('http://127.0.0.1:8000/api/cutoff',postData, config).then((res) =>{
+    axios.post(RootOnline +'/cutoff',postData, config).then((res) =>{
           console.log(res)
     })
-    // return postData;
   };
 
   saveInput = (e) => {
@@ -102,7 +102,6 @@ class CutOff extends Component {
   }
 
   componentDidMount() {
-    
   }
   render() {
       
@@ -137,7 +136,7 @@ class CutOff extends Component {
                                 type="text"
                                 readOnly
                                 value={ isNaN(this.state.dayEfektif) ? '' : this.state.dayEfektif+" Hari"}
-                                // onChange={this.handleUpdate}
+                                onChange={this.handleUpdate}
                                 />
                             </FormGroup>
                             <Row>

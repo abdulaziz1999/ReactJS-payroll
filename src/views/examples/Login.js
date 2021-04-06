@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { setUserSession } from "../../Utils/Common";
-import { RootOnline, Rootpath } from "../../service/Config";
+import { RootOnline } from "../../service/Config";
 // reactstrap components
 import {
   Button,
@@ -33,12 +33,10 @@ const Login = (props) => {
   const handleLogin = () => {
     setError(null);
     setLoading(true);
-    axios
-      .post(RootOnline + "/login", {
+    axios.post(RootOnline + "/login", {
         email: username.value,
         password: password.value,
-      })
-      .then((response) => {
+      }).then((response) => {
         setLoading(false);
         setUserSession(response.data.success.token, response.data.success.data);
         // console.log(response.data.success.data.role)

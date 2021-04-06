@@ -22,7 +22,7 @@ const Calendar = (props) => {
 
   // console.log(startDate ? format(startDate, 'yyyy-MM-dd', { locale: enGB }) : 'none')
   // console.log(endDate ? format(endDate, 'yyyy-MM-dd', { locale: enGB }) : 'none')
-  // console.log(props.tglnow)
+  // console.log(document.getElementById("starTgl").value)
   return (
     <div>
       {/* <p>Currently selecting: {focus}.</p> */}
@@ -36,7 +36,7 @@ const Calendar = (props) => {
                                 type="date"
                                 readOnly
                                 value={startDate ? format(startDate, 'yyyy-MM-dd', { locale: enGB }) : ''}
-                                // onChange={props.ubah}
+                                onChange={props.ubah}
                                 />
                             </FormGroup>
                         </Col>
@@ -50,7 +50,7 @@ const Calendar = (props) => {
                                 readOnly
                                 value={endDate ? format(endDate, 'yyyy-MM-dd', { locale: enGB }) : ''}
                                 // readOnly
-                                // onChange={props.ubah}
+                                onChange={props.ubah}
                                 />
                             </FormGroup>
                         </Col>

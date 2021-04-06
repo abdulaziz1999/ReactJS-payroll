@@ -18,6 +18,7 @@ import {
 import '../examples/css/Style.css';
 import TableUser from "components/Table/TableUser";
 import API from '../../service';
+import { RootOnline } from "service/Config";
 // import ModalPop from "components/ModalPop";
 
 class User extends Component {
@@ -38,7 +39,7 @@ class User extends Component {
         Authorization: `Bearer ` + localStorage.token 
       }
     }
-    axios.get('http://127.0.0.1:8000/api/user',config).then((result) => {
+    axios.get(RootOnline + '/user',config).then((result) => {
       this.setState({
         post: result.data
       });

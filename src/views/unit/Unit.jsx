@@ -7,82 +7,45 @@ import {
   Container,
   Row,
   CardBody,
-  Button
+  Button,
+  Col
 } from "reactstrap";
 // core components
 import '../examples/css/Style.css';
-import API from '../../service';
+// import API from '../../service';
 // import Swal from 'sweetalert2'
 import axios from "axios";
+import { RootOnline } from "service/Config";
 
 class Review extends Component {
   state = {
     post: [],
-    formPegawai: {
-      id: "",
-      idpegawai: "",
-      nama: "",
-      nama_lembaga: "",
-      total: "",
-      idstatus: "",
-    },
-    formupdate:{
-      idpegawai: "",
-      total: ""
-    },
     isUpdate: false,
   };
  
-  getPostAPI = () => {
-    API.getPegawai().then((result) => {
-        this.setState({
-          post: result
-        });
-      });
-  };
-
-  getKreditAPI = () => {
-    const config = {headers : {Authorization: `Bearer ` + localStorage.token}}
-    axios.get('http://127.0.0.1:8000/api/gapok/5',config)
-    .then((result) => {
-      // this.setState({
-      //   post: result.data
-      // });
-      console.log(result)
-    }).catch((err) => {
-      console.log("ini eror :"+err)
-  })
-}
-
-  postDataToAPI = () => {
-    const postData = {
-      idpegawai: this.state.formPegawai.idguru,
-      total: this.state.formPegawai.total,
-    };
-    const config = {headers : {Authorization: `Bearer ` + localStorage.token}}
-    axios.post('http://127.0.0.1:8000/api/kredit',postData, config).then((res) =>{
-          this.getKreditAPI();
-          this.hadleFromClear();
+  getLembaga = () => {
+    axios.get('https://kepegawaian.dqakses.id/api/lembaga').then((res) => {
+      this.setState({
+        post : res.data
+      })
     })
   };
 
-  putDataToAPI = () => {
-    const postData = {
-      idpegawai: this.state.formPegawai.idguru,
-      total: this.state.formPegawai.total,
-    };
-    API.putPegawai(postData,this.state.formPegawai.idguru).then((res) => {
-        this.getPostAPI();
-        this.hadleFromClear();
-      });
-  };
-
+  getReviewLembaga = (event) => {
+    let id = event.target.id
+    const config = {headers : {Authorization: `Bearer ` + localStorage.token}}
+    axios.get(RootOnline + '/gapok/'+id,config)
+    .then((result) => {
+      console.log(result)
+      this.props.history.push('/admin/review/'+id);
+    }).catch((err) => {
+      console.log("ini eror :"+err)
+    })
+  }
 
   
   componentDidMount() {
-    // let step = document.getElementsByClassName("go2441762052");
-    // console.log(step)
-    // this.getKreditAPI()
+    this.getLembaga()
   }
 
   render() {
@@ -99,11 +62,23 @@ class Review extends Component {
                   <h3 className="mb-0">Pilih Lembaga</h3>
                 </CardHeader>
                 <CardBody>
-                    <Button block color="primary" size="lg" type="button" onClick={this.getKreditAPI}>PAUD <i className="ni ni-check-bold text-green"></i></Button>
-                    <Button block color="primary" size="lg" type="button">SDIT <i className="ni ni-fat-remove text-red"></i></Button>
-                    <Button block color="primary" size="lg" type="button">SMPIT <i className="ni ni-fat-remove text-red"></i></Button>
-                    <Button block color="primary" size="lg" type="button">SMAIT <i className="ni ni-fat-remove text-red"></i></Button>
-                    <Button block color="primary" size="lg" type="button">STIU DQ <i className="ni ni-fat-remove text-red"></i></Button>
+                    {this.state.post.map((post, index) => {
+                      return (
+                        <Row key={index}>
+                          <Col md={8}>
+                            <Button block color="primary" size="md" id={post.id} type="button" onClick={this.getReviewLembaga} >{post.nama_lembaga} </Button>
+                          </Col>
+                          <Col md={4} className="mb-3">
+                            <Button className="btn-icon btn-2" color="secondary" type="button">
+                              <span className="btn-inner--icon">
+                                <i className="ni ni-check-bold text-green" />
+                                {/* <i className="ni ni-fat-remove text-red" /> */}
+                              </span>
+                            </Button>
+                          </Col>
+                        </Row>
+                      )
+                    })}
                 </CardBody>
               </Card>
             </div>

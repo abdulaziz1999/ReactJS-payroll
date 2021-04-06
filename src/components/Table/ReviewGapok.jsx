@@ -2,10 +2,10 @@
 
 import React from "react";
 import { useState } from "react";
-import { Col, Form, FormGroup , Input,InputGroup, InputGroupAddon,InputGroupText, Row, Table} from "reactstrap";
+import { Button, Col, Form, FormGroup , Input,InputGroup, InputGroupAddon,InputGroupText, Row, Table} from "reactstrap";
 
 
-const TableGapok = ({data,modal,remove}) => {
+const TableGapok = ({data,save}) => {
     // console.log(data)
     const [searchTerm, setSearchTerm] = useState("")
     
@@ -59,18 +59,21 @@ const TableGapok = ({data,modal,remove}) => {
                       return (
                         <tr key={index}>
                           <td><b>{post.nama}</b></td>
-                          <td><b>2020</b></td>
-                          <td><b>VIII B</b></td>
-                          <td><b>125</b></td>
-                          <td><b>12</b></td>
-                          <td><b>PTT</b></td>
-                          <td><b>Rp. 8000.000</b></td>
+                          <td><b>{post.tahunmasuk}</b></td>
+                          <td><b>{post.golongan}</b></td>
+                          <td><b>{post.satuanindex}</b></td>
+                          <td><b>{post.indexruang}</b></td>
+                          <td><b>{post.idstatus}</b></td>
+                          <td><b>{post.gapok}</b></td>
                         </tr>
                       );
                     })}
                   </tbody>
                 </Table>
             </div>
+            <Col className="modal-footer">
+              <Button color="success" className="mt-3" size="md" type="button" onClick={save}>Simpan & Lanjutkan</Button>
+            </Col>
         </div>
     )
 }

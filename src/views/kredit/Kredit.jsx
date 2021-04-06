@@ -18,6 +18,7 @@ import {
 import '../examples/css/Style.css';
 import TableComp from "components/Table/TableKredit";
 import API from '../../service';
+import { RootOnline } from "../../service/Config"
 // import Swal from 'sweetalert2'
 import axios from "axios";
 
@@ -49,7 +50,7 @@ class Kredit extends Component {
 
   getKreditAPI = () => {
     const config = {headers : {Authorization: `Bearer ` + localStorage.token}}
-    axios.get('http://127.0.0.1:8000/api/kredit',config)
+    axios.get(RootOnline + '/kredit',config)
     .then((result) => {
       this.setState({
         post: result.data
@@ -66,7 +67,7 @@ class Kredit extends Component {
       total: this.state.formPegawai.total,
     };
     const config = {headers : {Authorization: `Bearer ` + localStorage.token}}
-    axios.post('http://127.0.0.1:8000/api/kredit',postData, config).then((res) =>{
+    axios.post(RootOnline + '/kredit',postData, config).then((res) =>{
           this.getKreditAPI();
           this.hadleFromClear();
     })

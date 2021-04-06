@@ -4,7 +4,6 @@ table.scroll {
 table.scroll thead {
     display:table;
     width:100%;
-    background-color: salmon;
 }
 table.scroll tbody {
     display:block;
