@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { Component } from "react"
 // import axios from "axios";
 // reactstrap components
 import {
@@ -6,15 +6,17 @@ import {
   CardHeader,
   Container,
   Row,
+  Col,
+  Button,
   CardBody,
-} from "reactstrap";
+} from "reactstrap"
 // core components
-import '../examples/css/Style.css';
-import ReviewGapok from "components/Table/ReviewGapok";
+import '../examples/css/Style.css'
+import ReviewGapok from "components/Table/ReviewGapok"
 // import API from '../../service';
 // import Swal from 'sweetalert2'
-import axios from "axios";
-import { RootOnline } from "service/Config";
+import axios from "axios"
+import { RootOnline } from "service/Config"
 
 class Review extends Component {
   state = {
@@ -23,9 +25,9 @@ class Review extends Component {
   };
 
   getReviewGapok = () => {
-    let URL= this.props.location.pathname;
-    let arr= URL.split('/');
-    let id = arr[3];
+    let URL= this.props.location.pathname
+    let arr= URL.split('/')
+    let id = arr[3]
     const config = {headers : {Authorization: `Bearer ` + localStorage.token}}
     axios.get(RootOnline +'/gapok/'+id ,config).then((result) => {
       this.setState({
@@ -37,21 +39,21 @@ class Review extends Component {
   }
 
   simpanGapok = () => {
-    let URL= this.props.location.pathname;
-    let arr= URL.split('/');
+    let URL= this.props.location.pathname
+    let arr= URL.split('/')
     let id = arr[3];
     const config = {headers : {Authorization: `Bearer ` + localStorage.token}}
     axios.post(RootOnline +'/gapok/'+id ,config).then((result) => {
-      this.props.history.push('/admin/reviewtotal/'+id)
       console.log(result.data)
+      this.props.history.push('/admin/reviewtotal/'+id)
     }).catch((err) => {
       console.log("ini eror : "+err)
     })
   }
 
   getNamaLembaga = () => {
-    let URL= this.props.location.pathname;
-    let arr= URL.split('/');
+    let URL= this.props.location.pathname
+    let arr= URL.split('/')
     let id = arr[3];
     axios.get('https://kepegawaian.dqakses.id/api/lembagaById/'+id).then((result) => {
       this.setState({
@@ -62,10 +64,10 @@ class Review extends Component {
     })
   }
   
-  format = amount => {
+  format = (amount) => {
     return Number(amount)
       .toFixed(2)
-      .replace(/\d(?=(\d{3})+\.)/g, '$&,');
+      .replace(/\d(?=(\d{3})+\.)/g, '$&,')
   };
   
   componentDidMount() {
@@ -74,7 +76,7 @@ class Review extends Component {
   }
 
   render() {
-    let datapost =  this.state.post;
+    let datapost =  this.state.post
     return (
       <>
         <div className="header bg-gradient-info pb-8 pt-5 pt-md-8">   
@@ -90,6 +92,9 @@ class Review extends Component {
                 <CardBody>
                  <ReviewGapok data={datapost} save={this.simpanGapok} />
                 </CardBody>
+                <Col className="modal-footer">
+                  <Button color="success" className="mt-3" size="md" type="button" onClick={this.simpanGapok}>Simpan & Lanjutkan</Button>
+                </Col>
               </Card>
             </div>
           </Row>

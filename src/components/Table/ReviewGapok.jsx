@@ -6,7 +6,7 @@ import { Button, Col, Form, FormGroup , Input,InputGroup, InputGroupAddon,InputG
 
 
 const TableGapok = ({data,save}) => {
-    // console.log(data)
+    console.log(save)
     const [searchTerm, setSearchTerm] = useState("")
     
     return (
@@ -71,9 +71,6 @@ const TableGapok = ({data,save}) => {
                   </tbody>
                 </Table>
             </div>
-            <Col className="modal-footer">
-              <Button color="success" className="mt-3" size="md" type="button" onClick={save}>Simpan & Lanjutkan</Button>
-            </Col>
         </div>
     )
 }

@@ -1,5 +1,4 @@
-import React, { Component } from "react";
-// import axios from "axios";
+import React, { Component } from "react"
 // reactstrap components
 import {
   Card,
@@ -11,13 +10,12 @@ import {
   Col
 } from "reactstrap";
 // core components
-import '../examples/css/Style.css';
-// import API from '../../service';
+import '../examples/css/Style.css'
 // import Swal from 'sweetalert2'
-import axios from "axios";
-import { RootOnline } from "service/Config";
+import axios from "axios"
+import { RootOnline } from "service/Config"
 
-class Review extends Component {
+class Unit extends Component {
   state = {
     post: [],
     isUpdate: false,
@@ -34,10 +32,10 @@ class Review extends Component {
   getReviewLembaga = (event) => {
     let id = event.target.id
     const config = {headers : {Authorization: `Bearer ` + localStorage.token}}
-    axios.get(RootOnline + '/gapok/'+id,config)
+    axios.get(RootOnline + '/gapok/' +id,config)
     .then((result) => {
       console.log(result)
-      this.props.history.push('/admin/review/'+id);
+      this.props.history.push('/admin/review/'+id)
     }).catch((err) => {
       console.log("ini eror :"+err)
     })
@@ -89,4 +87,4 @@ class Review extends Component {
   }
 }
 
-export default Review;
+export default Unit;
