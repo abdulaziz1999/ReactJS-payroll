@@ -1,23 +1,11 @@
 import React, { Component } from "react";
 // reactstrap components
-import {
-  Card,
-  CardHeader,
-  Modal,
-  Button,
-  Container,
-  FormGroup,
-  Form,
-  Input,
-  Col,
-  Row,
-  CardBody,
-} from "reactstrap";
+import { Card, CardHeader, Button, Container, Col, Row, CardBody} from "reactstrap";
 // core components
 import '../examples/css/Style.css';
-import TableUser from "components/Table/TableUser";
 import API from '../../service';
-// import ModalPop from "components/ModalPop";
+import TableUser from "components/Table/TableUser";
+import ModalUser from "components/Modal/ModalUser";
 
 class User extends Component {
   state = {
@@ -79,7 +67,6 @@ class User extends Component {
       {
         formUser: formUserNew,
       })
-      console.log(this.state.formUser)
   }
 
   handleSimpan = (modal) => {
@@ -102,12 +89,6 @@ class User extends Component {
       },
     })
   }
-
-  format = amount => {
-    return Number(amount)
-      .toFixed(2)
-      .replace(/\d(?=(\d{3})+\.)/g, '$&,');
-  };
 
   toggleModal = (state, post,e) => {
       this.setState({
@@ -137,27 +118,18 @@ class User extends Component {
     this.setState({ [state]: !this.state[state]})
   }
 
+  format = amount => {
+    return Number(amount)
+      .toFixed(2)
+      .replace(/\d(?=(\d{3})+\.)/g, '$&,');
+  };
+
   componentDidMount() {
     this.getDataUser()
   }
 
   render() {
-    const datapost = this.state.post
-    const formdata = this.state.formUser
-    const status = this.state.isUpdate
-    let nama 
-    let role 
-    let email
-    if(formdata){
-      nama = formdata.name
-      role = formdata.role
-      email = formdata.email
-    }else{
-      nama = ""
-      role = ""
-      email = ""
-    }
-
+    const datapost = this.state.post  
     return (
       <>
         <div className="header bg-gradient-info pb-8 pt-5 pt-md-8">   
@@ -173,12 +145,7 @@ class User extends Component {
                     <h3 className="mb-0">Data User</h3>
                   </Col>
                   <Col md="6" sm="6" className="text-right">
-                  <Button
-                    color="success"
-                    type="button"
-                    size="sm"
-                    onClick={() => this.toggleModalAdd("exampleModal")}
-                    >
+                  <Button color="success" type="button" size="sm" onClick={() => this.toggleModalAdd("exampleModal")} >
                     <i className="fa fa-plus"></i> Create
                     </Button>
                   </Col>
@@ -192,114 +159,15 @@ class User extends Component {
           </Row>
         </Container>
 
-
-        <Modal
-          className="modal-dialog-centered"
-          isOpen={this.state.exampleModal}
-          toggle={() => this.toggleModal("exampleModal")}
-          size="lg">
-          <div className="modal-header">
-            <h5 className="modal-title" id="exampleModalLabel">
-              {status === true ? 'Update Data User' : 'Tambah Data User'}
-            </h5>
-            <button
-              aria-label="Close"
-              className="close"
-              data-dismiss="modal"
-              type="button"
-              onClick={() => this.toggleClose("exampleModal")}
-            >
-              <span aria-hidden={true}>×</span>
-            </button>
-          </div>
-          <div className="modal-body">
-            <Form>
-              <Row>
-                <Col md="6">
-                  <FormGroup>
-                    <label>Nama User :</label>
-                    <Input
-                      readOnly
-                      placeholder="Nama"
-                      name="name"
-                      type="text"
-                      onChange={this.handleUbah}
-                      value={nama}
-                    />
-                  </FormGroup>
-                </Col>
-                <Col md="6">
-                  <FormGroup>
-                  <label>Role :</label>
-                    <Input
-                      placeholder="Role"
-                      name="role"
-                      type="text"
-                      onChange={this.handleUbah}
-                      value={role}
-                    />
-                  </FormGroup>
-                </Col>
-              </Row>
-              <Row>
-                <Col md="6">
-                  <FormGroup>
-                  <label>Email :</label>
-                    <Input
-                      placeholder="Email"
-                      name="email"
-                      type="text"
-                      onChange={this.handleUbah}
-                      value={email}
-                    />
-                  </FormGroup>
-                </Col>
-                {!status ?
-                  <Col md="6">
-                  <FormGroup>
-                  <label>Password :</label>
-                    <Input
-                      placeholder="Password"
-                      name="password"
-                      type="text"
-                      id="passwordUser"
-                    />
-                  </FormGroup>
-                </Col>
-                :
-                ""
-                }
-
-              </Row>
-            </Form>
-          </div>
-          <div className="modal-footer">
-            <Button
-              color="danger"
-              data-dismiss="modal"
-              type="button"
-              size="sm"
-              onClick={() => this.toggleClose("exampleModal")}
-            >
-              Close
-            </Button>
-            <Button
-              color="info"
-              type="button"
-              size="sm"
-              onClick={() => this.handleSimpan("exampleModal")}
-            >
-              <i className="ni ni-air-baloon"></i> Update
-            </Button>
-          </div>
-        </Modal>
-        {/* <ModalPop
-        modalClouse={this.toggleClose()}
-        modal={this.toggleModal()}
-        save={this.handleSimpan()}
-        ubah={this.handleUbah()}
-        formPegawai={this.state.formPegawai}
-        /> */}
+        <ModalUser 
+        data={this.state.formUser} 
+        stateExample={this.state.exampleModal} 
+        modalBuka={this.toggleModal} 
+        modalTutup={this.toggleClose} 
+        updateField={this.handleUbah} 
+        save={this.handleSimpan} 
+        status={this.state.isUpdate}
+        />
       </>
     );
   }

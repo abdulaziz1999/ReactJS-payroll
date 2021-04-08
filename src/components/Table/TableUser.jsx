@@ -2,11 +2,10 @@
 
 import React from "react";
 import { useState } from "react";
-import { Col, Form, FormGroup , Input,InputGroup, InputGroupAddon,InputGroupText, Row, Table,Button} from "reactstrap";
+import { Col, Form, FormGroup , Input,InputGroup, InputGroupAddon,InputGroupText, Row, Table,Button, Badge} from "reactstrap";
 
 
 const TableUser = ({data,modal,remove}) => {
-    // console.log(data)
     const [searchTerm, setSearchTerm] = useState("")
     
     return (
@@ -55,7 +54,11 @@ const TableUser = ({data,modal,remove}) => {
                       return (
                         <tr key={index} className="text-left">
                           <td>{post.name}</td>
-                          <td>{post.role}</td>
+                          <td>
+                          <Badge color="success" href="#" onClick={e => e.preventDefault()}>
+                            <strong>{post.role}</strong>
+                          </Badge>
+                          </td>
                           <td>{post.email}</td>
                           <td>
                             <div className="btn-group">

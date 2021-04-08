@@ -1,11 +1,12 @@
 import Index from "views/Index.js";
 import Kredit from "views/kredit/Kredit";
-import Insentif from "views/insentif/Insentif";
+import Cicilan from "views/cicilan/Cicilan";
 import User from "views/user/User";
 import Cutoff from "views/cutoff/CutOff";
 import Unit from "views/unit/Unit";
 import Review from "views/review/Review";
 import ReviewTotal from "views/reviewtotal/Reviewtotal";
+import ReviewInsentif from "views/insentif/Insentif";
 
 var routes = [
   {
@@ -44,23 +45,37 @@ var routes = [
     layout: "/admin",
   },
   {
-    path: "/insentif",
+    path: "/reviewinsentif",
     name: "Review Insentif - 5",
-    icon: "ni ni-credit-card text-blue",
-    component: Insentif,
+    icon: "ni ni-single-copy-04 text-blue",
+    component: ReviewInsentif,
     layout: "/admin",
   },
   {
     path: "/kredit",
-    name: "Kredit",
-    icon: "ni ni-credit-card text-blue",
+    name: "Kredit - DQ Mart",
+    icon: "ni ni-credit-card text-red",
+    component: Kredit,
+    layout: "/admin",
+  },
+  {
+    path: "/cicilan",
+    name: "Cicilan - Keuangan",
+    icon: "ni ni-credit-card text-orange",
+    component: Cicilan,
+    layout: "/admin",
+  },
+  {
+    path: "/insentif",
+    name: "Insentif - Unit",
+    icon: "ni ni-credit-card text-green",
     component: Kredit,
     layout: "/admin",
   },
   {
     path: "/user",
-    name: "User",
-    icon: "ni ni-circle-08 text-blue",
+    name: "Pengguna",
+    icon: "ni ni-circle-08 text-orange",
     component: User,
     layout: "/admin",
   },

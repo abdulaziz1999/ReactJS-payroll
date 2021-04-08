@@ -236,6 +236,37 @@ const Sidebar = (props) => {
           <Nav navbar>{createLinks(routes)}</Nav>
           {/* Divider */}
           <hr className="my-3" />
+          {/* Heading */}
+          <h6 className="navbar-heading text-muted">Master Data</h6>
+          {/* Navigation */}
+          <Nav className="mb-md-3" navbar>
+            <NavItem>
+              <NavLink href="#">
+                <i className="ni ni-spaceship te" />
+                Index ruang
+              </NavLink>
+            </NavItem>
+            <NavItem>
+              <NavLink href="#">
+                <i className="ni ni-single-02" />
+                Sinkron Data Pegawai
+              </NavLink>
+            </NavItem>
+            <NavItem>
+              <NavLink href="#">
+                <i className="ni ni-ui-04" />
+                Input Data Insentif
+              </NavLink>
+            </NavItem>
+          </Nav>
+          {/* <Nav className="mb-md-3" navbar>
+            <NavItem className="active-pro active">
+              <NavLink href="#">
+                <i className="ni ni-spaceship" />
+                Upgrade to PRO
+              </NavLink>
+            </NavItem>
+          </Nav> */}
         </Collapse>
       </Container>
     </Navbar>
