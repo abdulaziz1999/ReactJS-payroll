@@ -2,7 +2,18 @@
 
 import React from "react";
 import { useState } from "react";
-import { Col, Form, FormGroup , Input,InputGroup, InputGroupAddon,InputGroupText, Row, Table, Badge,Button} from "reactstrap";
+import { 
+  Col, 
+  Form, 
+  FormGroup , 
+  Input,
+  InputGroup, 
+  InputGroupAddon,
+  InputGroupText, 
+  Row, 
+  Table, 
+  Badge,
+  Button} from "reactstrap";
 
 
 const TableKredit = ({data,modal,remove}) => {

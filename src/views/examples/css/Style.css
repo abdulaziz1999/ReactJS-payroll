@@ -27,6 +27,8 @@ table.scroll th, td {
     max-height:600px;
 }
 
-.table-responsive thead th { position: sticky; top: 0; }
+.table-responsive thead th { position: sticky; top: 0; border: 2px solid black; font-weight: bold; }
+
+
 
 

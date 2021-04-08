@@ -34,7 +34,7 @@ const TableUser = ({data,modal,remove}) => {
                     </Col>
                 </Row>
             </Form>
-            <Table className="align-items-center table-flush scroll" responsive>
+            <Table className="align-items-center table-flush" responsive>
                   <thead className="thead-light">
                     <tr >
                       <th scope="col">Nama</th>
@@ -63,9 +63,7 @@ const TableUser = ({data,modal,remove}) => {
                                 color="info"
                                 type="button"
                                 size="sm"
-                                onClick={() =>
-                                  modal("exampleModal", post)
-                                }
+                                onClick={() => modal("exampleModal", post)}
                               >
                                 <i className="ni ni-ruler-pencil"></i> Update
                               </Button>

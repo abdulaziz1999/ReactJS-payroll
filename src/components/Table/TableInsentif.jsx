@@ -12,11 +12,11 @@ import {
   InputGroupText,
   Row,
   Table,
-  Badge,
-  Button,
+  // Badge,
+  // Button,
 } from "reactstrap";
 
-const TableInsentif = ({ data, modal, remove }) => {
+const TableInsentif = ({ data, insentif, remove }) => {
   // console.log(data)
   const [searchTerm, setSearchTerm] = useState("");
 
@@ -47,15 +47,30 @@ const TableInsentif = ({ data, modal, remove }) => {
       </Form>
       <div className="table-responsive">
         <Table
-          className="align-items-center scroll table-fixed"
+          className="align-items-center table-fixed table-bordered sticky-table"
           responsive
         >
           <thead className="thead-light">
             <tr>
-              <th scope="col">Nama Pegawai</th>
-              <th scope="col">Kredit</th>
-              <th scope="col">Act</th>
+              <th scope="col" rowSpan={3}>Nama Pegawai</th>
+              {/* <th className="text-center" scope="col" colSpan={5} >Insentif Rutin</th> */}
+              {insentif.map((row, index) => {
+                  return(
+                    <th key={index} scope="col" rowSpan={3}>{row.insentif}</th>
+                  )
+              })}
+              <th scope="col" rowSpan={3}>Total</th>
             </tr>
+            {/* <tr>
+              <th className="text-center" scope="col" colSpan={5} >Nominal</th>
+            </tr>
+            <tr>
+              <th scope="col" >Eskul</th>
+              <th scope="col" >Bimbel</th>
+              <th scope="col" >Pramuka</th>
+              <th scope="col" >Pendampingan</th>
+              <th scope="col" >Ujian Tahsin</th>
+            </tr> */}
           </thead>
           <tbody>
             {data
@@ -70,38 +85,20 @@ const TableInsentif = ({ data, modal, remove }) => {
                 return "";
               })
               .map((post, index) => {
+                var elements=[];
+                for(var i=0;i<post.insentif.length;i++){
+                  elements.push(<td>{post.insentif[i]}</td>);
+                }
                 return (
                   <tr key={index}>
                     <td>{post.nama}</td>
-                    <td>
-                      <Badge color="" className="badge-dot">
-                        <i className="bg-info" />
-                        <b>
-                          {post.kredit != null ? "Rp. " + post.kredit : "-"}
-                        </b>
-                      </Badge>
-                    </td>
-                    <td>
-                      <div className="btn-group">
-                        <Button
-                          color="info"
-                          type="button"
-                          size="sm"
-                          onClick={() => modal("exampleModal", post)}
-                        >
-                          <i className="fa fa-plus"></i> Update
-                        </Button>
-                        &nbsp;
-                        <Button
-                          color="danger"
-                          type="button"
-                          size="sm"
-                          onClick={() => remove(post.id)}
-                        >
-                          <i className="fa fa-trash"></i> Delete
-                        </Button>
-                      </div>
-                    </td>
+                    {/* <td>1</td>
+                    <td>2</td>
+                    <td>3</td>
+                    <td>4</td>
+                    <td>5</td> */}
+                    {elements}
+                    <td>{post.totalinsentif}</td>
                   </tr>
                 );
               })}

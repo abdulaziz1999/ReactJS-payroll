@@ -55,7 +55,7 @@ class Kredit extends Component {
       this.setState({
         post: result.data
       });
-      console.log(result.data[2]['nama'])
+      // console.log(result.data[2]['nama'])
     }).catch((err) => {
       console.log("ini eror :"+err)
   })
@@ -90,7 +90,6 @@ class Kredit extends Component {
   };
 
   handleRemove = (data) => {
-    console.log(data);
     API.deletePegawai(data).then((res) => {
       this.getPostAPI();
     });
@@ -106,10 +105,6 @@ class Kredit extends Component {
 
   hadleUbah = (event) => {
     let formPegawaiNew = { ...this.state.formPegawai };
-    let timestamp = new Date().getTime();
-    if (!this.state.isUpdate) {
-      formPegawaiNew["id"] = timestamp;
-    }
     formPegawaiNew[event.target.name] = event.target.value;
     this.setState(
       {

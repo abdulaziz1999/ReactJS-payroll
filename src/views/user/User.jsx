@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import axios from "axios";
 // reactstrap components
 import {
   Card,
@@ -18,7 +17,6 @@ import {
 import '../examples/css/Style.css';
 import TableUser from "components/Table/TableUser";
 import API from '../../service';
-import { RootOnline } from "service/Config";
 // import ModalPop from "components/ModalPop";
 
 class User extends Component {
@@ -28,79 +26,73 @@ class User extends Component {
       id: "",
       name: "",
       role: "",
-      email: ""
+      email: "",
     },
     isUpdate: false,
-  };
+  }
 
-  getUserAPI = () => {
-    const config = {
-      headers : {
-        Authorization: `Bearer ` + localStorage.token 
-      }
+  getDataUser = () => {
+      API.getDataUser().then((res) => {
+        this.setState({
+          post: res
+        })
+      })
+  }
+
+  putDataUser = () => {
+    API.putDataUser(this.state.formUser).then((res) => {
+        this.getDataUser()
+        this.handleFromClear()
+      })
+  }
+
+  postDataUser = () => {
+    let data = {
+      role: this.state.formUser.role,
+      email: this.state.formUser.email,
+      password: document.getElementById("passwordUser").value
     }
-    axios.get(RootOnline + '/user',config).then((result) => {
-      this.setState({
-        post: result.data
-      });
-    }).catch((err) => {
-      console.log("ini eror :"+err)
-  })
-}
-
-  postDataToAPI = () => {
-    API.postPegawai(this.state.formPegawai).then((res) => {
-        this.getPostAPI();
-        this.hadleFromClear();
-      });
-  };
-
-  putDataToAPI = () => {
-    API.putPegawai(this.state.formPegawai,this.state.formPegawai.id).then((res) => {
-        this.getPostAPI();
-        this.hadleFromClear();
-      });
-  };
+    API.postDataUser(data).then((res) => {
+      this.getDataUser()
+    })
+  }
 
   handleRemove = (data) => {
-    console.log(data);
-    API.deletePegawai(data).then((res) => {
-      this.getPostAPI();
-    });
-  };
+    console.log(data)
+    API.deleteUser(data).then((res) => {
+      this.getDataUser()
+    })
+  }
 
   handleUpdate = (data) => {
-    console.log(data);
+    console.log(data)
     this.setState({
       formUser: data,
       isUpdate: true,
-    });
-  };
+    })
+  }
 
-  hadleUbah = (event) => {
-    let formPegawaiNew = { ...this.state.formPegawai };
-    let timestamp = new Date().getTime();
-    if (!this.state.isUpdate) {
-      formPegawaiNew["id"] = timestamp;
-    }
-    formPegawaiNew[event.target.name] = event.target.value;
+  handleUbah = (event) => {
+    let formUserNew = { ...this.state.formUser }
+    formUserNew[event.target.name] = event.target.value
     this.setState(
       {
-        formPegawai: formPegawaiNew,
-      }
-    );
-  };
+        formUser: formUserNew,
+      })
+      console.log(this.state.formUser)
+  }
 
   handleSimpan = (modal) => {
     if (this.state.isUpdate) {
-      this.putDataToAPI();
-      this.toggleClose(modal);
+      this.putDataUser()
+      this.toggleClose(modal)
     } else {
-      this.postDataToAPI();
+      this.postDataUser()
+      this.toggleClose(modal)
     }
-  };
+  }
 
-  hadleFromClear = () => {
+  handleFromClear = () => {
     this.setState({
       isUpdate: false,
       formUser: {
@@ -108,8 +100,8 @@ class User extends Component {
         role: "",
         email: ""
       },
-    });
-  };
+    })
+  }
 
   format = amount => {
     return Number(amount)
@@ -118,44 +110,50 @@ class User extends Component {
   };
 
   toggleModal = (state, post,e) => {
+      this.setState({
+        exampleModal: !this.state[state],
+      });
+      this.setState({
+        formUser: post,
+        isUpdate: true,
+      },(err) => {
+        console.log('error : ', err)
+    })
+  }
+
+  toggleModalAdd = (state, e) => {
     this.setState({
       exampleModal: !this.state[state],
     });
-    
+    this.handleFromClear()
     this.setState({
-      formUser: post,
-      isUpdate: true,
-    },
-    (err) => {
+      isUpdate: false,
+    },(err) => {
       console.log('error : ', err)
-  });
-  
-  };
+    })
+  }
 
   toggleClose = (state) => {
-    this.setState({
-      [state]: !this.state[state],
-    });
-  };
+    this.setState({ [state]: !this.state[state]})
+  }
 
-  
   componentDidMount() {
-    this.getUserAPI()
-    
+    this.getDataUser()
   }
 
   render() {
     const datapost = this.state.post
     const formdata = this.state.formUser
-    let name
-    let role
+    const status = this.state.isUpdate
+    let nama 
+    let role 
     let email
     if(formdata){
-      name = formdata.name
+      nama = formdata.name
       role = formdata.role
       email = formdata.email
     }else{
-      name = ""
+      nama = ""
       role = ""
       email = ""
     }
@@ -179,7 +177,7 @@ class User extends Component {
                     color="success"
                     type="button"
                     size="sm"
-                    // onClick={() => ()}
+                    onClick={() => this.toggleModalAdd("exampleModal")}
                     >
                     <i className="fa fa-plus"></i> Create
                     </Button>
@@ -202,7 +200,7 @@ class User extends Component {
           size="lg">
           <div className="modal-header">
             <h5 className="modal-title" id="exampleModalLabel">
-              Update User
+              {status === true ? 'Update Data User' : 'Tambah Data User'}
             </h5>
             <button
               aria-label="Close"
@@ -221,12 +219,12 @@ class User extends Component {
                   <FormGroup>
                     <label>Nama User :</label>
                     <Input
+                      readOnly
+                      placeholder="Nama"
                       name="name"
-                      id="exampleFormControlInput1"
-                      placeholder="nama"
-                      value={name}
-                      onChange={this.hadleUbah}
                       type="text"
+                      onChange={this.handleUbah}
+                      value={nama}
                     />
                   </FormGroup>
                 </Col>
@@ -234,28 +232,44 @@ class User extends Component {
                   <FormGroup>
                   <label>Role :</label>
                     <Input
-                      placeholder="Regular"
+                      placeholder="Role"
                       name="role"
                       type="text"
-                      onChange={this.hadleUbah}
+                      onChange={this.handleUbah}
                       value={role}
                     />
                   </FormGroup>
                 </Col>
               </Row>
               <Row>
-                <Col md="12">
+                <Col md="6">
                   <FormGroup>
                   <label>Email :</label>
                     <Input
-                      placeholder="Regular"
+                      placeholder="Email"
                       name="email"
                       type="text"
-                      onChange={this.hadleUbah}
+                      onChange={this.handleUbah}
                       value={email}
                     />
                   </FormGroup>
                 </Col>
+                {!status ?
+                  <Col md="6">
+                  <FormGroup>
+                  <label>Password :</label>
+                    <Input
+                      placeholder="Password"
+                      name="password"
+                      type="text"
+                      id="passwordUser"
+                    />
+                  </FormGroup>
+                </Col>
+                :
+                ""
+                }
+
               </Row>
             </Form>
           </div>
@@ -283,7 +297,7 @@ class User extends Component {
         modalClouse={this.toggleClose()}
         modal={this.toggleModal()}
         save={this.handleSimpan()}
-        ubah={this.hadleUbah()}
+        ubah={this.handleUbah()}
         formPegawai={this.state.formPegawai}
         /> */}
       </>

@@ -19,6 +19,7 @@ import ArrayInsert from "views/examples/Tes.js"
 import Akses from "views/Dash/Akses"
 import Unit from "views/review/Review"
 import Summary from "views/reviewtotal/Reviewtotal"
+import Insentif from "views/insentif/Insentif"
 
 ReactDOM.render(
   <BrowserRouter>
@@ -26,19 +27,15 @@ ReactDOM.render(
       <ProtectedRoute path="/admin" component={AdminLayout} />
       <ProtectedRoute path="/dqmart" component={DqmartLayout} />
       <ProtectedRoute path="/keuangan" component={KeuangantLayout} />
-      <Route
-        path="/auth"
-        render={(props) =>
-          !getToken() ? ( <AuthLayout {...props} />) : ( <Redirect to={{ pathname: "/akses" }} />)
-        }
-      />
+      <Route path="/auth" render={(props) => !getToken() ? ( <AuthLayout {...props} />) : ( <Redirect to={{ pathname: "/akses" }} />)}/>
+      <Route path="/akses" component={Akses}/>
+      <Route path="/admin/review/:id" component={Unit}/>
+      <Route path="/admin/reviewtotal/:id" component={Summary}/>
+      <Route path="/admin/insentif/:id" component={Insentif}/>
       <Route path="/dash" component={Dash}/>
       <Route path="/icon" component={Icons}/>
       <Route path="/step" component={Step}/>
       <Route path="/tes" component={ArrayInsert}/>
-      <Route path="/akses" component={Akses}/>
-      <Route path="/admin/review/:idlembaga" component={Unit}/>
-      <Route path="/admin/reviewtotal/:idlembaga" component={Summary}/>
       <Redirect from="/" to="/auth/login" />
     </Switch>
   </BrowserRouter>,

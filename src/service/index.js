@@ -3,27 +3,24 @@ import Post from './Post'
 import Put from './Put'
 import Delete from './Delete'
 
-//POST
-const postPegawai = (data) => Post('pegawai',false,data)
+//API User
+const getDataUser = () => Get('user',true)
+const postDataUser = (data) => Post('user',true,data)
+const putDataUser = (data) => Put(`user`,true,data)
+const deleteUser = (id) => Delete(`user/${id}`,true)
 
-//PUT
 const kreditPegawai = (config) => Get('kredit',true,config)
-const putPegawai = (data,id) => Put(`pegawai/${id}`,false,data)
-
-//DELETE
-const deletePegawai = (id) => Delete(`pegawai/${id}`,false)
-
-//GET
-const getPegawai = () => Get('pegawai?_sort=id&_order=desc',false)
-// const postKredit = (config) => Get('kredit',true,config)
+const getPegawai = () => Get('kredit',true)
 
 const API = {
+    //API User
+    getDataUser,
+    postDataUser,
+    putDataUser,
+    deleteUser,
+
     getPegawai,
-    postPegawai,
-    putPegawai,
-    deletePegawai,
     kreditPegawai,
-    // postKredit
 }
 
 export default API
