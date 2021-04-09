@@ -26,10 +26,25 @@ class Insentif extends Component {
     post: [],
     insentif: [],
     insentifAll:[],
+    namaLembaga: "",
     isUpdate: false,
     searchTerm: "",
     idinsentif: ['1','2','3']
   };
+
+  getNamaLembaga = () => {
+    let URL= this.props.location.pathname
+    let arr= URL.split('/')
+    let id = arr[3];
+    delete axios.defaults.headers.common["Authorization"]
+    axios.get('https://kepegawaian.dqakses.id/api/lembagaById/'+id).then((result) => {
+      this.setState({
+        namaLembaga : result.data[0]['nama_lembaga']
+      })
+    }).catch((err) => {
+      console.log("ini eror : "+err + this.state)
+    })
+  }
 
   getDataInsentif = async() => {
     let URL= this.props.location.pathname;
@@ -132,6 +147,7 @@ class Insentif extends Component {
 
 
   componentDidMount() {
+    this.getNamaLembaga()
     this.getInsentif()
     this.getDataInsentif()
     let tableHeaderTop = document.querySelector('.sticky-table thead').getBoundingClientRect().top;
@@ -157,7 +173,7 @@ class Insentif extends Component {
                 <CardHeader className="border-0">
                   <Row>
                     <Col md="6" sm="6" className="text-left">
-                      <h3 className="mb-0">Data Insentif Pegawai</h3>
+                      <h3 className="mb-0">Data Insentif Pegawai Lembaga - {this.state.namaLembaga}</h3>
                     </Col>
                     <Col md="6" sm="6" className="text-right">
                       <Button

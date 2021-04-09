@@ -55,6 +55,7 @@ class ReviewTotal extends Component {
     let URL= this.props.location.pathname
     let arr= URL.split('/')
     let id = arr[3];
+    delete axios.defaults.headers.common["Authorization"]
     axios.get('https://kepegawaian.dqakses.id/api/lembagaById/'+id).then((result) => {
       this.setState({
         namaLembaga : result.data[0]['nama_lembaga']

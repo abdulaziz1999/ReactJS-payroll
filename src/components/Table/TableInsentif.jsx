@@ -46,10 +46,7 @@ const TableInsentif = ({ data, insentif, remove }) => {
         </Row>
       </Form>
       <div className="table-responsive">
-        <Table
-          className="align-items-center table-fixed table-bordered sticky-table"
-          responsive
-        >
+        <Table className="align-items-center table-fixed sticky-table" responsive >
           <thead className="thead-light">
             <tr>
               <th scope="col" rowSpan={3}>Nama Pegawai</th>

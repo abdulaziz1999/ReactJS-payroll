@@ -5,7 +5,7 @@ import { useState } from "react";
 import { Col, Form, FormGroup , Input,InputGroup, InputGroupAddon,InputGroupText, Row, Table} from "reactstrap";
 
 
-const TableGapok = ({data,save}) => {
+const TableGapok = ({data,format}) => {
     // console.log(save)
     const [searchTerm, setSearchTerm] = useState("")
     
@@ -65,7 +65,7 @@ const TableGapok = ({data,save}) => {
                           <td><b>{post.satuanindex}</b></td>
                           <td><b>{post.indexruang}</b></td>
                           <td><b>{post.idstatus}</b></td>
-                          <td><b>{post.gapok}</b></td>
+                          <td><b>{format(post.gapok)}</b></td>
                           <td><b>0</b></td>
                         </tr>
                       );

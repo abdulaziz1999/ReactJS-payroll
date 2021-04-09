@@ -49,6 +49,7 @@ class Review extends Component {
     let URL= this.props.location.pathname
     let arr= URL.split('/')
     let id = arr[3];
+    delete axios.defaults.headers.common["Authorization"]
     axios.get('https://kepegawaian.dqakses.id/api/lembagaById/'+id).then((result) => {
       this.setState({
         namaLembaga : result.data[0]['nama_lembaga']
@@ -68,9 +69,7 @@ class Review extends Component {
   };
   
   format = (amount) => {
-    return Number(amount)
-      .toFixed(2)
-      .replace(/\d(?=(\d{3})+\.)/g, '$&,')
+    return Number(amount).toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,')
   };
 
   toggleModal = (state) => {
@@ -122,7 +121,7 @@ class Review extends Component {
                   </Row>
                 </CardHeader>
                 <CardBody>
-                 <ReviewGapok data={datapost} save={this.simpanGapok} />
+                 <ReviewGapok data={datapost} save={this.simpanGapok} format={this.format}/>
                 </CardBody>
                 <Col className="modal-footer">
                   <Button color="success" className="mt-3" size="md" type="button" onClick={this.simpanGapok}>Simpan & Lanjutkan</Button>

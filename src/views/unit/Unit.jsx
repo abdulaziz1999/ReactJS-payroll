@@ -22,6 +22,7 @@ class Unit extends Component {
   };
  
   getLembaga = async() => {
+    delete axios.defaults.headers.common["Authorization"]
     const res = await axios.get('https://kepegawaian.dqakses.id/api/lembaga')
       this.setState({
         post : res.data
