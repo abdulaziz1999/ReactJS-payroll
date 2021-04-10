@@ -52,7 +52,6 @@ class ReviewTotal extends Component {
       this.setState({
         post: result.data
       });
-      // console.log(result.data)
     }catch(err) {
       console.log("ini eror :"+err)
     }

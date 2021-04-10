@@ -53,12 +53,36 @@ class Review extends Component {
     let URL= this.props.location.pathname
     let arr= URL.split('/')
     let id = arr[3];
+    let timerInterval
     axios.defaults.headers.common['Authorization'] = `Bearer ` + localStorage.token
     axios.post(RootOnline +'/gapok/'+id ).then((result) => {
       Swal.fire(
-        'Success!',
-        'Data Gapok <br> Berhasil Disimpan.',
-        'success'
+        {
+          title: 'Sedang Mengambil Data Kehadiran',
+        html: 'I will close in <b></b> milliseconds.',
+        timer: 45000,
+        timerProgressBar: true,
+        didOpen: () => {
+          Swal.showLoading()
+          timerInterval = setInterval(() => {
+            const content = Swal.getContent()
+            if (content) {
+              const b = content.querySelector('b')
+              if (b) {
+                b.textContent = Swal.getTimerLeft()
+              }
+            }
+          }, 100)
+        },
+        willClose: () => {
+          clearInterval(timerInterval)
+        }
+      }).then((result) => {
+        /* Read more about handling dismissals below */
+        if (result.dismiss === Swal.DismissReason.timer) {
+          console.log('I was closed by the timer')
+        }
+        }
     )
       this.props.history.push('/admin/reviewtotal/'+id)
     }).catch((err) => {
