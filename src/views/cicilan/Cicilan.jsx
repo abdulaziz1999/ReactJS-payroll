@@ -1,4 +1,5 @@
-import React, { Component, Fragment } from "react";
+import React, { Component } from "react";
+// import axios from "axios";
 // reactstrap components
 import {
   Card,
@@ -15,121 +16,124 @@ import {
 } from "reactstrap";
 // core components
 import '../examples/css/Style.css';
-import TableUser from "components/Table/TableUser";
+import TableComp from "components/Table/TableKredit";
 import API from '../../service';
-// import ModalPop from "components/ModalPop";
+import { RootOnline } from "../../service/Config"
+// import Swal from 'sweetalert2'
+import axios from "axios";
 
-class User extends Component {
+class Kredit extends Component {
   state = {
     post: [],
-    formUser: {
+    formPegawai: {
       id: "",
-      name: "",
-      role: "",
-      email: "",
+      idpegawai: "",
+      nama: "",
+      nama_lembaga: "",
+      total: "",
+      idstatus: "",
+    },
+    formupdate:{
+      idpegawai: "",
+      total: ""
     },
     isUpdate: false,
-  }
-
-  getDataUser = () => {
-      API.getDataUser().then((res) => {
+  };
+ 
+  getPostAPI = () => {
+    API.getPegawai().then((result) => {
         this.setState({
-          post: res
-        })
-      })
-  }
+          post: result
+        });
+      });
+  };
 
-  putDataUser = () => {
-    API.putDataUser(this.state.formUser).then((res) => {
-        this.getDataUser()
-        this.handleFromClear()
-      })
-  }
+  getKreditAPI = () => {
+    const config = {headers : {Authorization: `Bearer ` + localStorage.token}}
+    axios.get(RootOnline + '/kredit',config)
+    .then((result) => {
+      this.setState({
+        post: result.data
+      });
+      // console.log(result.data[2]['nama'])
+    }).catch((err) => {
+      console.log("ini eror :"+err)
+  })
+}
 
-  postDataUser = () => {
-    let data = {
-      role: this.state.formUser.role,
-      email: this.state.formUser.email,
-      password: document.getElementById("passwordUser").value
-    }
-    API.postDataUser(data).then((res) => {
-      this.getDataUser()
+  postDataToAPI = () => {
+    const postData = {
+      idpegawai: this.state.formPegawai.idguru,
+      total: this.state.formPegawai.total,
+    };
+    const config = {headers : {Authorization: `Bearer ` + localStorage.token}}
+    axios.post(RootOnline + '/kredit',postData, config).then((res) =>{
+          this.getKreditAPI();
+          this.hadleFromClear();
+        //   Swal.fire(
+        //     'Success!',
+        //     'User '+res.data['nama']+' <br> Tes.',
+        //     'success'
+        // )
     })
-  }
+  };
+
+  putDataToAPI = () => {
+    const postData = {
+      idpegawai: this.state.formPegawai.idguru,
+      total: this.state.formPegawai.total,
+    };
+    API.putPegawai(postData,this.state.formPegawai.idguru).then((res) => {
+        this.getPostAPI();
+        this.hadleFromClear();
+      });
+  };
 
   handleRemove = (data) => {
-    console.log(data)
-    API.deleteUser(data).then((res) => {
-      this.getDataUser()
-    })
-  }
+    API.deletePegawai(data).then((res) => {
+      this.getPostAPI();
+    });
+  };
 
   handleUpdate = (data) => {
-    console.log(data)
+    console.log(data);
     this.setState({
-      formUser: data,
+      formPegawai: data,
       isUpdate: true,
-    })
-  }
+    });
+  };
 
-  handleUbah = (event) => {
-    let formUserNew = { ...this.state.formUser }
-    formUserNew[event.target.name] = event.target.value
+  hadleUbah = (event) => {
+    let formPegawaiNew = { ...this.state.formPegawai };
+    formPegawaiNew[event.target.name] = event.target.value;
     this.setState(
       {
-        formUser: formUserNew,
-      })
-      console.log(this.state.formUser)
-  }
+        formPegawai: formPegawaiNew,
+      }
+    );
+  };
 
   handleSimpan = (modal) => {
     if (this.state.isUpdate) {
-      this.putDataUser()
-      this.toggleClose(modal)
+      this.postDataToAPI()
+      console.log(this.state.formPegawai)
+      this.toggleClose(modal);
     } else {
-      this.postDataUser()
-      this.toggleClose(modal)
+      this.putDataToAPI()
     }
-  }
+  };
 
-  handleFromClear = () => {
+  hadleFromClear = () => {
     this.setState({
       isUpdate: false,
-      formUser: {
-        name: "",
-        role: "",
-        email: ""
+      formPegawai: {
+        nama: "",
+        nama_lembaga: "",
+        total: "",
+        idstatus: "",
       },
-    })
-  }
-
-  toggleModal = (state, post,e) => {
-      this.setState({
-        exampleModal: !this.state[state],
-      });
-      this.setState({
-        formUser: post,
-        isUpdate: true,
-      },(err) => {
-        console.log('error : ', err)
-    })
-  }
-
-  toggleModalAdd = (state, e) => {
-    this.setState({
-      exampleModal: !this.state[state],
-    });
-    this.handleFromClear()
-    this.setState({
-      isUpdate: false,
-    },(err) => {
-      console.log('error : ', err)
-    })
-  }
-
-  toggleClose = (state) => {
-    this.setState({ [state]: !this.state[state]})
-  }
+    }); 
+  };
 
   format = amount => {
     return Number(amount)
@@ -137,25 +141,43 @@ class User extends Component {
       .replace(/\d(?=(\d{3})+\.)/g, '$&,');
   };
 
+  toggleModal = (state, post,e) => {
+    this.setState({
+      exampleModal: !this.state[state],
+    });
+    this.setState({
+      formPegawai: post,
+      isUpdate: true,
+    });
+  
+  };
+
+  toggleClose = (state) => {
+    this.setState({
+      [state]: !this.state[state],
+    });
+  };
+
+  
   componentDidMount() {
-    this.getDataUser()
+    this.getKreditAPI();
+
   }
 
   render() {
     const datapost = this.state.post
-    const formdata = this.state.formUser
-    const status = this.state.isUpdate
-    let nama 
-    let role 
-    let email
+    const formdata = this.state.formPegawai
+    let nama
+    let nama_lembaga
+    // let total
     if(formdata){
-      nama = formdata.name
-      role = formdata.role
-      email = formdata.email
+      nama = formdata.nama
+      nama_lembaga = formdata.nama_lembaga
+      // total = formdata.total
     }else{
       nama = ""
-      role = ""
-      email = ""
+      nama_lembaga = ""
+      // total = ""
     }
 
     return (
@@ -168,32 +190,33 @@ class User extends Component {
             <div className="col">
               <Card className="shadow">
                 <CardHeader className="border-0">
-                  <Row>
-                  <Col md="6" sm="6" className="text-left">
-                    <h3 className="mb-0">Data User</h3>
-                  </Col>
-                  <Col md="6" sm="6" className="text-right">
-                  <Button color="success" type="button" size="sm" onClick={() => this.toggleModalAdd("exampleModal")} >
-                    <i className="fa fa-plus"></i> Create
-                    </Button>
-                  </Col>
-                  </Row>
+                  <h3 className="mb-0">Data Kredit Pegawai</h3>
                 </CardHeader>
                 <CardBody>
-                 <TableUser data={datapost} modal={this.toggleModal} remove={this.handleRemove}/>
+                 <TableComp data={datapost} modal={this.toggleModal} />
                 </CardBody>
               </Card>
             </div>
           </Row>
         </Container>
 
-
-        <Modal className="modal-dialog-centered" isOpen={this.state.exampleModal} toggle={() => this.toggleModal("exampleModal")} size="lg">
+        <Modal
+          className="modal-dialog-centered"
+          isOpen={this.state.exampleModal}
+          toggle={() => this.toggleModal("exampleModal")}
+          size="lg"
+        >
           <div className="modal-header">
             <h5 className="modal-title" id="exampleModalLabel">
-              {status === true ? 'Update Data User' : 'Tambah Data User'}
+              Update data kredit
             </h5>
-            <button aria-label="Close" className="close" data-dismiss="modal" type="button" onClick={() => this.toggleClose("exampleModal")}            >
+            <button
+              aria-label="Close"
+              className="close"
+              data-dismiss="modal"
+              type="button"
+              onClick={() => this.toggleClose("exampleModal")}
+            >
               <span aria-hidden={true}>×</span>
             </button>
           </div>
@@ -202,83 +225,24 @@ class User extends Component {
               <Row>
                 <Col md="6">
                   <FormGroup>
-                    <label>Nama User :</label>
-                    <Input readOnly placeholder="Nama" name="name" type="text" onChange={this.handleUbah} value={nama}
-                    />
+                    <label>Nama Pegawai :</label>
+                    <Input disabled name="nama" id="exampleFormControlInput1" placeholder="nama" value={nama} onChange={this.hadleUbah} type="text" />
                   </FormGroup>
                 </Col>
                 <Col md="6">
                   <FormGroup>
-                  <label>Role :</label>
-                    <Input placeholder="Role" name="role" type="select" onChange={this.handleUbah} >
-                    {!status ?
-                      <Fragment>
-                        <option selected disabled>Pilih Role</option>
-                        <option value="admin" >Admin</option>
-                        <option value="dqmart" >DQ Mart</option>
-                        <option value="keuangan" >Keuangan</option>
-                        <option value="unit" >Unit</option>
-                      </Fragment>
-                      :
-                      <Fragment>
-                        <option value="" disabled>Pilih Role {role}</option>
-                        {role === 'admin' ?
-                        <Fragment>
-                          <option value="admin" selected>Admin</option>
-                          <option value="dqmart" >DQ Mart</option>
-                          <option value="keuangan" >Keuangan</option>
-                          <option value="unit" >Unit</option>  
-                        </Fragment>
-                        : ""}
-                        {role === 'dqmart' ?
-                          <Fragment>
-                            <option value="admin">Admin</option>
-                            <option value="dqmart" selected>DQ Mart</option>
-                            <option value="keuangan" >Keuangan</option>
-                            <option value="unit" >Unit</option>
-                          </Fragment> 
-                          : ""
-                        }
-                        {role === 'keuangan' ?
-                          <Fragment>
-                            <option value="admin">Admin</option>
-                            <option value="dqmart">DQ Mart</option>
-                            <option value="keuangan" selected>Keuangan</option>
-                            <option value="unit" >Unit</option>
-                          </Fragment> 
-                          : ""
-                        }
-                        {role === 'unit' ?
-                          <Fragment>
-                            <option value="admin">Admin</option>
-                            <option value="dqmart">DQ Mart</option>
-                            <option value="keuangan">Keuangan</option>
-                            <option value="unit" selected>Unit</option>
-                          </Fragment> 
-                          : ""
-                        }
-                      </Fragment>
-                      }
-                    </Input>
+                  <label>Nama Lembaga :</label>
+                    <Input disabled placeholder="Regular" name="nama_lembaga" type="text" onChange={this.hadleUbah} value={nama_lembaga} />
                   </FormGroup>
                 </Col>
               </Row>
               <Row>
-                <Col md="6">
+                <Col md="12">
                   <FormGroup>
-                  <label>Email :</label>
-                    <Input placeholder="Email" name="email" type="text" onChange={this.handleUbah} value={email}/>
+                  <label>Jumlah Kredit :</label>
+                    <Input placeholder="Kredit" autoComplete="off" name="total" type="text" onChange={this.hadleUbah} />
                   </FormGroup>
                 </Col>
-                {!status ?
-                  <Col md="6">
-                  <FormGroup>
-                  <label>Password :</label>
-                    <Input placeholder="Password" name="password" type="text" id="passwordUser" />
-                  </FormGroup>
-                </Col>
-                :""
-                }
               </Row>
             </Form>
           </div>
@@ -286,21 +250,13 @@ class User extends Component {
             <Button color="danger" data-dismiss="modal" type="button" size="sm" onClick={() => this.toggleClose("exampleModal")} >
               Close
             </Button>
-            <Button color="info" type="button" size="sm" onClick={() => this.handleSimpan("exampleModal")} >
-              <i className="ni ni-air-baloon"></i> Update
+            <Button color="info" type="button" size="sm" onClick={() => this.handleSimpan("exampleModal")} > <i className="ni ni-air-baloon"></i> Update
             </Button>
           </div>
         </Modal>
-        {/* <ModalPop
-        modalClouse={this.toggleClose()}
-        modal={this.toggleModal()}
-        save={this.handleSimpan()}
-        ubah={this.handleUbah()}
-        formPegawai={this.state.formPegawai}
-        /> */}
       </>
     );
   }
 }
 
-export default User;
+export default Kredit;
