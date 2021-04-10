@@ -135,7 +135,7 @@ class Review extends Component {
                     <Col md="6" sm="6" className="text-left">
                       <h3 className="mb-0">Review Gapok Lembaga - {this.state.namaLembaga}
                       <Badge 
-                        className="ml-3" color="info"><strong>{this.state.cutOffActiv.start} sampai {this.state.cutOffActiv.start}</strong>
+                        className="ml-3" color="info"><strong>{this.state.cutOffActiv.start} sampai {this.state.cutOffActiv.end}</strong>
                       </Badge>
                         <i className="ni ni-check-bold text-green ml-1"></i>
                       </h3>

@@ -218,10 +218,10 @@ class Insentif extends Component {
                       </h3>
                     </Col>
                     <Col md="6" sm="6" className="text-right">
-                      {/* <Button color="success" type="button" size="sm" onClick={() => this.toggleModal("exampleModal") }>
+                      <Button color="success" type="button" size="sm" onClick={() => this.toggleModal("exampleModal") }>
                         <i className="fa fa-plus"></i> Insentif
                       </Button>
-                      <Button color="success" type="button" size="sm" onClick={this.getAddInsentifPerCutOff}>
+                      {/* <Button color="success" type="button" size="sm" onClick={this.getAddInsentifPerCutOff}>
                         <i className="fa fa-plus"></i> Add Insentif
                       </Button> */}
                     </Col>

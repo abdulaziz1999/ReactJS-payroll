@@ -5,7 +5,7 @@ import { useState } from "react";
 import { Col, Form, FormGroup , Input,InputGroup, InputGroupAddon,InputGroupText, Row, Table} from "reactstrap";
 import '../../views/examples/css/fixedcolumn.css'
 
-const TableGapok = ({data,modal,remove}) => {
+const TableGapok = ({data,format,remove}) => {
     // console.log(data)
     const [searchTerm, setSearchTerm] = useState("")
     
@@ -39,11 +39,12 @@ const TableGapok = ({data,modal,remove}) => {
                   <thead className="thead-light">
                     <tr>
                       <th scope="col"><b>Nama Pegawai</b></th>
-                      <th scope="col"><b>Total Keseluruhan</b></th>
-                      <th scope="col"><b>Total Quran</b></th>
-                      <th scope="col"><b>Total Kelas</b></th>
-                      <th scope="col"><b>Total Asrama</b></th>
-                      <th scope="col"><b>Total Transport</b></th>
+                      <th scope="col"><b>Jam Quran</b></th>
+                      <th scope="col"><b>Jam Kelas</b></th>
+                      <th scope="col"><b>Jam Asrama</b></th>
+                      <th scope="col"><b>Total Jam Tambahan</b></th>
+                      <th scope="col"><b>Transport</b></th>
+                      <th scope="col"><b>Total</b></th>
                     </tr>
                   </thead>
                   <tbody >
@@ -58,11 +59,12 @@ const TableGapok = ({data,modal,remove}) => {
                       return (
                         <tr key={index}>
                           <td><b>{post.nama}</b></td>
-                          <td><b>{post.total_jam}</b></td>
                           <td><b>{post.quran}</b></td>
                           <td><b>{post.kelas}</b></td>
                           <td><b>{post.asrama}</b></td>
-                          <td><b>{post.transport}</b></td>
+                          <td><b>{format(post.total_jam)}</b></td>
+                          <td><b>{format(post.transport)}</b></td>
+                          <td><b>{format(post.total_jam+post.transport)}</b></td>
                         </tr>
                       );
                     })}

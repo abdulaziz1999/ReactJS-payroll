@@ -46,6 +46,7 @@ const TableGapok = ({data,format}) => {
                       <th scope="col"><b>PT/PTT</b></th>
                       <th scope="col"><b>Gaji Pokok</b></th>
                       <th scope="col"><b>Tunjangan</b></th>
+                      <th scope="col"><b>Gapok + Tunjangan</b></th>
                     </tr>
                   </thead>
                   <tbody >
@@ -67,6 +68,7 @@ const TableGapok = ({data,format}) => {
                           <td><b>{post.idstatus}</b></td>
                           <td><b>{format(post.gapok)}</b></td>
                           <td><b>0</b></td>
+                          <td><b>{format(post.gapok)}</b></td>
                         </tr>
                       );
                     })}

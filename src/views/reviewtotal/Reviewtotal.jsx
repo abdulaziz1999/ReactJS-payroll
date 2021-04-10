@@ -121,13 +121,13 @@ class ReviewTotal extends Component {
                 <CardHeader className="border-0">
                   <h3 className="mb-0">Data Total Jam Tambahan Lembaga - {this.state.namaLembaga}
                     <Badge 
-                    className="ml-3" color="info"><strong>{this.state.cutOffActiv.start} sampai {this.state.cutOffActiv.start}</strong>
+                    className="ml-3" color="info"><strong>{this.state.cutOffActiv.start} sampai {this.state.cutOffActiv.end}</strong>
                     </Badge>
                      <i className="ni ni-check-bold text-green ml-1"></i>
                   </h3>
                 </CardHeader>
                 <CardBody>
-                 <ReviewGapok data={datapost} modal={this.toggleModal} />
+                 <ReviewGapok data={datapost} modal={this.toggleModal} format={this.format} />
                 </CardBody>
                 <Col className="modal-footer">
                   <Button color="success" className="mt-3" size="md" type="button" onClick={this.getStepInsentif}>Simpan & Lanjutkan</Button>
