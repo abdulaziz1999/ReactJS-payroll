@@ -7,10 +7,12 @@ import {
   Row,
   CardBody,
   Button,
-  Col
+  Col,
+  Badge
 } from "reactstrap";
 // core components
 import '../examples/css/Style.css'
+import API from '../../service';
 // import Swal from 'sweetalert2'
 import axios from "axios"
 import { RootOnline } from "service/Config"
@@ -18,6 +20,7 @@ import { RootOnline } from "service/Config"
 class Unit extends Component {
   state = {
     post: [],
+    cutOffActiv: [],
     isUpdate: false,
   };
  
@@ -29,20 +32,65 @@ class Unit extends Component {
       })
   };
 
+  getDataCutOff = () => {
+    API.getDataCutOff().then((res) => {
+      this.setState({
+        cutOffActiv: res
+      })
+    })
+  }
+
   getReviewLembaga = (event) => {
     let id = event.target.id
     const config = {headers : {Authorization: `Bearer ` + localStorage.token}}
     axios.get(RootOnline + '/gapok/' +id,config)
     .then((result) => {
+      console.log(id)
       this.props.history.push('/admin/review/'+id)
     }).catch((err) => {
       console.log("ini eror :"+err)
     })
   }
 
+  getReviewGapok = (event) => {
+    let id = event.target.id
+    const config = {headers : {Authorization: `Bearer ` + localStorage.token}}
+    axios.get(RootOnline + '/gapok/' +id,config)
+    .then((result) => {
+      console.log(id)
+      this.props.history.push('/admin/review/'+id)
+    }).catch((err) => {
+      console.log("ini eror :"+err)
+    })
+  }
+
+  getReviewJam = (event) => {
+    let id = event.target.id
+    const config = {headers : {Authorization: `Bearer ` + localStorage.token}}
+    axios.get(RootOnline + '/summary/' +id,config)
+    .then((result) => {
+      console.log(id)
+      this.props.history.push('/admin/reviewtotal/'+id)
+    }).catch((err) => {
+      console.log("ini eror :"+err)
+    })
+  }
+
+  getReviewInsentif = (event) => {
+    let id = event.target.id
+    const config = {headers : {Authorization: `Bearer ` + localStorage.token}}
+    axios.get(RootOnline + '/insentifCutoff/' +id,config)
+    .then((result) => {
+      console.log(id)
+      this.props.history.push('/admin/reviewinsentif/'+id)
+    }).catch((err) => {
+      console.log("ini eror :"+err)
+    })
+  }
   
   componentDidMount() {
     this.getLembaga()
+    this.getDataCutOff()
   }
 
   render() {
@@ -56,22 +104,60 @@ class Unit extends Component {
             <div className="col">
               <Card className="shadow">
                 <CardHeader className="border-0">
-                  <h3 className="mb-0">Pilih Lembaga</h3>
+                  <h3 className="mb-0">Pilih Lembaga 
+                    <Badge 
+                    className="ml-3" color="info"><strong>{this.state.cutOffActiv.start} sampai {this.state.cutOffActiv.start}</strong>
+                    </Badge>
+                     <i className="ni ni-check-bold text-green ml-1"></i>
+                  </h3>
                 </CardHeader>
                 <CardBody>
                     {this.state.post.map((post, index) => {
                       return (
                         <Row key={index}>
-                          <Col md={8}>
-                            <Button block color="primary" size="md" id={post.id} type="button" onClick={this.getReviewLembaga} >{post.nama_lembaga} </Button>
+                          <Col md={3}>
+                            <Button block color="primary" className="mt-1" size="md" id={post.id} type="button" onClick={this.getReviewLembaga} >{post.nama_lembaga} </Button>
+                            <hr className="my-3" />
                           </Col>
-                          <Col md={4} className="mb-3">
-                            <Button className="btn-icon btn-2" color="secondary" type="button">
+                          <Col md={9} className="mb-3">
+                            <Button className="btn-icon btn-2 mt-1" color="secondary" >
                               <span className="btn-inner--icon">
-                                <i className="ni ni-check-bold text-green" />
+                                1 - Review Gapok <i className="ni ni-check-bold text-green" />
                                 {/* <i className="ni ni-fat-remove text-red" /> */}
                               </span>
                             </Button>
+                            <Button className="btn-icon btn-2 mt-1" color="secondary" >
+                              <span className="btn-inner--icon">
+                                2 - Review Jam<i className="ni ni-check-bold text-green" />
+                                {/* <i className="ni ni-fat-remove text-red" /> */}
+                              </span>
+                            </Button>
+                            <Button className="btn-icon btn-2 mt-1" color="secondary" >
+                              <span className="btn-inner--icon">
+                                3 - Review Insentif <i className="ni ni-check-bold text-green" />
+                                {/* <i className="ni ni-fat-remove text-red" /> */}
+                              </span>
+                            </Button>
+                            <Button className="btn-icon btn-2 mt-1" color="secondary" type="button">
+                              <span className="btn-inner--icon">
+                                4 - Review Cicilan 
+                                {/* <i className="ni ni-check-bold text-green" /> */}
+                                <i className="ni ni-fat-remove text-red" />
+                              </span>
+                            </Button>
+                            <Button className="btn-icon btn-2 mt-1" color="secondary" type="button">
+                              <span className="btn-inner--icon">
+                                5 - Review Ledger 
+                                {/* <i className="ni ni-check-bold text-green" /> */}
+                                <i className="ni ni-fat-remove text-red" />
+                              </span>
+                            </Button>
+                            <Button className="btn-icon btn-2 mt-1" color="secondary" type="button">
+                              <span className="btn-inner--icon">
+                                6 - Kirim Data <i className="ni ni-fat-remove text-red" />
+                              </span>
+                            </Button>
+                            <hr className="my-3" />
                           </Col>
                         </Row>
                       )

@@ -3,12 +3,12 @@
 import React from "react";
 import { useState } from "react";
 import { Col, Form, FormGroup , Input,InputGroup, InputGroupAddon,InputGroupText, Row, Table} from "reactstrap";
-
+import '../../views/examples/css/fixedcolumn.css'
 
 const TableGapok = ({data,format}) => {
     // console.log(save)
     const [searchTerm, setSearchTerm] = useState("")
-    
+  
     return (
         <div className="">
             <Form>
@@ -38,7 +38,7 @@ const TableGapok = ({data,format}) => {
               <Table className="align-items-center table-flush" responsive>
                   <thead className="thead-light">
                     <tr>
-                      <th scope="col" className="zui-sticky-col"><b>Nama Pegawai</b></th>
+                      <th scope="col" className="zui-sticky-col" id="table-scroll-x"><b>Nama Pegawai</b></th>
                       <th scope="col"><b>Tahun Masuk</b></th>
                       <th scope="col"><b>Golongan</b></th>
                       <th scope="col"><b>Satuan Index</b></th>

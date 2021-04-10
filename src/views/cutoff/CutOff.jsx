@@ -11,12 +11,14 @@ import {
   Input,
   Row,
   CardBody,
-  Badge
+  Badge,
+  // Alert
 } from "reactstrap";
 // core components
 import "../examples/css/Style.css";
 import Calendar from "../../components/Calendar/Calendar";
 import Swal from 'sweetalert2'
+import API from '../../service';
 import { RootOnline } from "service/Config";
 class CutOff extends Component {
   
@@ -52,14 +54,9 @@ class CutOff extends Component {
   };
 
   getDataCutOff = () => {
-    const config = {headers : {Authorization: `Bearer ` + localStorage.token}}
-    axios.get(RootOnline + '/cutoff',config).then((res) => {
-      let last = res.data.length - 1;
-      console.log(res.data[last]['start'])
-      // document.getElementById("starTgl").value = res.data[last]['start']
-      // document.getElementById("endTgl").value = res.data[last]['end']
+    API.getDataCutOff().then((res) => {
       this.setState({
-        post : res.data
+        post: res
       })
     })
   }
@@ -135,7 +132,10 @@ class CutOff extends Component {
             <div className="col">
               <Card className="shadow">
                 <CardHeader className="border-0">
-                  <h3 className="mb-0">Cut Off Payroll</h3>
+                  <h3 className="mb-0">Cut Off Payroll  
+                  <Badge className="ml-3" color="info"><strong>{this.state.post.start}</strong> sampai <strong>{this.state.post.end}</strong></Badge>
+                  <i className="ni ni-check-bold text-green ml-1"></i>
+                  </h3>
                 </CardHeader>
                 <CardBody>
                     <CardBody>

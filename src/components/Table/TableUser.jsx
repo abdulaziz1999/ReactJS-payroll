@@ -20,14 +20,7 @@ const TableUser = ({data,modal,remove}) => {
                                 <i className="ni ni-zoom-split-in" />
                                 </InputGroupText>
                             </InputGroupAddon>
-                            <Input
-                                className="form-control-alternative"
-                                placeholder="Search"
-                                type="text"
-                                onChange={(event) => {
-                                    setSearchTerm(event.target.value)
-                                }}
-                            />
+                            <Input className="form-control-alternative" placeholder="Search" type="text" onChange={(event) => {setSearchTerm(event.target.value) }}/>
                             </InputGroup>
                         </FormGroup>
                     </Col>

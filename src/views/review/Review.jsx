@@ -1,11 +1,11 @@
 import React, { Component } from "react"
 // import axios from "axios";
 // reactstrap components
-import { Card, CardHeader, Container, Row, Col, Button, CardBody } from "reactstrap"
+import { Card, CardHeader, Container, Row, Col, Button, CardBody ,Badge} from "reactstrap"
 // core components
 import '../examples/css/Style.css'
-// import API from '../../service';
-// import Swal from 'sweetalert2'
+import API from '../../service';
+import Swal from 'sweetalert2'
 import axios from "axios"
 import { RootOnline } from "service/Config"
 import ReviewGapok from "components/Table/ReviewGapok"
@@ -15,8 +15,24 @@ import ModalTunjangan from "../../components/Modal/ModalTunjangan"
 class Review extends Component {
   state = {
     post: [],
+    cutOffActiv: [],
     namaLembaga : "",
   };
+
+  getUriSegment3 = () => {
+    let URL= this.props.location.pathname
+    let arr= URL.split('/')
+    let id = arr[3]
+    return id
+  }
+
+  getDataCutOff = () => {
+    API.getDataCutOff().then((res) => {
+      this.setState({
+        cutOffActiv: res
+      })
+    })
+  }
 
   getReviewGapok = async() => {
     let URL= this.props.location.pathname
@@ -39,6 +55,11 @@ class Review extends Component {
     let id = arr[3];
     axios.defaults.headers.common['Authorization'] = `Bearer ` + localStorage.token
     axios.post(RootOnline +'/gapok/'+id ).then((result) => {
+      Swal.fire(
+        'Success!',
+        'Data Gapok <br> Berhasil Disimpan.',
+        'success'
+    )
       this.props.history.push('/admin/reviewtotal/'+id)
     }).catch((err) => {
       console.log("ini eror : "+err)
@@ -54,7 +75,7 @@ class Review extends Component {
       this.setState({
         namaLembaga : result.data[0]['nama_lembaga']
       })
-      console.log(this.state)
+      // console.log(this.state)
     }).catch((err) => {
       console.log("ini eror : "+err)
     })
@@ -69,7 +90,7 @@ class Review extends Component {
   };
   
   format = (amount) => {
-    return Number(amount).toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,')
+    return Number(amount).toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&.')
   };
 
   toggleModal = (state) => {
@@ -92,6 +113,7 @@ class Review extends Component {
     if(!id){
       // this.handleLocalStorage()
     }else{
+      this.getDataCutOff()
       this.getReviewGapok()
       this.getNamaLembaga()
     }
@@ -111,7 +133,12 @@ class Review extends Component {
                 <CardHeader className="border-0">
                   <Row>
                     <Col md="6" sm="6" className="text-left">
-                      <h3 className="mb-0">Review Gapok Lembaga - {this.state.namaLembaga}</h3>
+                      <h3 className="mb-0">Review Gapok Lembaga - {this.state.namaLembaga}
+                      <Badge 
+                        className="ml-3" color="info"><strong>{this.state.cutOffActiv.start} sampai {this.state.cutOffActiv.start}</strong>
+                      </Badge>
+                        <i className="ni ni-check-bold text-green ml-1"></i>
+                      </h3>
                     </Col>
                     <Col md="6" sm="6" className="text-right">
                       <Button color="success" type="button" size="sm" onClick={() =>   this.toggleModal("exampleModal") }>
@@ -136,6 +163,7 @@ class Review extends Component {
         modalBuka={this.toggleModal}
         modalTutup={this.toggleClose}
         save={this.handleSimpan}
+        uri={this.getUriSegment3()}
         />
       </>
     );

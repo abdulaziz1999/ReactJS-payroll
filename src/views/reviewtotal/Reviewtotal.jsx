@@ -6,27 +6,34 @@ import {
   CardHeader,
   Button,
   Container,
-  // FormGroup,
-  // Form,
-  // Input,
   Col,
   Row,
   CardBody,
+  Badge
 } from "reactstrap";
 // core components
 import '../examples/css/Style.css';
 import ReviewGapok from "components/Table/ReviewTotal";
 import API from '../../service';
-// import Swal from 'sweetalert2'
+import Swal from 'sweetalert2'
 import axios from "axios";
 import { RootOnline } from "service/Config";
 
 class ReviewTotal extends Component {
   state = {
     post: [],
+    cutOffActiv: [],
     namaLembaga: "",
   };
  
+  getDataCutOff = () => {
+    API.getDataCutOff().then((res) => {
+      this.setState({
+        cutOffActiv: res
+      })
+    })
+  }
+
   getPostAPI = () => {
     API.getPegawai().then((result) => {
         this.setState({
@@ -67,9 +74,14 @@ class ReviewTotal extends Component {
 
   getStepInsentif = () => {
     let URL= this.props.location.pathname
-    let arr= URL.split('/')
+    let arr= URL.split('/') 
     let id = arr[3];
-    this.props.history.push('/admin/insentif/'+id)
+    Swal.fire(
+      'Success!',
+      'Data Jam Tambahan<br> Berhasil Disimpan.',
+      'success'
+  )
+    this.props.history.push('/admin/reviewinsentif/'+id)
   }
 
   format = amount => {
@@ -87,6 +99,7 @@ class ReviewTotal extends Component {
     if(!id){
 
     }else{
+      this.getDataCutOff()
       this.getDataSummary()
       this.getNamaLembaga()
     }
@@ -106,7 +119,12 @@ class ReviewTotal extends Component {
             <div className="col">
               <Card className="shadow">
                 <CardHeader className="border-0">
-                  <h3 className="mb-0">Data Total Jam Tambahan Lembaga - {this.state.namaLembaga}</h3>
+                  <h3 className="mb-0">Data Total Jam Tambahan Lembaga - {this.state.namaLembaga}
+                    <Badge 
+                    className="ml-3" color="info"><strong>{this.state.cutOffActiv.start} sampai {this.state.cutOffActiv.start}</strong>
+                    </Badge>
+                     <i className="ni ni-check-bold text-green ml-1"></i>
+                  </h3>
                 </CardHeader>
                 <CardBody>
                  <ReviewGapok data={datapost} modal={this.toggleModal} />

@@ -3,7 +3,7 @@
 import React from "react";
 import { useState } from "react";
 import { Col, Form, FormGroup , Input,InputGroup, InputGroupAddon,InputGroupText, Row, Table} from "reactstrap";
-
+import '../../views/examples/css/fixedcolumn.css'
 
 const TableGapok = ({data,modal,remove}) => {
     // console.log(data)
@@ -44,7 +44,6 @@ const TableGapok = ({data,modal,remove}) => {
                       <th scope="col"><b>Total Kelas</b></th>
                       <th scope="col"><b>Total Asrama</b></th>
                       <th scope="col"><b>Total Transport</b></th>
-                      <th scope="col"><b>Lainnya</b></th>
                     </tr>
                   </thead>
                   <tbody >
@@ -64,7 +63,6 @@ const TableGapok = ({data,modal,remove}) => {
                           <td><b>{post.kelas}</b></td>
                           <td><b>{post.asrama}</b></td>
                           <td><b>{post.transport}</b></td>
-                          <td><b>Rp. 8000.000</b></td>
                         </tr>
                       );
                     })}

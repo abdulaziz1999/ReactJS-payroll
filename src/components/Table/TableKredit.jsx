@@ -14,7 +14,7 @@ import {
   Table, 
   Badge,
   Button} from "reactstrap";
-
+  import '../../views/examples/css/fixedcolumn.css'
 
 const TableKredit = ({data,modal,remove}) => {
     // console.log(data)
@@ -45,7 +45,7 @@ const TableKredit = ({data,modal,remove}) => {
                     </Col>
                 </Row>
             </Form>
-            <Table className="align-items-center table-flush scroll" responsive>
+            <Table className="align-items-center table-flush" responsive>
                   <thead className="thead-light">
                     <tr>
                       <th scope="col"><b>Nama Pegawai</b></th>

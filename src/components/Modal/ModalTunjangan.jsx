@@ -10,15 +10,39 @@ import {
   Row,
 } from "reactstrap";
 
+import API from '../../service'
 class ModalTunjangan extends Component {
   state = {
-    post: [],
+    dataPegawai: [],
+  }
+
+  onFormSubmit = (e) => {
+    e.preventDefault()
+  }
+
+  getPegawai = () => {
+    API.getDataPegawai().then((res) => {
+      this.setState({
+        dataPegawai : res
+      })
+    })
+  }
+
+  getJenisTunjangan = (event) => {
+    let id = event.target.value
+    console.log(id)
+    API.getDetailTunjangan(id).then((res) => {
+      console.log(res)
+    })
   }
 
   componentDidMount() {
+    this.getPegawai()
+    console.log()
   }
 
   render() {
+    const uri = parseInt(this.props.uri)
     return (
       <>
         <Modal
@@ -47,8 +71,14 @@ class ModalTunjangan extends Component {
                 <Col md="12">
                   <FormGroup>
                     <label htmlFor="exampleFormControlSelect1">Nama Pegawai :</label>
-                    <Input name="nama"id="exampleFormControlSelect1" type="select">
-                      <option value="">Pilih Nama Pegawai</option>
+                    <Input name="nama"id="exampleFormControlSelect1" type="select" onChange={this.getJenisTunjangan}>
+                      <option disabled selected defaultValue>Pilih Nama Pegawai</option>
+                      {this.state.dataPegawai.filter(row => row.idlembaga === uri)
+                      .map((row, index) => {
+                          return (
+                            <option key={index} value={row.idguru}>{row.nama}</option>
+                          )
+                      })}
                     </Input>
                   </FormGroup>
                 </Col>
@@ -66,9 +96,10 @@ class ModalTunjangan extends Component {
                   <FormGroup>
                   <label>Nominal :</label>
                     <Input
-                      placeholder="Kredit"
+                      autoComplete="off"
+                      placeholder="Nominal"
                       name="total"
-                      type="text"
+                      type="number"
                       // onChange={this.hadleUbah}
                       // value={total}
                     />
@@ -78,22 +109,11 @@ class ModalTunjangan extends Component {
             </Form>
           </div>
           <div className="modal-footer">
-            <Button
-              color="danger"
-              data-dismiss="modal"
-              type="button"
-              size="sm"
-              onClick={() => this.props.modalTutup("exampleModal")}
-            >
-              Close
+            <Button color="danger" data-dismiss="modal" type="button" size="sm" onClick={() => this.props.modalTutup("exampleModal")} >
+              <i className="ni ni-fat-remove"></i>Close
             </Button>
-            <Button
-              color="info"
-              type="button"
-              size="sm"
-              onClick={() => this.props.save("exampleModal")}
-            >
-              <i className="ni ni-air-baloon"></i> Tambah
+            <Button color="info" type="submit" size="sm" onClick={() => this.props.save("exampleModal")} >
+              <i className="ni ni-fat-add"></i> Tambah
             </Button>
           </div>
         </Modal>

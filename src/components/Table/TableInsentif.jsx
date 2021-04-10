@@ -15,6 +15,7 @@ import {
   // Badge,
   // Button,
 } from "reactstrap";
+import '../../views/examples/css/fixedcolumn.css'
 
 const TableInsentif = ({ data, insentif, remove }) => {
   // console.log(data)

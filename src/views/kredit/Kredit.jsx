@@ -169,15 +169,15 @@ class Kredit extends Component {
     const formdata = this.state.formPegawai
     let nama
     let nama_lembaga
-    let total
+    // let total
     if(formdata){
       nama = formdata.nama
       nama_lembaga = formdata.nama_lembaga
-      total = formdata.total
+      // total = formdata.total
     }else{
       nama = ""
       nama_lembaga = ""
-      total = ""
+      // total = ""
     }
 
     return (
@@ -226,28 +226,13 @@ class Kredit extends Component {
                 <Col md="6">
                   <FormGroup>
                     <label>Nama Pegawai :</label>
-                    <Input
-                      disabled
-                      name="nama"
-                      id="exampleFormControlInput1"
-                      placeholder="nama"
-                      value={nama}
-                      onChange={this.hadleUbah}
-                      type="text"
-                    />
+                    <Input disabled name="nama" id="exampleFormControlInput1" placeholder="nama" value={nama} onChange={this.hadleUbah} type="text" />
                   </FormGroup>
                 </Col>
                 <Col md="6">
                   <FormGroup>
                   <label>Nama Lembaga :</label>
-                    <Input
-                      disabled        
-                      placeholder="Regular"
-                      name="nama_lembaga"
-                      type="text"
-                      onChange={this.hadleUbah}
-                      value={nama_lembaga}
-                    />
+                    <Input disabled placeholder="Regular" name="nama_lembaga" type="text" onChange={this.hadleUbah} value={nama_lembaga} />
                   </FormGroup>
                 </Col>
               </Row>
@@ -255,45 +240,20 @@ class Kredit extends Component {
                 <Col md="12">
                   <FormGroup>
                   <label>Jumlah Kredit :</label>
-                    <Input
-                      placeholder="Kredit"
-                      name="total"
-                      type="text"
-                      onChange={this.hadleUbah}
-                      value={total}
-                    />
+                    <Input placeholder="Kredit" autoComplete="off" name="total" type="text" onChange={this.hadleUbah} />
                   </FormGroup>
                 </Col>
               </Row>
             </Form>
           </div>
           <div className="modal-footer">
-            <Button
-              color="danger"
-              data-dismiss="modal"
-              type="button"
-              size="sm"
-              onClick={() => this.toggleClose("exampleModal")}
-            >
+            <Button color="danger" data-dismiss="modal" type="button" size="sm" onClick={() => this.toggleClose("exampleModal")} >
               Close
             </Button>
-            <Button
-              color="info"
-              type="button"
-              size="sm"
-              onClick={() => this.handleSimpan("exampleModal")}
-            >
-              <i className="ni ni-air-baloon"></i> Update
+            <Button color="info" type="button" size="sm" onClick={() => this.handleSimpan("exampleModal")} > <i className="ni ni-air-baloon"></i> Update
             </Button>
           </div>
         </Modal>
-        {/* <ModalPop
-        modalClouse={this.toggleClose()}
-        modal={this.toggleModal()}
-        save={this.handleSimpan()}
-        ubah={this.hadleUbah()}
-        formPegawai={this.state.formPegawai}
-        /> */}
       </>
     );
   }

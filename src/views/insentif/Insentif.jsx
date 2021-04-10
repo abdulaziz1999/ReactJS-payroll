@@ -13,11 +13,12 @@ import {
   Col,
   Row,
   CardBody,
+  Badge
 } from "reactstrap";
 // core components
 import '../examples/css/Style.css';
 import TableComp from "components/Table/TableInsentif";
-// import API from '../../service';
+import API from '../../service';
 import Swal from 'sweetalert2'
 import { RootOnline } from "service/Config";
 
@@ -27,10 +28,23 @@ class Insentif extends Component {
     insentif: [],
     insentifAll:[],
     namaLembaga: "",
+    addInsentif: {
+      insentif : "",
+      nominal : ""
+    },
     isUpdate: false,
     searchTerm: "",
-    idinsentif: ['1','2','3']
+    idinsentif: ["1","2"],
+    cutOffActiv: []
   };
+
+  getDataCutOff = () => {
+    API.getDataCutOff().then((res) => {
+      this.setState({
+        cutOffActiv: res
+      })
+    })
+  }
 
   getNamaLembaga = () => {
     let URL= this.props.location.pathname
@@ -56,7 +70,7 @@ class Insentif extends Component {
       this.setState({
         post: result.data
       });
-      console.log(this.state.post)
+      // console.log(this.state.post)
     }catch(err) {
       console.log("ini eror :"+err)
     }
@@ -89,20 +103,22 @@ class Insentif extends Component {
     }
   }
 
-  getAddInsentif = async() => {
-      let datapost = {
-        insentif : 'PSB',
-        nominal : '100000'
-      }
+  //add master data insentif
+  getAddInsentif = async(modal) => {
       axios.defaults.headers.common['Authorization'] = `Bearer ` + localStorage.token
-      const result = await axios.post(RootOnline +'/insentif',datapost)
+      const result = await axios.post(RootOnline +'/insentif',this.state.addInsentif)
       try{
-        this.setState({
-          insentif: result.data
-        });
+        this.toggleClose(modal)
+        this.getDataInsentif()
       }catch(err) {
-        console.log("ini eror :"+err)
+        console.log("ini eror :"+err+result)
       }
+  }
+
+  getAddInsentifPerCutOff = () => {
+    API.postDataInsentifCutoff(this.state.idinsentif).then((res) => {
+      console.log(res)
+    })
   }
 
   getInsentif = async() => {
@@ -118,11 +134,31 @@ class Insentif extends Component {
     }
   }  
 
+  getSimpan = () => {
+    Swal.fire(
+      'Success!',
+      'Data Insetif <br> Berhasil Disimpan.',
+      'success'
+  )
+    this.props.history.push('/admin/unit')
+  }
+
   format = amount => {
     return Number(amount)
       .toFixed(2)
       .replace(/\d(?=(\d{3})+\.)/g, '$&,');
   };
+
+  handleUbah = (event) => {
+    let formInsentif = { ...this.state.addInsentif };
+    formInsentif[event.target.name] = event.target.value;
+    this.setState(
+      {
+        addInsentif: formInsentif,
+      }
+    )
+    console.log(this.state.addInsentif)
+  }
 
   toggleModal = (state, post,e) => {
     this.setState({
@@ -147,6 +183,7 @@ class Insentif extends Component {
 
 
   componentDidMount() {
+    this.getDataCutOff()
     this.getNamaLembaga()
     this.getInsentif()
     this.getDataInsentif()
@@ -173,24 +210,29 @@ class Insentif extends Component {
                 <CardHeader className="border-0">
                   <Row>
                     <Col md="6" sm="6" className="text-left">
-                      <h3 className="mb-0">Data Insentif Pegawai Lembaga - {this.state.namaLembaga}</h3>
+                      <h3 className="mb-0">Data Insentif Pegawai Lembaga - {this.state.namaLembaga}
+                      <Badge 
+                    className="ml-3" color="info"><strong>{this.state.cutOffActiv.start} sampai {this.state.cutOffActiv.start}</strong>
+                    </Badge>
+                     <i className="ni ni-check-bold text-green ml-1"></i>
+                      </h3>
                     </Col>
                     <Col md="6" sm="6" className="text-right">
-                      <Button
-                        color="success"
-                        type="button"
-                        size="sm"
-                        onClick={() =>
-                          this.toggleModal("exampleModal")
-                        }>
+                      {/* <Button color="success" type="button" size="sm" onClick={() => this.toggleModal("exampleModal") }>
                         <i className="fa fa-plus"></i> Insentif
-                        </Button>
+                      </Button>
+                      <Button color="success" type="button" size="sm" onClick={this.getAddInsentifPerCutOff}>
+                        <i className="fa fa-plus"></i> Add Insentif
+                      </Button> */}
                     </Col>
                   </Row>
                 </CardHeader>
                 <CardBody>
                  <TableComp data={this.state.post} insentif={this.state.insentif}/>
                 </CardBody>
+                <Col className="modal-footer">
+                  <Button color="success" className="mt-3" size="md" type="button" onClick={this.getSimpan}>Simpan & Lanjutkan</Button>
+                </Col>
               </Card>
             </div>
           </Row>
@@ -217,7 +259,7 @@ class Insentif extends Component {
           </div>
           <div className="modal-body">
             <Form>
-              <Row>
+              {/* <Row>
                 <Col md="12">
                   <FormGroup>
                     <label htmlFor="exampleFormControlSelect1">Nama Pegawai :</label>
@@ -234,18 +276,18 @@ class Insentif extends Component {
                     </Input>
                   </FormGroup>
                 </Col>
-              </Row>
+              </Row> */}
               <Row>
                 <Col md="12">
                   <FormGroup>
+                  <label>Nama Insentif :</label>
+                    <Input autoComplete="off" placeholder="Nama Insentif" name="insentif" type="text" onChange={this.handleUbah} />
+                  </FormGroup>
+                </Col>
+                <Col md="12">
+                  <FormGroup>
                   <label>Nominal :</label>
-                    <Input
-                      placeholder="Nominal"
-                      name="total"
-                      type="text"
-                      // onChange={this.hadleUbah}
-                      // value={total}
-                    />
+                    <Input autoComplete="off" placeholder="Nominal" name="nominal" type="number" onChange={this.handleUbah} />
                   </FormGroup>
                 </Col>
               </Row>
@@ -265,7 +307,7 @@ class Insentif extends Component {
               color="info"
               type="button"
               size="sm"
-              onClick={() => this.handleSimpan("exampleModal")}
+              onClick={() => this.getAddInsentif("exampleModal")}
             >
               <i className="ni ni-air-baloon"></i> Tambah
             </Button>

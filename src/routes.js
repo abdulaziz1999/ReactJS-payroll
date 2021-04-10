@@ -39,7 +39,7 @@ var routes = [
   },
   {
     path: "/reviewtotal",
-    name: "Review Total - 4",
+    name: "Review Jam - 4",
     icon: "ni ni-time-alarm text-blue",
     component: ReviewTotal,
     layout: "/admin",
