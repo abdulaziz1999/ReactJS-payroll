@@ -1,5 +1,3 @@
-// import axios from "axios";
-
 import React from "react";
 import { useState } from "react";
 import {
@@ -12,13 +10,10 @@ import {
   InputGroupText,
   Row,
   Table,
-  // Badge,
-  // Button,
 } from "reactstrap";
 import '../../views/examples/css/fixedcolumn.css'
 
 const TableInsentif = ({ data, insentif, remove }) => {
-  // console.log(data)
   const [searchTerm, setSearchTerm] = useState("");
 
   return (
@@ -85,7 +80,7 @@ const TableInsentif = ({ data, insentif, remove }) => {
               .map((post, index) => {
                 var elements=[];
                 for(var i=0;i<post.insentif.length;i++){
-                  elements.push(<td>{post.insentif[i]}</td>);
+                  elements.push(<td key={i}>{post.insentif[i]}</td>);
                 }
                 return (
                   <tr key={index}>

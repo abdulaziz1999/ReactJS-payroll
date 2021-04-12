@@ -25,15 +25,15 @@ class Unit extends Component {
   };
  
   getLembaga = async() => {
-    delete axios.defaults.headers.common["Authorization"]
-    const res = await axios.get('https://kepegawaian.dqakses.id/api/lembaga')
+    await API.getUnit().then((res) =>{
       this.setState({
-        post : res.data
+        post : res
       })
+    })
   };
 
-  getDataCutOff = () => {
-    API.getDataCutOff().then((res) => {
+  getDataCutOff = async() => {
+    await API.getDataCutOff().then((res) => {
       this.setState({
         cutOffActiv: res
       })
@@ -106,7 +106,7 @@ class Unit extends Component {
                 <CardHeader className="border-0">
                   <h3 className="mb-0">Pilih Lembaga 
                     <Badge 
-                    className="ml-3" color="info"><strong>{this.state.cutOffActiv.start} sampai {this.state.cutOffActiv.start}</strong>
+                    className="ml-3" color="info"><strong>{this.state.cutOffActiv.start} sampai {this.state.cutOffActiv.end}</strong>
                     </Badge>
                      <i className="ni ni-check-bold text-green ml-1"></i>
                   </h3>

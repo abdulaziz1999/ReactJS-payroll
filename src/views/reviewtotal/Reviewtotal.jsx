@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-// import axios from "axios";
 // reactstrap components
 import {
   Card,
@@ -16,8 +15,6 @@ import '../examples/css/Style.css';
 import ReviewGapok from "components/Table/ReviewTotal";
 import API from '../../service';
 import Swal from 'sweetalert2'
-import axios from "axios";
-import { RootOnline } from "service/Config";
 
 class ReviewTotal extends Component {
   state = {
@@ -25,6 +22,13 @@ class ReviewTotal extends Component {
     cutOffActiv: [],
     namaLembaga: "",
   };
+
+  getUriSegment3 = () => {
+    let URL= this.props.location.pathname
+    let arr= URL.split('/')
+    let id = arr[3]
+    return id
+  }
  
   getDataCutOff = () => {
     API.getDataCutOff().then((res) => {
@@ -38,48 +42,39 @@ class ReviewTotal extends Component {
     API.getPegawai().then((result) => {
         this.setState({
           post: result
-        });
-      });
-  };
-
-  getDataSummary = async() => {
-    let URL= this.props.location.pathname;
-    let arr=URL.split('/');
-    let id = arr[3];
-    axios.defaults.headers.common['Authorization'] = `Bearer ` + localStorage.token
-    const result = await axios.get(RootOnline +'/summary/'+id )
-    try{
-      this.setState({
-        post: result.data
-      });
-    }catch(err) {
-      console.log("ini eror :"+err)
-    }
+        })
+      })
   }
 
-  getNamaLembaga = () => {
-    let URL= this.props.location.pathname
-    let arr= URL.split('/')
-    let id = arr[3];
-    delete axios.defaults.headers.common["Authorization"]
-    axios.get('https://kepegawaian.dqakses.id/api/lembagaById/'+id).then((result) => {
+  getNamaLembaga = async() => {
+    let id = this.getUriSegment3()
+    await API.getUnitById(id).then((result) => {
       this.setState({
-        namaLembaga : result.data[0]['nama_lembaga']
+        namaLembaga : result[0]['nama_lembaga']
       })
     }).catch((err) => {
-      console.log("ini eror : "+err + this.state)
+      console.log("ini eror : "+err)
+    })
+  }
+
+  getDataSummary = async() => {
+    let id = this.getUriSegment3()
+    await API.getDataSummary(id).then((result) => {
+      this.setState({
+        post: result
+      })
+    }).catch((err) => {
+      console.log("ini eror : "+err)
     })
   }
 
   getStepInsentif = () => {
-    let URL= this.props.location.pathname
-    let arr= URL.split('/') 
-    let id = arr[3];
+    let id = this.getUriSegment3()
     Swal.fire(
       'Success!',
       'Data Jam Tambahan<br> Berhasil Disimpan.',
       'success'
-  )
+    )
     this.props.history.push('/admin/reviewinsentif/'+id)
   }
 
@@ -92,15 +87,13 @@ class ReviewTotal extends Component {
 
   
   componentDidMount() {
-    let URL= this.props.location.pathname
-    let arr= URL.split('/')
-    let id = arr[3];
+    let id = this.getUriSegment3()
     if(!id){
 
     }else{
+      this.getNamaLembaga()
       this.getDataCutOff()
       this.getDataSummary()
-      this.getNamaLembaga()
     }
 
   }

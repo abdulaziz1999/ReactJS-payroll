@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import axios from "axios";
 // reactstrap components
 import {
   Card,
@@ -19,7 +18,6 @@ import "../examples/css/Style.css";
 import Calendar from "../../components/Calendar/Calendar";
 import Swal from 'sweetalert2'
 import API from '../../service';
-import { RootOnline } from "service/Config";
 class CutOff extends Component {
   
   state = {
@@ -32,17 +30,16 @@ class CutOff extends Component {
       dayEfektif : "",
   };
 
-  postDataToAPI = () => {
-    let startValue = document.getElementById("starTgl").value;
-    let endValue = document.getElementById("endTgl").value;
+  postDataToAPI = async() => {
+    let startValue = document.getElementById("starTgl").value
+    let endValue = document.getElementById("endTgl").value
     const postData = {
       start: startValue,
       end: endValue,
       holidays: this.state.holiday,
       status: 1
-    };
-    const config = {headers : {Authorization: `Bearer ` + localStorage.token}}
-    axios.post(RootOnline +'/cutoff',postData, config).then((res) =>{
+    }
+    await API.postDataCutOff(postData).then((res) =>{
           console.log(res)
           Swal.fire(
                 'Success!',

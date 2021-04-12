@@ -1,5 +1,5 @@
 import Index from "views/Dash/DashKeuangan";
-import Insentif from "views/insentif/Insentif";
+import Insentif from "views/reviewinsentif/Insentif";
 
 var routes = [
   {

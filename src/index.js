@@ -17,9 +17,9 @@ import Icons from "views/examples/Icons";
 import Step from "views/Step/Step";
 import ArrayInsert from "views/examples/Tes.js"
 import Akses from "views/Dash/Akses"
-import Unit from "views/review/Review"
+import Review from "views/review/Review"
 import Summary from "views/reviewtotal/Reviewtotal"
-import Insentif from "views/insentif/Insentif"
+import Insentif from "views/reviewinsentif/Insentif"
 
 ReactDOM.render(
   <BrowserRouter>
@@ -29,7 +29,7 @@ ReactDOM.render(
       <ProtectedRoute path="/keuangan" component={KeuangantLayout} />
       <Route path="/auth" render={(props) => !getToken() ? ( <AuthLayout {...props} />) : ( <Redirect to={{ pathname: "/akses" }} />)}/>
       <Route path="/akses" component={Akses}/>
-      <Route path="/admin/review/:id" component={Unit}/>
+      <Route path="/admin/review/:id" component={Review}/>
       <Route path="/admin/reviewtotal/:id" component={Summary}/>
       <Route path="/admin/insentif/:id" component={Insentif}/>
       <Route path="/dash" component={Dash}/>

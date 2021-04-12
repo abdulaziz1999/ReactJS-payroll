@@ -4,9 +4,10 @@ import Cicilan from "views/cicilan/Cicilan";
 import User from "views/user/User";
 import Cutoff from "views/cutoff/CutOff";
 import Unit from "views/unit/Unit";
+import InputInsentif from "views/insentif/Insentif";
 import Review from "views/review/Review";
 import ReviewTotal from "views/reviewtotal/Reviewtotal";
-import ReviewInsentif from "views/insentif/Insentif";
+import ReviewInsentif from "views/reviewinsentif/Insentif";
 
 var routes = [
   {
@@ -69,7 +70,7 @@ var routes = [
     path: "/insentif",
     name: "Insentif - Unit",
     icon: "ni ni-credit-card text-green",
-    component: Kredit,
+    component: InputInsentif,
     layout: "/admin",
   },
   {

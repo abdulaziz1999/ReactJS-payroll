@@ -3,6 +3,10 @@ import Post from './Post'
 import Put from './Put'
 import Delete from './Delete'
 
+//API kepegawaian
+const getUnit = () => Get('lembaga',false)
+const getUnitById = (id) => Get(`lembagaById/${id}`,false)
+
 //API User
 const getDataUser  = () => Get('user',true)
 const postDataUser = (data) => Post('user',true,data)
@@ -91,7 +95,12 @@ const API = {
     postDataInsentif,
     postInsentifPegawai,
 
+    //API Pegawai Master data
     getDataPegawai,
+
+    //API Lembaga
+    getUnit,
+    getUnitById,
 
     getPegawai,
     kreditPegawai,

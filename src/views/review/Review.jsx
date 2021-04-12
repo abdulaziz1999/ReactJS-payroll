@@ -1,13 +1,10 @@
 import React, { Component } from "react"
-// import axios from "axios";
 // reactstrap components
 import { Card, CardHeader, Container, Row, Col, Button, CardBody ,Badge} from "reactstrap"
 // core components
 import '../examples/css/Style.css'
 import API from '../../service';
 import Swal from 'sweetalert2'
-import axios from "axios"
-import { RootOnline } from "service/Config"
 import ReviewGapok from "components/Table/ReviewGapok"
 import ModalTunjangan from "../../components/Modal/ModalTunjangan"
 // import Cookies from "js-cookie"
@@ -26,39 +23,52 @@ class Review extends Component {
     return id
   }
 
-  getDataCutOff = () => {
-    API.getDataCutOff().then((res) => {
+  getDataCutOff = async() => {
+    await API.getDataCutOff().then((res) => {
       this.setState({
         cutOffActiv: res
       })
     })
   }
 
-  getReviewGapok = async() => {
-    let URL= this.props.location.pathname
-    let arr= URL.split('/')
-    let id = arr[3]
-    const config = {headers : {Authorization: `Bearer ` + localStorage.token}}
-    const result = await axios.get(RootOnline +'/gapok/'+id ,config)
-     try{
+  getNamaLembaga = async() => {
+    let id = this.getUriSegment3()
+    await API.getUnitById(id).then((result) => {
       this.setState({
-        post: result.data
+        namaLembaga : result[0]['nama_lembaga']
       })
-    }catch(err) {
-      console.log("ini eror :"+err)
-    }
+    }).catch((err) => {
+      console.log("ini eror : "+err)
+    })
   }
 
-  simpanGapok = () => {
-    let URL= this.props.location.pathname
-    let arr= URL.split('/')
-    let id = arr[3];
+  getReviewGapok = async() => {
+    let id = this.getUriSegment3()
+    await API.getDataGapok(id).then((res) => {
+      this.setState({
+        post: res
+      })
+      console.log(this.state.post)
+    },(err) => {
+      console.log("ini eror :"+err)
+    })
+  }
+
+  simpanGapok = async() => {
+    this.loadingData()
+    let id = this.getUriSegment3()
+    await API.postDataGapok(id).then((result) => {
+      this.props.history.push('/admin/reviewtotal/'+id)
+    }).catch((err) => {
+      console.log("ini eror : "+err)
+    })
+  }
+
+  loadingData = () => {
     let timerInterval
-    axios.defaults.headers.common['Authorization'] = `Bearer ` + localStorage.token
-    axios.post(RootOnline +'/gapok/'+id ).then((result) => {
-      Swal.fire(
-        {
-          title: 'Sedang Mengambil Data Kehadiran',
+    Swal.fire(
+      {
+        title: 'Sedang Mengambil Data Kehadiran',
         html: 'I will close in <b></b> milliseconds.',
         timer: 45000,
         timerProgressBar: true,
@@ -72,36 +82,15 @@ class Review extends Component {
                 b.textContent = Swal.getTimerLeft()
               }
             }
-          }, 100)
-        },
-        willClose: () => {
-          clearInterval(timerInterval)
-        }
-      }).then((result) => {
-        /* Read more about handling dismissals below */
-        if (result.dismiss === Swal.DismissReason.timer) {
-          console.log('I was closed by the timer')
-        }
-        }
-    )
-      this.props.history.push('/admin/reviewtotal/'+id)
-    }).catch((err) => {
-      console.log("ini eror : "+err)
-    })
-  }
-
-  getNamaLembaga = () => {
-    let URL= this.props.location.pathname
-    let arr= URL.split('/')
-    let id = arr[3];
-    delete axios.defaults.headers.common["Authorization"]
-    axios.get('https://kepegawaian.dqakses.id/api/lembagaById/'+id).then((result) => {
-      this.setState({
-        namaLembaga : result.data[0]['nama_lembaga']
-      })
-      // console.log(this.state)
-    }).catch((err) => {
-      console.log("ini eror : "+err)
+        }, 100)
+      },
+      willClose: () => {
+        clearInterval(timerInterval)
+      }
+    }).then((result) => {
+      if (result.dismiss === Swal.DismissReason.timer) {
+        console.log('I was closed by the timer')
+      }
     })
   }
 
@@ -111,7 +100,7 @@ class Review extends Component {
     this.props.history.push(url)
     // this.getNamaLembaga()
     this.getReviewGapok()
-  };
+  }
   
   format = (amount) => {
     return Number(amount).toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&.')
@@ -131,15 +120,13 @@ class Review extends Component {
   };
   
   componentDidMount() {
-    let URL= this.props.location.pathname
-    let arr= URL.split('/')
-    let id = arr[3];
+    let id = this.getUriSegment3()
     if(!id){
       // this.handleLocalStorage()
     }else{
+      this.getNamaLembaga()
       this.getDataCutOff()
       this.getReviewGapok()
-      this.getNamaLembaga()
     }
   }
 
