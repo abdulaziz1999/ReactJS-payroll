@@ -9,6 +9,7 @@ import AdminFooter from "components/Footers/AdminFooter.js";
 import Sidebar from "components/Sidebar/Sidebar.js";
 
 import routes from "routes.js";
+import DataPegawai from "views/masterData/dataPegawai"
 
 const Admin = (props) => {
   const mainContent = React.useRef(null);
@@ -65,6 +66,7 @@ const Admin = (props) => {
         />
         <Switch>
           {getRoutes(routes)}
+          <Route path="/admin/datapegawai" component={DataPegawai}/>
           <Redirect from="*" to="/admin/index" />
         </Switch>
         <Container fluid>

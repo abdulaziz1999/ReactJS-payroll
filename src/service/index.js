@@ -51,6 +51,7 @@ const postTunjanganPegawai = (data) => Post(`tunjangan/pegawai`,true,data)
 
 //API Pegawai
 const getDataPegawai = () => Get('pegawai',true)
+const getSycnPegawai = () => Get('syncPegawai',true)
 
 const kreditPegawai = (config) => Get('kredit',true,config)
 const getPegawai    = () => Get('kredit',true)
@@ -99,6 +100,7 @@ const API = {
 
     //API Pegawai Master data
     getDataPegawai,
+    getSycnPegawai,
 
     //API Lembaga
     getUnit,

@@ -142,7 +142,7 @@ class User extends Component {
                 <CardHeader className="border-0">
                   <Row>
                   <Col md="6" sm="6" className="text-left">
-                    <h3 className="mb-0">Data User</h3>
+                    <h3 className="mb-0">Data User </h3>
                   </Col>
                   <Col md="6" sm="6" className="text-right">
                   <Button color="success" type="button" size="sm" onClick={() => this.toggleModalAdd("exampleModal")} >
