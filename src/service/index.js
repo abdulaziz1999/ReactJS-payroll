@@ -21,6 +21,7 @@ const postDataKredit  = (data) => Post('kredit',true,data)
 
 //API Cut Off
 const getDataCutOff  = () => Get('cutoff/active',true)
+const getRangeTgl  = () => Get('cutoff',true)
 const postDataCutOff = (data) => Post('cutoff',true,data)
 const putDataCutOff  = (data) => Put('cutoff',true,data)
 const deleteCutOff   = (id) => Delete(`cutoff/${id}`,true)
@@ -66,6 +67,7 @@ const API = {
     postDataCutOff,
     putDataCutOff,
     deleteCutOff,
+    getRangeTgl,
 
     //API Kredit
     getDataKredit,

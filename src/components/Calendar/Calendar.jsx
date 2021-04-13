@@ -20,41 +20,37 @@ const Calendar = (props) => {
     setFocus(newFocus || START_DATE)
   }
 
-  // console.log(startDate ? format(startDate, 'yyyy-MM-dd', { locale: enGB }) : 'none')
-  // console.log(endDate ? format(endDate, 'yyyy-MM-dd', { locale: enGB }) : 'none')
-  // console.log(document.getElementById("starTgl").value)
   return (
     <div>
-      {/* <p>Currently selecting: {focus}.</p> */}
-                    <Row>
-                        <Col sm={6}>
-                            <FormGroup>
-                                <label>Start Date :</label>
-                                <Input
-                                id="starTgl"
-                                name="startDate"
-                                type="date"
-                                readOnly
-                                value={startDate ? format(startDate, 'yyyy-MM-dd', { locale: enGB }) : ''}
-                                onChange={props.ubah}
-                                />
-                            </FormGroup>
-                        </Col>
-                        <Col sm={6}>
-                            <FormGroup>
-                            <label>End Date :</label>
-                                <Input
-                                id="endTgl"
-                                name="endDate"
-                                type="date"
-                                readOnly
-                                value={endDate ? format(endDate, 'yyyy-MM-dd', { locale: enGB }) : ''}
-                                // readOnly
-                                onChange={props.ubah}
-                                />
-                            </FormGroup>
-                        </Col>
-                    </Row>
+      <Row>
+          <Col sm={6}>
+              <FormGroup>
+                  <label>Start Date :</label>
+                  <Input
+                  id="starTgl"
+                  name="startDate"
+                  type="date"
+                  readOnly
+                  value={startDate ? format(startDate, 'yyyy-MM-dd', { locale: enGB }) : ''}
+                  onChange={props.ubah}
+                  />
+              </FormGroup>
+          </Col>
+          <Col sm={6}>
+              <FormGroup>
+              <label>End Date :</label>
+                  <Input
+                  id="endTgl"
+                  name="endDate"
+                  type="date"
+                  readOnly
+                  value={endDate ? format(endDate, 'yyyy-MM-dd', { locale: enGB }) : ''}
+                  // readOnly
+                  onChange={props.ubah}
+                  />
+              </FormGroup>
+          </Col>
+      </Row>
       <DateRangePickerCalendar
         startDate={startDate}
         endDate={endDate}

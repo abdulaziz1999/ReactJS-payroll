@@ -1,22 +1,23 @@
-import React, { Component } from "react"
+import React, { Component } from "react";
 // reactstrap components
 import {
   Card,
   CardHeader,
   Button,
   Container,
+  FormGroup,
   Col,
+  Input,
   Row,
   CardBody,
   Badge,
   // Alert
-} from "reactstrap"
+} from "reactstrap";
 // core components
-// import "../examples/css/Style.css";
-import Calendar from "../../components/Calendar/Calendar"
-import TableCutoff from "../../components/Table/CutOff"
+import "../examples/css/Style.css";
+import Calendar from "../../components/Calendar/Calendar";
 import Swal from 'sweetalert2'
-import API from '../../service'
+import API from '../../service';
 class CutOff extends Component {
   
   state = {
@@ -25,7 +26,8 @@ class CutOff extends Component {
         startDate : "",
         endDate : "",
       },
-      DataRange : []
+      holiday: [],
+      dayEfektif : "",
   };
 
   postDataToAPI = async() => {
@@ -56,11 +58,23 @@ class CutOff extends Component {
     })
   }
 
-  getDataRangeTgl = () => {
-    API.getRangeTgl().then((res) => {
-      this.setState({DataRange : res})
-      console.log(this.state.DataRange)
-    })
+  saveInput = (e) => {
+    this.setState({ input: e.target.value });
+  };
+
+  addNewHoliday = (e) => {
+    this.setState({ input: e.target.value });
+    let { holiday, input } = this.state;
+    holiday.push(input);
+  };
+
+  handleDayEfektif = () => {
+    if(this.state.endDate !== ""){
+      this.setState({
+        day_efektif : 5
+      })
+    }
+    console.log(this.state)
   }
 
   handleUpdate = (event) => {
@@ -104,7 +118,6 @@ class CutOff extends Component {
 
   componentDidMount() {
     this.getDataCutOff()
-    this.getDataRangeTgl()
   }
   render() {
     return (
@@ -132,7 +145,45 @@ class CutOff extends Component {
                             </Card>
                         </Col>
                         <Col sm={6}>
-                            <TableCutoff data={this.state.DataRange}/>
+                            <FormGroup>
+                                <label>Hari Efektif :</label>
+                                <Input
+                                name="dayEfektif"
+                                id="exampleFormControlInput1"
+                                placeholder="Hari Efektif"
+                                type="text"
+                                readOnly
+                                value={ isNaN(this.state.dayEfektif) ? '' : this.state.dayEfektif+" Hari"}
+                                onChange={this.handleUpdate}
+                                />
+                            </FormGroup>
+                            <Row>
+                            <Col sm={6}>
+                              <label>Hari Libur :</label>
+                              <FormGroup>
+                                  <Input
+                                  placeholder="Hari Libur"
+                                  name="holiday"
+                                  type="date"
+                                  onChange={this.saveInput}
+                                  />
+                              </FormGroup>
+                            </Col>
+                            <Col sm={6}>
+                              <Button className="mb--6" onClick={this.addNewHoliday} color="success" size="md"  type="button"> Tambah</Button>
+                            </Col>
+                            </Row>
+                            <ol>
+                              {
+                                this.state.holiday.map((subItems, sIndex) => {
+                                return <li key={`${subItems}${sIndex}`}>
+                                <Badge className="badge-danger" pill>
+                                {subItems}
+                                </Badge>
+                                </li>;
+                                })
+                              }
+                            </ol>
                         </Col>
                         <Col className="modal-footer">
                         <Button  color="success" size="md" onClick={this.postDataToAPI}  type="button">
