@@ -22,7 +22,7 @@ import { RootOnline } from "../../service/Config"
 // import Swal from 'sweetalert2'
 import axios from "axios";
 
-class Kredit extends Component {
+class Cicilan extends Component {
   state = {
     post: [],
     formPegawai: {
@@ -259,4 +259,4 @@ class Kredit extends Component {
   }
 }
 
-export default Kredit;
+export default Cicilan;

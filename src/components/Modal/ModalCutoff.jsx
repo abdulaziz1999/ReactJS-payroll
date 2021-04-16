@@ -61,7 +61,7 @@ class ModalCutOff extends Component {
         <Modal className="modal-dialog-centered" isOpen={this.props.stateExample} toggle={() => this.props.modalBuka("exampleModal")} size="lg" >
           <div className="modal-header">
             <h5 className="modal-title" id="exampleModalLabel">
-              Tambah Tunjangan
+              Update Data Cut Off
             </h5>
             <button aria-label="Close" className="close" data-dismiss="modal" type="button" onClick={() => this.props.modalTutup("exampleModal")} >
               <span aria-hidden={true}>×</span>
