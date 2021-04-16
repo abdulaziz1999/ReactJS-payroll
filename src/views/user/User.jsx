@@ -4,6 +4,7 @@ import { Card, CardHeader, Button, Container, Col, Row, CardBody} from "reactstr
 // core components
 import '../examples/css/Style.css';
 import API from '../../service';
+import Swal from 'sweetalert2'
 import TableUser from "components/Table/TableUser";
 import ModalUser from "components/Modal/ModalUser";
 
@@ -42,13 +43,29 @@ class User extends Component {
     }
     API.postDataUser(data).then((res) => {
       this.getDataUser()
-    })
+    }) 
   }
 
-  handleRemove = (data) => {
-    console.log(data)
-    API.deleteUser(data).then((res) => {
-      this.getDataUser()
+  handleRemove = (id) => {
+      Swal.fire({
+      title: 'Are you sure?',
+      text: "You won't be able to revert this!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, delete it!'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        API.deleteUser(id).then(() => {
+          this.getDataRangeTgl()
+          Swal.fire(
+            'Deleted!',
+            'Your User '+ id +' been deleted.',
+            'success'
+          )
+        })
+      }
     })
   }
 

@@ -18,6 +18,7 @@ import API from '../../service';
 import Swal from 'sweetalert2'
 import { RootOnline } from "service/Config";
 import ModalInsentif from "../../components/Modal/ModalInsentif";
+import Moment from 'moment'
 
 class Insentif extends Component {
   state = {
@@ -28,7 +29,7 @@ class Insentif extends Component {
     isUpdate: false,
     searchTerm: "",
     idinsentif: [],
-    cutOffActiv: [],
+    cutOffActive: [],
     postInsentif: {
       idguru: "",
       idinsentif: "",
@@ -46,7 +47,7 @@ class Insentif extends Component {
   getDataCutOff = () => {
     API.getDataCutOff().then((res) => {
       this.setState({
-        cutOffActiv: res
+        cutOffActive: res
       })
     })
   }
@@ -167,7 +168,8 @@ class Insentif extends Component {
   }
 
   render() {
-    
+    const awal = Moment(this.state.cutOffActive.start).format('DD MMMM YYYY')
+    const akhir = Moment(this.state.cutOffActive.end).format('DD MMMM YYYY')
     return (
       <>
         <div className="header bg-gradient-info pb-8 pt-5 pt-md-8">   
@@ -181,9 +183,11 @@ class Insentif extends Component {
                   <Row>
                     <Col md="6" sm="6" className="text-left">
                       <h3 className="mb-0">Data Insentif Pegawai Lembaga - {this.state.namaLembaga}
-                      <Badge 
-                    className="ml-3" color="info"><strong>{this.state.cutOffActiv.start} sampai {this.state.cutOffActiv.end}</strong>
-                    </Badge>
+                      <Badge className="ml-3" color="info">
+                        <strong className="mr-2">{awal}</strong>
+                        sampai 
+                        <strong className="ml-2">{akhir}</strong>
+                      </Badge>
                      <i className="ni ni-check-bold text-green ml-1"></i>
                       </h3>
                     </Col>

@@ -23,7 +23,7 @@ const postDataKredit  = (data) => Post('kredit',true,data)
 const getDataCutOff  = () => Get('cutoff/active',true)
 const getRangeTgl  = () => Get('cutoff',true)
 const postDataCutOff = (data) => Post('cutoff',true,data)
-const putDataCutOff  = (data) => Put('cutoff',true,data)
+const putDataCutOff  = (data,id) => Put(`cutoff/${id}`,true,data)
 const deleteCutOff   = (id) => Delete(`cutoff/${id}`,true)
 
 //API Review Gapok

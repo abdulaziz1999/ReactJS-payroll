@@ -1,9 +1,9 @@
 import React from "react";
 import { useState } from "react";
-import { Col, Form, FormGroup , Input,InputGroup, InputGroupAddon,InputGroupText, Row, Table} from "reactstrap";
+import { Col, Form, FormGroup , Input,InputGroup, InputGroupAddon,InputGroupText, Row, Table, Button} from "reactstrap";
 
 
-const TableInsentif = ({data,modal,remove,format}) => {
+const TableInsentif = ({data,remove,format,insentif}) => {
     const [searchTerm, setSearchTerm] = useState("")
     
     return (
@@ -29,14 +29,16 @@ const TableInsentif = ({data,modal,remove,format}) => {
                     <tr >
                       <th scope="col">Insentif</th>
                       <th scope="col">Nominal</th>
-                      {/* <th scope="col" className="text-center">Act</th> */}
+                      {insentif ? null :
+                      <th scope="col" className="text-center">Act</th>
+                      }
                     </tr>
                   </thead>
                   <tbody >
                     {data.filter((val) => {
                         if(searchTerm === ""){
                             return val
-                        }else if(val.name.toLowerCase().includes(searchTerm.toLowerCase())){
+                        }else if(val.insentif.toLowerCase().includes(searchTerm.toLowerCase())){
                             return val
                         }
                         return ""
@@ -45,27 +47,19 @@ const TableInsentif = ({data,modal,remove,format}) => {
                         <tr key={index} className="text-left">
                           <td><b>{post.insentif}</b></td>
                           <td><b>{format(post.nominal)}</b></td>
-                          {/* <td>
-                            <div className="btn-group">
-                              <Button
-                                color="info"
-                                type="button"
-                                size="sm"
-                                onClick={() => modal("exampleModal", post)}
-                              >
-                                <i className="ni ni-ruler-pencil"></i> Update
-                              </Button>
-                              &nbsp;
-                              <Button
-                                color="danger"
-                                type="button"
-                                size="sm"
-                                onClick={() => remove(post.id)}
-                              >
-                                <i className="fa fa-trash"></i> Delete
-                              </Button>
-                            </div>
-                          </td> */}
+                          {insentif ? null :
+                              <td>
+                                <div className="btn-group">
+                                  {/* <Button color="info" type="button" size="sm" onClick={() => modal("exampleModal", post)} >
+                                    <i className="ni ni-ruler-pencil"></i> Update
+                                  </Button>
+                                  &nbsp; */}
+                                  <Button color="danger" type="button" size="sm" onClick={() => remove(post.id)} >
+                                    <i className="fa fa-trash"></i> Delete
+                                  </Button>
+                                </div>
+                              </td>
+                          }
                         </tr>
                       );
                     })}

@@ -38,7 +38,6 @@ class User extends Component {
       this.setState({
         insentifActive: res
       })
-      console.log(this.state.insentifActive)
     })
   }
 
@@ -49,10 +48,9 @@ class User extends Component {
       })
   }
 
-  handleRemove = (data) => {
-    console.log(data)
-    API.deleteUser(data).then((res) => {
-      this.getDataUser()
+  handleRemove = (id) => {
+    API.deleteDataInsentifCutoff(id).then((res) => {
+      this.getDataInsentifActive()
     })
   }
 
@@ -100,9 +98,7 @@ class User extends Component {
       this.setState({
         formUser: post,
         isUpdate: true,
-      },(err) => {
-        console.log('error : ', err)
-    })
+      })
   }
 
   toggleModalAdd = (state, e) => {
@@ -112,8 +108,6 @@ class User extends Component {
     this.handleFromClear()
     this.setState({
       isUpdate: false,
-    },(err) => {
-      console.log('error : ', err)
     })
   }
 
@@ -157,7 +151,7 @@ class User extends Component {
                   </Row>
                 </CardHeader>
                 <CardBody>
-                 <TableInsentif data={dataInsentifAll} modal={this.toggleModal} remove={this.handleRemove} format={this.format}/>
+                 <TableInsentif data={dataInsentifAll} insentif={true} modal={this.toggleModal} format={this.format}/>
                 </CardBody>
               </Card>
             </div>
@@ -179,7 +173,7 @@ class User extends Component {
                   </Row>
                 </CardHeader>
                 <CardBody>
-                 <TableInsentif data={dataInsetifActive} modal={this.toggleModal} remove={this.handleRemove} format={this.format}/>
+                 <TableInsentif data={dataInsetifActive} insentif={false} modal={this.toggleModal} remove={this.handleRemove} format={this.format}/>
                 </CardBody>
               </Card>
             </div>

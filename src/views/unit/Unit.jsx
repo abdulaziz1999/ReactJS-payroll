@@ -16,11 +16,12 @@ import API from '../../service';
 // import Swal from 'sweetalert2'
 import axios from "axios"
 import { RootOnline } from "service/Config"
+import Moment from 'moment'
 
 class Unit extends Component {
   state = {
     post: [],
-    cutOffActiv: [],
+    cutOffActive: [],
     isUpdate: false,
   };
  
@@ -35,7 +36,7 @@ class Unit extends Component {
   getDataCutOff = async() => {
     await API.getDataCutOff().then((res) => {
       this.setState({
-        cutOffActiv: res
+        cutOffActive: res
       })
     })
   }
@@ -45,7 +46,6 @@ class Unit extends Component {
     const config = {headers : {Authorization: `Bearer ` + localStorage.token}}
     axios.get(RootOnline + '/gapok/' +id,config)
     .then((result) => {
-      console.log(id)
       this.props.history.push('/admin/review/'+id)
     }).catch((err) => {
       console.log("ini eror :"+err)
@@ -105,9 +105,11 @@ class Unit extends Component {
               <Card className="shadow">
                 <CardHeader className="border-0">
                   <h3 className="mb-0">Pilih Lembaga 
-                    <Badge 
-                    className="ml-3" color="info"><strong>{this.state.cutOffActiv.start} sampai {this.state.cutOffActiv.end}</strong>
-                    </Badge>
+                      <Badge className="ml-3" color="info">
+                        <strong className="mr-2">{Moment(this.state.cutOffActive.start).format('DD MMMM YYYY')}</strong>
+                        sampai 
+                        <strong className="ml-2">{Moment(this.state.cutOffActive.end).format('DD MMMM YYYY')}</strong>
+                      </Badge>
                      <i className="ni ni-check-bold text-green ml-1"></i>
                   </h3>
                 </CardHeader>

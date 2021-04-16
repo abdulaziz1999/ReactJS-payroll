@@ -33,7 +33,6 @@ ReactDOM.render(
       <Route path="/admin/review/:id" component={Review}/>
       <Route path="/admin/reviewtotal/:id" component={Summary}/>
       <Route path="/admin/insentif/:id" component={Insentif}/>
-      
       <Route path="/dash" component={Dash}/>
       <Route path="/icon" component={Icons}/>
       <Route path="/step" component={Step}/>

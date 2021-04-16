@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { Component } from "react"
 // reactstrap components
 import {
     Table,
@@ -7,9 +7,10 @@ import {
     CardHeader,
     Button,
     Badge
-} from "reactstrap";
+} from "reactstrap"
 // core components
-// import Header from "components/Headers/Header_dash";
+import Moment from 'moment'
+
 
 class TableCutoff extends Component {
   render(){
@@ -17,30 +18,30 @@ class TableCutoff extends Component {
       <>  
       <Card className="shadow">
         <CardHeader className="bg-transparent">
-          <h3 className="mb-0">Data Range Tanggal</h3>
+          <h3 className="mb-0">Data Cut Off</h3>
         </CardHeader>
         <CardBody>
-          <Table className="align-items-center" responsive>
+          <Table className="align-items-center" responsive> 
             <thead className="thead-light">
               <tr>
                 <th scope="col">Range Tanggal</th>
                 <th scope="col">Status</th>
-                <th scope="col">Act</th>
+                <th scope="col">Action</th>
               </tr>
             </thead>
             <tbody>
               {this.props.data.map((row, index) => {
                 return (
                   <tr key={index}>
-                    <td>{row.start} - {row.end}</td>
+                    <td>{Moment(row.start).format('DD MMMM YYYY')} - {Moment(row.end).format('DD MMMM YYYY')}</td>
                     <td>
-                      <Badge className="p-2" color="success">status</Badge>
+                      {row.status === 1 ? <Badge className="p-2" color="success">active</Badge> : <Badge className="p-2" color="danger">non active</Badge>}
                     </td>
                     <td>
-                    <Button color="success" size="sm" type="button">
+                    <Button color="success" size="sm"  type="button" onClick={() => this.props.modal("exampleModal",row)} >
                         <i className="fa fa-pen"></i>
                       </Button>
-                      <Button color="danger" size="sm" type="button">
+                      <Button color="danger" size="sm" type="button" onClick={() => this.props.remove(row.id)} >
                         <i className="fa fa-trash"></i>
                       </Button>
                     </td>

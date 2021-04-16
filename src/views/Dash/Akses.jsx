@@ -1,9 +1,6 @@
 import React, { Component } from "react";
-// import axios from "axios";
-// reactstrap components
 import { getToken,getRole } from "../../Utils/Common";
 import '../examples/css/Style.css';
-// import Swal from 'sweetalert2'
 
 class Akses extends Component {
 
@@ -14,6 +11,8 @@ class Akses extends Component {
         this.props.history.push('/dqmart/index');
     }else if(getToken() && getRole() === 'keuangan') { 
         this.props.history.push('/keuangan/index');
+    }else if(getToken() && getRole() === 'unit') { 
+        this.props.history.push('/unit/index');
     } else{
         this.props.history.push('/auth/login');
     }

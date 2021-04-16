@@ -15,11 +15,11 @@ import '../examples/css/Style.css';
 import ReviewGapok from "components/Table/ReviewTotal";
 import API from '../../service';
 import Swal from 'sweetalert2'
-
+import Moment from 'moment'
 class ReviewTotal extends Component {
   state = {
     post: [],
-    cutOffActiv: [],
+    cutOffActive: [],
     namaLembaga: "",
   };
 
@@ -33,7 +33,7 @@ class ReviewTotal extends Component {
   getDataCutOff = () => {
     API.getDataCutOff().then((res) => {
       this.setState({
-        cutOffActiv: res
+        cutOffActive: res
       })
     })
   }
@@ -112,9 +112,11 @@ class ReviewTotal extends Component {
               <Card className="shadow">
                 <CardHeader className="border-0">
                   <h3 className="mb-0">Data Total Jam Tambahan Lembaga - {this.state.namaLembaga}
-                    <Badge 
-                    className="ml-3" color="info"><strong>{this.state.cutOffActiv.start} sampai {this.state.cutOffActiv.end}</strong>
-                    </Badge>
+                      <Badge className="ml-3" color="info">
+                        <strong className="mr-2">{Moment(this.state.cutOffActive.start).format('DD MMMM YYYY')}</strong>
+                        sampai 
+                        <strong className="ml-2">{Moment(this.state.cutOffActive.end).format('DD MMMM YYYY')}</strong>
+                      </Badge>
                      <i className="ni ni-check-bold text-green ml-1"></i>
                   </h3>
                 </CardHeader>

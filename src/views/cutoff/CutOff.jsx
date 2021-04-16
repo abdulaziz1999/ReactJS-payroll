@@ -9,23 +9,26 @@ import {
   Row,
   CardBody,
   Badge,
-  // Alert
 } from "reactstrap"
 // core components
-// import "../examples/css/Style.css";
-import Calendar from "../../components/Calendar/Calendar"
-import TableCutoff from "../../components/Table/CutOff"
 import Swal from 'sweetalert2'
 import API from '../../service'
+import Calendar from "../../components/Calendar/Calendar"
+import TableCutoff from "../../components/Table/CutOff"
+import ModalCutOff from "components/Modal/ModalCutoff"
+import Moment from 'moment'
 class CutOff extends Component {
   
   state = {
-      post: [],
-      formDate: {
-        startDate : "",
-        endDate : "",
-      },
-      DataRange : []
+    post:[],
+    DataRange : [],
+    formDate: {
+      id : "",
+      start : "",
+      end : "",
+      status:""
+    },
+    isUpdate: false
   };
 
   postDataToAPI = async() => {
@@ -34,7 +37,6 @@ class CutOff extends Component {
     const postData = {
       start: startValue,
       end: endValue,
-      holidays: this.state.holiday,
       status: 1
     }
     await API.postDataCutOff(postData).then((res) =>{
@@ -48,18 +50,25 @@ class CutOff extends Component {
     })
   };
 
-  getDataCutOff = () => {
-    API.getDataCutOff().then((res) => {
+  getDataCutOff = async() => {
+    await API.getDataCutOff().then((res) => {
       this.setState({
         post: res
       })
     })
   }
 
-  getDataRangeTgl = () => {
-    API.getRangeTgl().then((res) => {
+  getDataRangeTgl = async() => {
+    await API.getRangeTgl().then((res) => {
       this.setState({DataRange : res})
-      console.log(this.state.DataRange)
+    })
+  }
+
+  putDataCutoff = async() => {
+    let id = this.state.formDate.id
+    await API.putDataCutOff(this.state.formDate,id).then((res) => {
+      this.getDataRangeTgl()
+      this.getDataCutOff()
     })
   }
 
@@ -71,8 +80,27 @@ class CutOff extends Component {
       () => {this.handleDiff()});
   };
 
-  handleConsole = () => {
-    console.log(this.postDataToAPI);
+  handleRemove = (id) => {
+    Swal.fire({
+      title: 'Are you sure?',
+      text: "You won't be able to revert this!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, delete it!'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        API.deleteCutOff(id).then(() => {
+          this.getDataRangeTgl()
+          Swal.fire(
+            'Deleted!',
+            'Your id '+ id +' been deleted.',
+            'success'
+          )
+        })
+      }
+    })
   }
 
   handleStartDate = (value) => {
@@ -102,6 +130,25 @@ class CutOff extends Component {
     return today;
   }
 
+  toggleModal = (state, post,e) => {
+    this.setState({
+      exampleModal: !this.state[state],
+    });
+    this.setState({
+      formDate: post,
+      isUpdate: true,
+    })
+}
+
+toggleClose = (state) => {
+  this.setState({ [state]: !this.state[state]})
+}
+
+handleSimpan = (modal) => {
+    this.putDataCutoff()
+    this.toggleClose(modal)
+}
+
   componentDidMount() {
     this.getDataCutOff()
     this.getDataRangeTgl()
@@ -117,7 +164,11 @@ class CutOff extends Component {
               <Card className="shadow">
                 <CardHeader className="border-0">
                   <h3 className="mb-0">Cut Off Payroll  
-                  <Badge className="ml-3" color="info"><strong>{this.state.post.start}</strong> sampai <strong>{this.state.post.end}</strong></Badge>
+                  <Badge className="ml-3" color="info">
+                    <strong className="mr-2">{Moment(this.state.post.start).format('DD MMMM YYYY')}</strong>
+                    sampai 
+                    <strong className="ml-2">{Moment(this.state.post.end).format('DD MMMM YYYY')}</strong>
+                  </Badge>
                   <i className="ni ni-check-bold text-green ml-1"></i>
                   </h3>
                 </CardHeader>
@@ -132,7 +183,7 @@ class CutOff extends Component {
                             </Card>
                         </Col>
                         <Col sm={6}>
-                            <TableCutoff data={this.state.DataRange}/>
+                            <TableCutoff data={this.state.DataRange} remove={this.handleRemove} modal={this.toggleModal}/>
                         </Col>
                         <Col className="modal-footer">
                         <Button  color="success" size="md" onClick={this.postDataToAPI}  type="button">
@@ -146,6 +197,17 @@ class CutOff extends Component {
             </div>
           </Row>
         </Container>
+
+        <ModalCutOff
+        data={this.state.formDate} 
+        stateExample={this.state.exampleModal} 
+        modalBuka={this.toggleModal} 
+        modalTutup={this.toggleClose} 
+        updateField={this.handleUpdate} 
+        save={this.handleSimpan} 
+        status={this.state.isUpdate}
+        />
+
       </>
     );
   }

@@ -72,7 +72,7 @@ class ModalTunjangan extends Component {
                   <FormGroup>
                     <label htmlFor="exampleFormControlSelect1">Nama Pegawai :</label>
                     <Input name="nama"id="exampleFormControlSelect1" type="select" onChange={this.getJenisTunjangan}>
-                      <option disabled selected defaultValue={""}>Pilih Nama Pegawai</option>
+                      <option disabled selected value={""}>Pilih Nama Pegawai</option>
                       {this.state.dataPegawai.filter(row => row.idlembaga === uri)
                       .map((row, index) => {
                           return (

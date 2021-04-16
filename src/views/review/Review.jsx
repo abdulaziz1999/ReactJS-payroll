@@ -7,12 +7,13 @@ import API from '../../service';
 import Swal from 'sweetalert2'
 import ReviewGapok from "components/Table/ReviewGapok"
 import ModalTunjangan from "../../components/Modal/ModalTunjangan"
+import Moment from 'moment'
 // import Cookies from "js-cookie"
 
 class Review extends Component {
   state = {
     post: [],
-    cutOffActiv: [],
+    cutOffActive: [],
     namaLembaga : "",
   };
 
@@ -26,7 +27,7 @@ class Review extends Component {
   getDataCutOff = async() => {
     await API.getDataCutOff().then((res) => {
       this.setState({
-        cutOffActiv: res
+        cutOffActive: res
       })
     })
   }
@@ -48,7 +49,6 @@ class Review extends Component {
       this.setState({
         post: res
       })
-      console.log(this.state.post)
     },(err) => {
       console.log("ini eror :"+err)
     })
@@ -145,8 +145,10 @@ class Review extends Component {
                   <Row>
                     <Col md="6" sm="6" className="text-left">
                       <h3 className="mb-0">Review Gapok Lembaga - {this.state.namaLembaga}
-                      <Badge 
-                        className="ml-3" color="info"><strong>{this.state.cutOffActiv.start} sampai {this.state.cutOffActiv.end}</strong>
+                      <Badge className="ml-3" color="info">
+                        <strong className="mr-2">{Moment(this.state.cutOffActive.start).format('DD MMMM YYYY')}</strong>
+                        sampai 
+                        <strong className="ml-2">{Moment(this.state.cutOffActive.end).format('DD MMMM YYYY')}</strong>
                       </Badge>
                         <i className="ni ni-check-bold text-green ml-1"></i>
                       </h3>
