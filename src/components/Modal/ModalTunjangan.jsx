@@ -14,6 +14,7 @@ import API from '../../service'
 class ModalTunjangan extends Component {
   state = {
     dataPegawai: [],
+    jenisTunjangan : []
   }
 
   onFormSubmit = (e) => {
@@ -30,9 +31,10 @@ class ModalTunjangan extends Component {
 
   getJenisTunjangan = (event) => {
     let id = event.target.value
-    console.log(id)
     API.getDetailTunjangan(id).then((res) => {
-      console.log(res)
+      this.setState({
+        jenisTunjangan: res
+      })
     })
   }
 
@@ -71,7 +73,7 @@ class ModalTunjangan extends Component {
                 <Col md="12">
                   <FormGroup>
                     <label htmlFor="exampleFormControlSelect1">Nama Pegawai :</label>
-                    <Input name="nama"id="exampleFormControlSelect1" type="select" onChange={this.getJenisTunjangan}>
+                    <Input name="idguru" id="guruid" type="select" onChange={this.getJenisTunjangan}>
                       <option disabled selected value={""}>Pilih Nama Pegawai</option>
                       {this.state.dataPegawai.filter(row => row.idlembaga === uri)
                       .map((row, index) => {
@@ -85,8 +87,13 @@ class ModalTunjangan extends Component {
                 <Col md="12">
                   <FormGroup>
                   <label htmlFor="exampleFormControlSelect2">Jenis Tunjangan:</label>
-                    <Input name="tunjangan"id="exampleFormControlSelect2" type="select">
+                    <Input name="idtunjangan" id="tunjanganid" type="select" >
                       <option value="">Pilih Jenis Tunjangan</option>
+                      {this.state.jenisTunjangan.map((row, index) => {
+                          return (
+                            <option key={index} value={row.idtunjangan}>{row.tunjangan}</option>
+                          )
+                      })}
                     </Input>
                   </FormGroup>
                 </Col>
@@ -95,14 +102,7 @@ class ModalTunjangan extends Component {
                 <Col md="12">
                   <FormGroup>
                   <label>Nominal :</label>
-                    <Input
-                      autoComplete="off"
-                      placeholder="Nominal"
-                      name="total"
-                      type="number"
-                      // onChange={this.hadleUbah}
-                      // value={total}
-                    />
+                    <Input autoComplete="off" placeholder="Nominal" id="nomtunjangan" name="nominal" type="number" />
                   </FormGroup>
                 </Col>
               </Row>

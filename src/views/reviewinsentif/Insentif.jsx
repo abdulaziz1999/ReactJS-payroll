@@ -202,7 +202,7 @@ class Insentif extends Component {
                   </Row>
                 </CardHeader>
                 <CardBody>
-                 <TableComp data={this.state.post} insentif={this.state.insentif}/>
+                 <TableComp data={this.state.post} insentif={this.state.insentif} format={this.format}/>
                 </CardBody>
                 <Col className="modal-footer">
                   <Button color="success" className="mt-3" size="md" type="button" onClick={this.getSimpan}>Simpan & Lanjutkan</Button>
@@ -211,6 +211,7 @@ class Insentif extends Component {
             </div>
           </Row>
         </Container>
+
         <ModalInsentif 
         stateExample={this.state.exampleModal}
         modalBuka={this.toggleModal}

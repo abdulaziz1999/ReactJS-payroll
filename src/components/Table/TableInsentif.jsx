@@ -13,7 +13,7 @@ import {
 } from "reactstrap";
 import '../../views/examples/css/fixedcolumn.css'
 
-const TableInsentif = ({ data, insentif, remove }) => {
+const TableInsentif = ({ data, insentif, format }) => {
   const [searchTerm, setSearchTerm] = useState("");
 
   return (
@@ -80,18 +80,18 @@ const TableInsentif = ({ data, insentif, remove }) => {
               .map((post, index) => {
                 var elements=[];
                 for(var i=0;i<post.insentif.length;i++){
-                  elements.push(<td key={i}>{post.insentif[i]}</td>);
+                  elements.push(<td key={i}><strong>{format(post.insentif[i])}</strong></td>);
                 }
                 return (
                   <tr key={index}>
-                    <td>{post.nama}</td>
+                    <td><strong>{post.nama}</strong></td>
                     {/* <td>1</td>
                     <td>2</td>
                     <td>3</td>
                     <td>4</td>
                     <td>5</td> */}
                     {elements}
-                    <td>{post.totalinsentif}</td>
+                    <td><strong>{format(post.totalinsentif)}</strong></td>
                   </tr>
                 );
               })}

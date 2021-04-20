@@ -42,6 +42,7 @@ const TableGapok = ({data,format,remove}) => {
                       <th scope="col"><b>Jam Quran</b></th>
                       <th scope="col"><b>Jam Kelas</b></th>
                       <th scope="col"><b>Jam Asrama</b></th>
+                      <th scope="col"><b>Total Jam</b></th>
                       <th scope="col"><b>Total Jam Tambahan</b></th>
                       <th scope="col"><b>Transport</b></th>
                       <th scope="col"><b>Total</b></th>
@@ -63,6 +64,7 @@ const TableGapok = ({data,format,remove}) => {
                           <td><b>{post.kelas}</b></td>
                           <td><b>{post.asrama}</b></td>
                           <td><b>{format(post.total_jam)}</b></td>
+                          <td><b>{format(post.total_jam_tambahan)}</b></td>
                           <td><b>{format(post.transport)}</b></td>
                           <td><b>{format(post.total_jam+post.transport)}</b></td>
                         </tr>

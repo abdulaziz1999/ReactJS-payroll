@@ -48,14 +48,14 @@ class ModalUser extends Component {
                 <Col md="6">
                   <FormGroup>
                     <label>Nama Insentif :</label>
-                    <Input placeholder="Insentif" name="insentif" type="text" onChange={ubah} value={insentif}
+                    <Input placeholder="Insentif" name="insentif" autoComplete="off" type="text" onChange={ubah} value={insentif}
                     />
                   </FormGroup>
                 </Col>
                 <Col md="6">
                   <FormGroup>
                     <label>Nominal :</label>
-                    <Input placeholder="Nominal" name="nominal" type="text" onChange={ubah} value={nominal}
+                    <Input placeholder="Nominal" name="nominal" autoComplete="off" type="text" onChange={ubah} value={nominal}
                     />
                   </FormGroup>
                 </Col>

@@ -6,6 +6,7 @@ import '../examples/css/Style.css';
 import API from '../../service';
 import TableInsentif from "components/Table/TableInsentifUnit";
 import ModaAddInsentif from "components/Modal/ModalInputInsentif";
+import ModalInsentif  from "components/Modal/ModalInsentifActive"
 
 class User extends Component {
   state = {
@@ -111,6 +112,16 @@ class User extends Component {
     })
   }
 
+  toggleModalAct = (state, e) => {
+    this.setState({
+      exampleModal1: !this.state[state],
+    });
+    this.handleFromClear()
+    this.setState({
+      isUpdate: false,
+    })
+  }
+
   toggleClose = (state) => {
     this.setState({ [state]: !this.state[state]})
   }
@@ -166,7 +177,7 @@ class User extends Component {
                     <h3 className="mb-0">Data Insentif Active</h3>
                   </Col>
                   <Col md="6" sm="6" className="text-right">
-                  <Button color="success" type="button" size="sm" >
+                  <Button color="success" type="button" size="sm" onClick={() => this.toggleModalAct("exampleModal1")}>
                     <i className="fa fa-plus"></i> Tambah
                     </Button>
                   </Col>
@@ -183,6 +194,16 @@ class User extends Component {
         <ModaAddInsentif 
         data={this.state.formUser} 
         stateExample={this.state.exampleModal} 
+        modalBuka={this.toggleModal} 
+        modalTutup={this.toggleClose} 
+        updateField={this.handleUbah} 
+        save={this.handleSimpan} 
+        status={this.state.isUpdate}
+        />
+
+        <ModalInsentif 
+        data={this.state.formUser} 
+        stateModal={this.state.exampleModal1} 
         modalBuka={this.toggleModal} 
         modalTutup={this.toggleClose} 
         updateField={this.handleUbah} 

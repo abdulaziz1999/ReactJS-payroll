@@ -15,6 +15,11 @@ class Review extends Component {
     post: [],
     cutOffActive: [],
     namaLembaga : "",
+    dataTunjangan : {
+      idtunjangan: "",
+      idguru: "",
+      noiminal:""
+    }
   };
 
   getUriSegment3 = () => {
@@ -49,6 +54,7 @@ class Review extends Component {
       this.setState({
         post: res
       })
+      // console.log(res)
     },(err) => {
       console.log("ini eror :"+err)
     })
@@ -61,6 +67,26 @@ class Review extends Component {
       this.props.history.push('/admin/reviewtotal/'+id)
     }).catch((err) => {
       console.log("ini eror : "+err)
+    })
+  }
+
+  handleUbah = (event) => {
+    let formTunjangan = { ...this.state.dataTunjangan };
+    formTunjangan[event.target.name] = event.target.value;
+    this.setState({
+        dataTunjangan: formTunjangan,
+      })
+    console.log(this.state.dataTunjangan)
+  }
+
+  handleSimpan = async(modal) => {
+    let data = {
+      idtunjangan: document.getElementById("tunjanganid").value,
+      idguru: document.getElementById("guruid").value,
+      nominal:document.getElementById("nomtunjangan").value
+    }
+    await API.postTunjanganPegawai(data).then((res) => {
+      this.toggleClose(modal);
     })
   }
 
@@ -103,21 +129,20 @@ class Review extends Component {
   }
   
   format = (amount) => {
-    return Number(amount).toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&.')
-  };
+    return Number(amount).toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,')
+  }
 
   toggleModal = (state) => {
     this.setState({
       exampleModal: !this.state[state],
-    });
-  
-  };
+    })
+  }
 
   toggleClose = (state) => {
     this.setState({
       [state]: !this.state[state],
-    });
-  };
+    })
+  }
   
   componentDidMount() {
     let id = this.getUriSegment3()
@@ -176,6 +201,7 @@ class Review extends Component {
         modalBuka={this.toggleModal}
         modalTutup={this.toggleClose}
         save={this.handleSimpan}
+        updateField={this.handleUbah}
         uri={this.getUriSegment3()}
         />
       </>

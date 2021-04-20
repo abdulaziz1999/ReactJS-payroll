@@ -31,7 +31,7 @@ class Unit extends Component {
         post : res
       })
     })
-  };
+  }
 
   getDataCutOff = async() => {
     await API.getDataCutOff().then((res) => {
