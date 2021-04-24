@@ -22,8 +22,9 @@ class Review extends Component {
   }
 
   getSycnPegawai = () => {
+    this.loadingData()
     API.getSycnPegawai().then((res) => {
-      this.loadingData()
+      this.getPegawai()
     })
   }
 
@@ -58,7 +59,7 @@ class Review extends Component {
       {
         title: 'Sedang Sycn Data Pegawai',
         html: 'I will close in <b></b> milliseconds.',
-        timer: 1000,
+        timer: 17000,
         timerProgressBar: true,
         didOpen: () => {
           Swal.showLoading()

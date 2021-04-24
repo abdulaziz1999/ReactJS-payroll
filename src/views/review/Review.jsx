@@ -13,6 +13,7 @@ import Moment from 'moment'
 class Review extends Component {
   state = {
     post: [],
+    listTunjangan:[],
     cutOffActive: [],
     namaLembaga : "",
     dataTunjangan : {
@@ -29,11 +30,26 @@ class Review extends Component {
     return id
   }
 
+  getClearChache = async() => {
+    await API.hapusChache().then((res) => {
+    })
+  }
+
   getDataCutOff = async() => {
     await API.getDataCutOff().then((res) => {
       this.setState({
         cutOffActive: res
       })
+    })
+  }
+
+  getTunjangan = async() => {
+    await API.getDataTunjangan().then((res) => {
+      this.setState({
+        listTunjangan: res
+      })
+    }).catch((err) => {
+      console.log("ini eror : "+err)
     })
   }
 
@@ -87,6 +103,7 @@ class Review extends Component {
     }
     await API.postTunjanganPegawai(data).then((res) => {
       this.toggleClose(modal);
+      this.getReviewGapok()
     })
   }
 
@@ -151,7 +168,9 @@ class Review extends Component {
     }else{
       this.getNamaLembaga()
       this.getDataCutOff()
+      this.getClearChache()
       this.getReviewGapok()
+      this.getTunjangan()
     }
   }
 
@@ -186,7 +205,7 @@ class Review extends Component {
                   </Row>
                 </CardHeader>
                 <CardBody>
-                 <ReviewGapok data={datapost} save={this.simpanGapok} format={this.format}/>
+                 <ReviewGapok data={datapost} save={this.simpanGapok} format={this.format} listTunjangan={this.state.listTunjangan}/>
                 </CardBody>
                 <Col className="modal-footer">
                   <Button color="success" className="mt-3" size="md" type="button" onClick={this.simpanGapok}>Simpan & Lanjutkan</Button>

@@ -44,6 +44,11 @@ class Insentif extends Component {
     return id
   }
 
+  getClearChache = async() => {
+    await API.hapusChache().then((res) => {
+    })
+  }
+
   getDataCutOff = () => {
     API.getDataCutOff().then((res) => {
       this.setState({
@@ -156,6 +161,7 @@ class Insentif extends Component {
   componentDidMount() {
     this.getDataCutOff()
     this.getNamaLembaga()
+    this.getClearChache()
     this.getInsentif()
     this.getDataInsentif()
     let tableHeaderTop = document.querySelector('.sticky-table thead').getBoundingClientRect().top;

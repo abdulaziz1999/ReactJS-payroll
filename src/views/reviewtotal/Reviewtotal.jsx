@@ -29,6 +29,11 @@ class ReviewTotal extends Component {
     let id = arr[3]
     return id
   }
+
+  getClearChache = async() => {
+    await API.hapusChache().then((res) => {
+    })
+  }
  
   getDataCutOff = () => {
     API.getDataCutOff().then((res) => {
@@ -93,6 +98,7 @@ class ReviewTotal extends Component {
     }else{
       this.getNamaLembaga()
       this.getDataCutOff()
+      this.getClearChache()
       this.getDataSummary()
     }
 

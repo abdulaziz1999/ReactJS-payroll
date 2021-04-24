@@ -2,6 +2,7 @@ import Get from './Get'
 import Post from './Post'
 import Put from './Put'
 import Delete from './Delete'
+import GetClear from './GetClear'
 
 //API kepegawaian
 const getUnit = () => Get('lembaga',false)
@@ -53,8 +54,12 @@ const postTunjanganPegawai = (data) => Post(`tunjangan/pegawai`,true,data)
 const getDataPegawai = () => Get('pegawai',true)
 const getSycnPegawai = () => Get('syncPegawai',true)
 
+//API Kredit
 const kreditPegawai = (config) => Get('kredit',true,config)
 const getPegawai    = () => Get('kredit',true)
+
+//API Clear Chache
+const hapusChache = () => GetClear('clear-cache',true)
 
 const API = {
     //API User
@@ -108,6 +113,7 @@ const API = {
 
     getPegawai,
     kreditPegawai,
+    hapusChache
 }
 
 export default API

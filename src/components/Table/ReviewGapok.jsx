@@ -5,7 +5,7 @@ import { useState } from "react";
 import { Col, Form, FormGroup , Input,InputGroup, InputGroupAddon,InputGroupText, Row, Table} from "reactstrap";
 import '../../views/examples/css/fixedcolumn.css'
 
-const TableGapok = ({data,format}) => {
+const TableGapok = ({data,format,listTunjangan}) => {
     // console.log(save)
     const [searchTerm, setSearchTerm] = useState("")
   
@@ -45,7 +45,11 @@ const TableGapok = ({data,format}) => {
                       <th scope="col"><b>Index Ruang</b></th>
                       <th scope="col"><b>PT/PTT</b></th>
                       <th scope="col"><b>Gaji Pokok</b></th>
-                      <th scope="col"><b>Tunjangan</b></th>
+                      {listTunjangan.map((row, index) => {
+                            return(
+                              <th key={index} scope="col" rowSpan={3}>{row.tunjangan}</th>
+                            )
+                        })}
                       <th scope="col"><b>Gapok + Tunjangan</b></th>
                     </tr>
                   </thead>
@@ -58,6 +62,10 @@ const TableGapok = ({data,format}) => {
                         }
                         return ""
                     }).map((post, index) => {
+                      var elements=[];
+                      for(var i=0;i<post.tunjangan.length;i++){
+                        elements.push(<td key={i}><strong>{format(post.tunjangan[i])}</strong></td>);
+                      }
                       return (
                         <tr key={index}>
                           <td className="zui-sticky-col"><b>{post.nama}</b></td>
@@ -67,8 +75,8 @@ const TableGapok = ({data,format}) => {
                           <td><b>{post.indexruang}</b></td>
                           <td><b>{post.idstatus}</b></td>
                           <td><b>{format(post.gapok)}</b></td>
-                          <td><b>0</b></td>
-                          <td><b>{format(post.gapok)}</b></td>
+                          {elements}
+                          <td><b>{format(post.total_gapok_tunjangan)}</b></td>
                         </tr>
                       );
                     })}
