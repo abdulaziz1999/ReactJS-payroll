@@ -73,7 +73,7 @@ class ModalTunjangan extends Component {
                 <Col md="12">
                   <FormGroup>
                     <label htmlFor="exampleFormControlSelect1">Nama Pegawai :</label>
-                    <Input name="idguru" id="guruid" type="select" onChange={this.getJenisTunjangan}>
+                    <Input name="idguru" id="guruid" type="select" onChange={this.getJenisTunjangan} required>
                       <option disabled selected value={""}>Pilih Nama Pegawai</option>
                       {this.state.dataPegawai.filter(row => row.idlembaga === uri)
                       .map((row, index) => {
@@ -87,7 +87,7 @@ class ModalTunjangan extends Component {
                 <Col md="12">
                   <FormGroup>
                   <label htmlFor="exampleFormControlSelect2">Jenis Tunjangan:</label>
-                    <Input name="idtunjangan" id="tunjanganid" type="select" >
+                    <Input name="idtunjangan" id="tunjanganid" type="select" required>
                       <option value="">Pilih Jenis Tunjangan</option>
                       {this.state.jenisTunjangan.map((row, index) => {
                           return (
@@ -102,7 +102,7 @@ class ModalTunjangan extends Component {
                 <Col md="12">
                   <FormGroup>
                   <label>Nominal :</label>
-                    <Input autoComplete="off" placeholder="Nominal" id="nomtunjangan" name="nominal" type="number" />
+                    <Input autoComplete="off" placeholder="Nominal" id="nomtunjangan" name="nominal" type="number" required/>
                   </FormGroup>
                 </Col>
               </Row>
