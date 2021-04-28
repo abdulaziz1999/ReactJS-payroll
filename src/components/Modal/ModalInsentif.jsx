@@ -14,7 +14,7 @@ import API from '../../service'
 class ModalTunjangan extends Component {
   state = {
     dataPegawai: [],
-    insentifAll: []
+    insentifAll: [],
   }
 
   onFormSubmit = (e) => {
@@ -30,12 +30,23 @@ class ModalTunjangan extends Component {
   }
 
   getAllInsentif = async() => {
-    await API.getInsentifPerCutOff().then((result) => {
+    await API.getAllInsentif().then((result) => {
         this.setState({
             insentifAll: result
           });
     }).catch((err) => {
         console.log("ini eror :"+err)
+    })
+  }
+
+  getKegiatanId = async(event) => {
+    let id = event.target.value;
+    await API.getKegiatanId(id).then((result) => {
+      this.setState({
+          kegiatanId: result.detail
+        });
+    }).catch((err) => {
+      console.log("ini eror :"+err)
     })
   }
 
@@ -77,7 +88,7 @@ class ModalTunjangan extends Component {
                 <Col md="12">
                   <FormGroup>
                     <label htmlFor="exampleFormControlSelect1">Nama Pegawai :</label>
-                    <Input name="idguru"id="exampleFormControlSelect1" type="select" onChange={ubah} required>
+                    <Input name="idguru" id="exampleFormControlSelect1" type="select" onChange={ubah} required>
                       <option disabled selected defaultValue={''}>Pilih Nama Pegawai</option>
                       {this.state.dataPegawai.filter(row => row.idlembaga === uri)
                       .map((row, index) => {
@@ -90,12 +101,12 @@ class ModalTunjangan extends Component {
                 </Col>
                 <Col md="12">
                   <FormGroup>
-                  <label htmlFor="exampleFormControlSelect2">Jenis Insentif:</label>
-                    <Input name="idinsentif"id="exampleFormControlSelect2" type="select" onChange={ubah} required>
-                      <option value="">Pilih Jenis Insentif</option>
+                  <label htmlFor="exampleFormControlSelect2">Kegiatan - Skala:</label>
+                    <Input name="idinsentif" id="exampleFormControlSelect2" type="select" onChange={ubah} required>
+                      <option value="1">Pilih Kegiatan</option>
                       {this.state.insentifAll.map((row, index) => {
                           return (
-                            <option key={index} value={row.id}>{row.insentif}</option>
+                            <option key={index} value={row.id}>{row.nama_kegiatan} - {row.jenis}</option>
                           )
                       })}
                     </Input>
@@ -105,8 +116,15 @@ class ModalTunjangan extends Component {
               <Row>
                 <Col md="12">
                   <FormGroup>
-                  <label>Nominal :</label>
-                    <Input autoComplete="off" placeholder="Nominal" name="nominal" type="number" onChange={ubah} required />
+                  <label>Jabatan :</label>
+                    <Input name="nominal" id="exampleFormControlSelect2" type="select" onChange={ubah} required>
+                      <option value="">Pilih Jabatan</option>
+                      {this.props.kegiatanId.map((row, index) => {
+                          return (
+                            <option key={index} value={row.nominal}>{row.jabatan}</option>
+                          )
+                      })}
+                    </Input>
                   </FormGroup>
                 </Col>
               </Row>

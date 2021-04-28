@@ -18,7 +18,7 @@ import Step from "views/Step/Step"
 import ArrayInsert from "views/examples/Tes.js"
 import Akses from "views/Dash/Akses"
 import Review from "views/review/Review"
-import Summary from "views/reviewtotal/Reviewtotal"
+import Summary from "views/reviewjam/Reviewtotal"
 import Insentif from "views/reviewinsentif/Insentif"
 
 

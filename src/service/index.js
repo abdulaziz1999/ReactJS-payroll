@@ -35,14 +35,15 @@ const postDataGapok = (id) => Post(`gapok/${id}`,true)
 const getDataSummary = (id) => Get(`summary/${id}`,true)
 
 //API Review Insentif
-const getAllInsentif = () => Get(`insentif`,true)
-const getInsentifPerCutOff = () => Get(`insentif/cutoff`,true)
+const getAllInsentif = () => Get(`kegiatan`,true)
+const getInsentifPerCutOff = () => Get(`insentif`,true)
 const postDataInsentif = (data) => Post(`insentif`,true,data)
 const postInsentifPegawai = (data) => Post(`insentifPegawai`,true,data)
 
 const getDataInsentifCutoff = (id) => Get(`insentifCutoff/${id}`,true)
 const postDataInsentifCutoff = (data) => Post(`insentifCutoff`,true,data)
 const deleteDataInsentifCutoff = (id) => Delete(`insentifCutoff/${id}`,true)
+const getKegiatanId = (id) => Get(`kegiatan/${id}`,true)
 
 //API Tunjangan
 const getDataTunjangan  = () => Get(`tunjangan`,true)
@@ -102,7 +103,8 @@ const API = {
     deleteDataInsentifCutoff,
     postDataInsentif,
     postInsentifPegawai,
-
+    getKegiatanId,
+    
     //API Pegawai Master data
     getDataPegawai,
     getSycnPegawai,

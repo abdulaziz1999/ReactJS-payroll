@@ -13,7 +13,7 @@ import {
 // core components
 import '../examples/css/Style.css'
 import API from '../../service';
-// import Swal from 'sweetalert2'
+import Swal from 'sweetalert2'
 import axios from "axios"
 import { RootOnline } from "service/Config"
 import Moment from 'moment'
@@ -43,7 +43,13 @@ class Unit extends Component {
 
   getReviewLembaga = (event) => {
     let id = event.target.id
+    let data = event.target.name
     const config = {headers : {Authorization: `Bearer ` + localStorage.token}}
+    Swal.fire(
+      'Success!',
+      'Review Gapok Lembaga '+data+'.',
+      'success'
+    )
     axios.get(RootOnline + '/gapok/' +id,config)
     .then((result) => {
       this.props.history.push('/admin/review/'+id)
@@ -118,7 +124,7 @@ class Unit extends Component {
                       return (
                         <Row key={index}>
                           <Col md={3}>
-                            <Button block color="primary" className="mt-1" size="md" id={post.id} type="button" onClick={this.getReviewLembaga} >{post.nama_lembaga} </Button>
+                            <Button block color="primary" className="mt-1" size="md" id={post.id} name={post.nama_lembaga} type="button" onClick={this.getReviewLembaga} >{post.nama_lembaga} </Button>
                             <hr className="my-3" />
                           </Col>
                           <Col md={9} className="mb-3">

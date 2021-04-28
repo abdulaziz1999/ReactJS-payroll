@@ -5,15 +5,13 @@ import { Card, CardHeader, Container, Row, Col, Button, CardBody ,Badge} from "r
 import '../examples/css/Style.css'
 import API from '../../service';
 import Swal from 'sweetalert2'
-import ReviewGapok from "components/Table/ReviewGapok"
-import ModalTunjangan from "../../components/Modal/ModalTunjangan"
+import TableLedger from "components/Table/TableLedger"
 import Moment from 'moment'
 // import Cookies from "js-cookie"
 
-class Review extends Component {
+class ReviewLedger extends Component {
   state = {
     post: [],
-    listTunjangan:[],
     cutOffActive: [],
     namaLembaga : "",
     dataTunjangan : {
@@ -43,16 +41,6 @@ class Review extends Component {
     })
   }
 
-  getTunjangan = async() => {
-    await API.getDataTunjangan().then((res) => {
-      this.setState({
-        listTunjangan: res
-      })
-    }).catch((err) => {
-      console.log("ini eror : "+err)
-    })
-  }
-
   getNamaLembaga = async() => {
     let id = this.getUriSegment3()
     await API.getUnitById(id).then((result) => {
@@ -64,27 +52,14 @@ class Review extends Component {
     })
   }
 
-  getReviewGapok = async() => {
-    this.getClearChache()
-    let id = this.getUriSegment3()
-    await API.getDataGapok(id).then((res) => {
-      this.setState({
-        post: res
-      })
-      // console.log(res)
-    },(err) => {
-      console.log("ini eror :"+err)
-    })
-  }
-
   simpanGapok = async() => {
-    this.loadingData()
-    let id = this.getUriSegment3()
-    await API.postDataGapok(id).then((result) => {
-      this.props.history.push('/admin/reviewtotal/'+id)
-    }).catch((err) => {
-      console.log("ini eror : "+err)
-    })
+    // this.loadingData()
+    // let id = this.getUriSegment3()
+    // await API.postDataGapok(id).then((result) => {
+    //   // this.props.history.push('/admin/reviewtotal/'+id)
+    // }).catch((err) => {
+      console.log("oke")
+    // })
   }
 
   handleUbah = (event) => {
@@ -113,7 +88,7 @@ class Review extends Component {
     Swal.fire(
       {
         title: 'Sedang Mengambil Data Kehadiran',
-        html: 'Lembaga '+this.state.namaLembaga+'</br> I will close in <b></b> milliseconds.',
+        html: 'I will close in <b></b> milliseconds.',
         timer: 45000,
         timerProgressBar: true,
         didOpen: () => {
@@ -162,21 +137,14 @@ class Review extends Component {
     })
   }
   
-  componentDidMount() {
-    let id = this.getUriSegment3()
-    if(!id){
-      // this.handleLocalStorage()
-    }else{
+  componentDidMount() {   
       this.getNamaLembaga()
       this.getDataCutOff()
       this.getClearChache()
-      this.getReviewGapok()
-      this.getTunjangan()
-    }
   }
 
   render() {
-    let datapost =  this.state.post
+    // let datapost =  this.state.post
     return (
       <>
         <div className="header bg-gradient-info pb-8 pt-5 pt-md-8">   
@@ -188,8 +156,8 @@ class Review extends Component {
               <Card className="shadow">
                 <CardHeader className="border-0">
                   <Row>
-                    <Col md="6" sm="6" className="text-left">
-                      <h3 className="mb-0">Review Gapok Lembaga - {this.state.namaLembaga}
+                    <Col md="12" sm="6" className="text-left">
+                      <h3 className="mb-0">Review Ledger Lembaga - {this.state.namaLembaga}
                       <Badge className="ml-3" color="info">
                         <strong className="mr-2">{Moment(this.state.cutOffActive.start).format('DD MMMM YYYY')}</strong>
                         sampai 
@@ -198,15 +166,10 @@ class Review extends Component {
                         <i className="ni ni-check-bold text-green ml-1"></i>
                       </h3>
                     </Col>
-                    <Col md="6" sm="6" className="text-right">
-                      <Button color="success" type="button" size="sm" onClick={() =>   this.toggleModal("exampleModal") }>
-                        <i className="fa fa-plus"></i> Tunjangan
-                      </Button>
-                    </Col>
                   </Row>
                 </CardHeader>
                 <CardBody>
-                 <ReviewGapok data={datapost} save={this.simpanGapok} format={this.format} listTunjangan={this.state.listTunjangan}/>
+                 <TableLedger />
                 </CardBody>
                 <Col className="modal-footer">
                   <Button color="success" className="mt-3" size="md" type="button" onClick={this.simpanGapok}>Simpan & Lanjutkan</Button>
@@ -216,17 +179,9 @@ class Review extends Component {
           </Row>
         </Container>
         
-        <ModalTunjangan
-        stateExample={this.state.exampleModal}
-        modalBuka={this.toggleModal}
-        modalTutup={this.toggleClose}
-        save={this.handleSimpan}
-        updateField={this.handleUbah}
-        uri={this.getUriSegment3()}
-        />
       </>
     );
   }
 }
 
-export default Review;
+export default ReviewLedger;

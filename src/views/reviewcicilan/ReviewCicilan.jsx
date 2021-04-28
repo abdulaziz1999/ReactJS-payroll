@@ -13,19 +13,17 @@ import {
 } from "reactstrap";
 // core components
 import '../examples/css/Style.css';
-import TableComp from "components/Table/TableInsentif";
+import TableComp from "components/Table/TableCicilan";
 import API from '../../service';
 import Swal from 'sweetalert2'
 import { RootOnline } from "service/Config";
-import ModalInsentif from "../../components/Modal/ModalInsentif";
 import Moment from 'moment'
 
-class Insentif extends Component {
+class ReviewCicilan extends Component {
   state = {
     post: [],
     insentif: [],
     insentifAll:[],
-    kegiatanId:[],
     namaLembaga: "",
     isUpdate: false,
     searchTerm: "",
@@ -100,7 +98,7 @@ class Insentif extends Component {
 
   getInsentif = async() => {
     axios.defaults.headers.common['Authorization'] = `Bearer ` + localStorage.token
-    const result = await axios.get(RootOnline +'/kegiatan' )
+    const result = await axios.get(RootOnline +'/insentif/cutoff' )
     // const result = await axios.post(RootOnline +'/insentifCutoff',this.state.idinsentif) 
     try{
       this.setState({
@@ -126,22 +124,8 @@ class Insentif extends Component {
       .replace(/\d(?=(\d{3})+\.)/g, '$&,');
   };
 
-  getKegiatanId = async(event) => {
-    let id = event.target.value;
-    await API.getKegiatanId(id).then((result) => {
-      this.setState({
-          kegiatanId: result.detail
-        });
-    }).catch((err) => {
-      console.log("ini eror :"+err)
-    })
-  }
-
   handleUbah = (event) => {
     let formInsentif = { ...this.state.postInsentif };
-    if(event.target.name === 'idinsentif'){
-      this.getKegiatanId(event)
-    }
     formInsentif[event.target.name] = event.target.value;
     this.setState(
       {
@@ -177,15 +161,6 @@ class Insentif extends Component {
     this.getDataCutOff()
     this.getNamaLembaga()
     this.getClearChache()
-    this.getInsentif()
-    this.getDataInsentif()
-    let tableHeaderTop = document.querySelector('.sticky-table thead').getBoundingClientRect().top;
-    let ths = document.querySelectorAll('.sticky-table thead th')
-
-    for(let i = 0; i < ths.length; i++) {
-      let th = ths[i];
-      th.style.top = th.getBoundingClientRect().top - tableHeaderTop + "px";
-    }
   }
 
   render() {
@@ -203,7 +178,7 @@ class Insentif extends Component {
                 <CardHeader className="border-0">
                   <Row>
                     <Col md="6" sm="6" className="text-left">
-                      <h3 className="mb-0">Data Insentif Pegawai Lembaga - {this.state.namaLembaga}
+                      <h3 className="mb-0">Review Cicicilan Pegawai Lembaga - {this.state.namaLembaga}
                       <Badge className="ml-3" color="info">
                         <strong className="mr-2">{awal}</strong>
                         sampai 
@@ -213,11 +188,8 @@ class Insentif extends Component {
                       </h3>
                     </Col>
                     <Col md="6" sm="6" className="text-right">
-                      <Button color="success" type="button" size="sm" onClick={() => this.toggleModal("exampleModal") }>
+                      {/* <Button color="success" type="button" size="sm" onClick={() => this.toggleModal("exampleModal") }>
                         <i className="fa fa-plus"></i> Insentif
-                      </Button>
-                      {/* <Button color="success" type="button" size="sm" onClick={this.getAddInsentifPerCutOff}>
-                        <i className="fa fa-plus"></i> Add Insentif
                       </Button> */}
                     </Col>
                   </Row>
@@ -233,19 +205,9 @@ class Insentif extends Component {
           </Row>
         </Container>
 
-        <ModalInsentif 
-        stateExample={this.state.exampleModal}
-        modalBuka={this.toggleModal}
-        modalTutup={this.toggleClose}
-        save={this.handleSimpan}
-        uri={this.getUriSegment3()}
-        dataInsentif={this.getDataInsentif}
-        ubah={this.handleUbah}
-        kegiatanId={this.state.kegiatanId}
-        />        
       </>
     );
   }
 }
 
-export default Insentif;
+export default ReviewCicilan;

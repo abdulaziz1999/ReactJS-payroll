@@ -63,6 +63,7 @@ class ReviewTotal extends Component {
   }
 
   getDataSummary = async() => {
+    this.getClearChache()
     let id = this.getUriSegment3()
     await API.getDataSummary(id).then((result) => {
       this.setState({

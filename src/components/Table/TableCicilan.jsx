@@ -4,7 +4,7 @@ import {
   Col,
   Form,
   FormGroup,
-  Input, 
+  Input,
   InputGroup,
   InputGroupAddon,
   InputGroupText,
@@ -46,24 +46,14 @@ const TableInsentif = ({ data, insentif, format }) => {
           <thead className="thead-light">
             <tr>
               <th scope="col" rowSpan={3}>Nama Pegawai</th>
-              {/* <th className="text-center" scope="col" colSpan={5} >Insentif Rutin</th> */}
               {insentif.map((row, index) => {
                   return(
-                    <th key={index} scope="col" rowSpan={3}>{row.nama_kegiatan}</th>
+                    <th key={index} scope="col" rowSpan={3}>{row.insentif}</th>
                   )
               })}
+              <th scope="col" rowSpan={3}>DQ Mart</th>
               <th scope="col" rowSpan={3}>Total</th>
             </tr>
-            {/* <tr>
-              <th className="text-center" scope="col" colSpan={5} >Nominal</th>
-            </tr>
-            <tr>
-              <th scope="col" >Eskul</th>
-              <th scope="col" >Bimbel</th>
-              <th scope="col" >Pramuka</th>
-              <th scope="col" >Pendampingan</th>
-              <th scope="col" >Ujian Tahsin</th>
-            </tr> */}
           </thead>
           <tbody>
             {data
@@ -85,11 +75,6 @@ const TableInsentif = ({ data, insentif, format }) => {
                 return (
                   <tr key={index}>
                     <td><strong>{post.nama}</strong></td>
-                    {/* <td>1</td>
-                    <td>2</td>
-                    <td>3</td>
-                    <td>4</td>
-                    <td>5</td> */}
                     {elements}
                     <td><strong>{format(post.totalinsentif)}</strong></td>
                   </tr>
