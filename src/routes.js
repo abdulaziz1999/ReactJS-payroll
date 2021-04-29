@@ -70,7 +70,7 @@ var routes = [
   },
   {
     path: "/kredit",
-    name: "Kredit - DQ Mart",
+    name: "Cicilan - Berkah",
     icon: "ni ni-credit-card text-red",
     component: Kredit,
     layout: "/admin",

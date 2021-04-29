@@ -43,7 +43,7 @@ const TableGapok = ({data,format,remove}) => {
                       <th scope="col"><b>Jam Kelas</b></th>
                       <th scope="col"><b>Jam Asrama</b></th>
                       <th scope="col"><b>Total Jam</b></th>
-                      <th scope="col"><b>Total Jam Tambahan</b></th>
+                      <th scope="col"><b>Kelebihan Jam</b></th>
                       <th scope="col"><b>Transport</b></th>
                       <th scope="col"><b>Total</b></th>
                     </tr>

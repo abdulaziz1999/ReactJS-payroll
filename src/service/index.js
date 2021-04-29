@@ -59,6 +59,14 @@ const getSycnPegawai = () => Get('syncPegawai',true)
 const kreditPegawai = (config) => Get('kredit',true,config)
 const getPegawai    = () => Get('kredit',true)
 
+//API Potongan
+const getAllPotongan = () => Get('potongan',true)
+const postAllPotongan = (data) => Post('potongan',true,data)
+const PotonganKredit = (data) => Post('potongan/pegawai/kredit',true,data)
+const getPotonganRangeTgl = (idlembaga,startDate,endDate) => Get(`potongan/kredit/${idlembaga}/${startDate}/${endDate}`,true)
+const postPotonganRangeTgl = (idlembaga,startDate,endDate) => Post(`potongan/kredit/${idlembaga}/${startDate}/${endDate}`,true)
+const postPotonganCutoff = (idlembaga,idcutoff) => Get(`potongan/kredit/${idlembaga}/${idcutoff}`,true)
+
 //API Clear Chache
 const hapusChache = () => GetClear('clear-cache',true)
 
@@ -112,6 +120,14 @@ const API = {
     //API Lembaga
     getUnit,
     getUnitById,
+
+    //API potongan
+    getAllPotongan,
+    postAllPotongan,
+    PotonganKredit,
+    getPotonganRangeTgl,
+    postPotonganRangeTgl,
+    postPotonganCutoff,
 
     getPegawai,
     kreditPegawai,

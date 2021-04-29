@@ -25,6 +25,7 @@ import axios from "axios";
 class Kredit extends Component {
   state = {
     post: [],
+    lembaga:[],
     formPegawai: {
       id: "",
       idpegawai: "",
@@ -47,6 +48,14 @@ class Kredit extends Component {
         });
       });
   };
+
+  getLembaga = async() => {
+    await API.getUnit().then((res) =>{
+      this.setState({
+        lembaga : res
+      })
+    })
+  }
 
   getKreditAPI = () => {
     const config = {headers : {Authorization: `Bearer ` + localStorage.token}}
@@ -160,8 +169,8 @@ class Kredit extends Component {
 
   
   componentDidMount() {
-    this.getKreditAPI();
-
+    this.getKreditAPI()
+    this.getLembaga()
   }
 
   render() {
@@ -191,6 +200,15 @@ class Kredit extends Component {
               <Card className="shadow">
                 <CardHeader className="border-0">
                   <h3 className="mb-0">Data Kredit Pegawai</h3>
+                  {/* <Form>
+                    <Input name="lembaga" id="lembaga" type="select" required>
+                      {this.state.lembaga.map((row,index) => {
+                        return(
+                          <option key={index} value={row.id}>{row.nama_lembaga}</option>
+                        )
+                      })}
+                    </Input>
+                  </Form> */}
                 </CardHeader>
                 <CardBody>
                  <TableComp data={datapost} modal={this.toggleModal} />

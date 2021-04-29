@@ -58,6 +58,11 @@ class ReviewLedger extends Component {
     // await API.postDataGapok(id).then((result) => {
     //   // this.props.history.push('/admin/reviewtotal/'+id)
     // }).catch((err) => {
+      Swal.fire(
+        'Success!',
+        'Data Ledger <br> Berhasil Disimpan.',
+        'success'
+      )
       console.log("oke")
     // })
   }

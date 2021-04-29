@@ -117,7 +117,7 @@ class Insentif extends Component {
       'Data Insetif <br> Berhasil Disimpan.',
       'success'
   )
-    this.props.history.push('/admin/unit')
+    this.props.history.push('/admin/reviewcicilan')
   }
 
   format = amount => {

@@ -49,6 +49,7 @@ const TableKredit = ({data,modal,remove}) => {
                   <thead className="thead-light">
                     <tr>
                       <th scope="col"><b>Nama Pegawai</b></th>
+                      <th scope="col"><b>Nama Lembaga</b></th>
                       <th scope="col"><b>Kredit</b></th>
                       <th scope="col"><b>Act</b></th>
                     </tr>
@@ -59,12 +60,15 @@ const TableKredit = ({data,modal,remove}) => {
                             return val
                         }else if(val.nama.toLowerCase().includes(searchTerm.toLowerCase())){
                             return val
+                        }else if(val.nama_lembaga.toLowerCase().includes(searchTerm.toLowerCase())){
+                          return val
                         }
                         return ""
                     }).map((post, index) => {
                       return (
                         <tr key={index}>
                           <td><b>{post.nama}</b></td>
+                          <td><b>{post.nama_lembaga}</b></td>
                           <td>
                             <Badge color="" className="badge-dot">
                               <i className="bg-info" />

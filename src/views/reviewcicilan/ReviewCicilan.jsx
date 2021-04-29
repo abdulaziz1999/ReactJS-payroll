@@ -112,10 +112,10 @@ class ReviewCicilan extends Component {
   getSimpan = () => {
     Swal.fire(
       'Success!',
-      'Data Insetif <br> Berhasil Disimpan.',
+      'Data Cicilan <br> Berhasil Disimpan.',
       'success'
-  )
-    this.props.history.push('/admin/unit')
+    )
+    this.props.history.push('/admin/reviewledger')
   }
 
   format = amount => {
