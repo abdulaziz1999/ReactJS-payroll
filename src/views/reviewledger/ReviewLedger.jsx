@@ -1,6 +1,6 @@
 import React, { Component } from "react"
 // reactstrap components
-import { Card, CardHeader, Container, Row, Col, Button, CardBody ,Badge} from "reactstrap"
+import { Card, CardHeader, Container, Button, Row, Col, CardBody ,Badge} from "reactstrap"
 // core components
 import '../examples/css/Style.css'
 import API from '../../service';
@@ -14,17 +14,19 @@ class ReviewLedger extends Component {
     post: [],
     cutOffActive: [],
     namaLembaga : "",
-    dataTunjangan : {
-      idtunjangan: "",
-      idguru: "",
-      noiminal:""
-    }
   };
 
   getUriSegment3 = () => {
     let URL= this.props.location.pathname
     let arr= URL.split('/')
     let id = arr[3]
+    return id
+  }
+
+  getUriSegment4 = () => {
+    let URL= this.props.location.pathname
+    let arr= URL.split('/')
+    let id = arr[4]
     return id
   }
 
@@ -50,21 +52,6 @@ class ReviewLedger extends Component {
     }).catch((err) => {
       console.log("ini eror : "+err)
     })
-  }
-
-  simpanGapok = async() => {
-    // this.loadingData()
-    // let id = this.getUriSegment3()
-    // await API.postDataGapok(id).then((result) => {
-    //   // this.props.history.push('/admin/reviewtotal/'+id)
-    // }).catch((err) => {
-      Swal.fire(
-        'Success!',
-        'Data Ledger <br> Berhasil Disimpan.',
-        'success'
-      )
-      console.log("oke")
-    // })
   }
 
   handleUbah = (event) => {
@@ -125,6 +112,17 @@ class ReviewLedger extends Component {
     // this.getNamaLembaga()
     this.getReviewGapok()
   }
+
+  getLedger = async() => {
+    let id = this.getUriSegment3()
+    let idcut = this.getUriSegment4()
+    await API.getReviewLedger(id,idcut).then((res) => {
+      this.setState({
+        post : res
+      })
+      console.log(this.state.post)
+    })
+  }
   
   format = (amount) => {
     return Number(amount).toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,')
@@ -146,10 +144,11 @@ class ReviewLedger extends Component {
       this.getNamaLembaga()
       this.getDataCutOff()
       this.getClearChache()
+      this.getLedger()
   }
 
   render() {
-    // let datapost =  this.state.post
+    let datapost =  this.state.post
     return (
       <>
         <div className="header bg-gradient-info pb-8 pt-5 pt-md-8">   
@@ -174,10 +173,10 @@ class ReviewLedger extends Component {
                   </Row>
                 </CardHeader>
                 <CardBody>
-                 <TableLedger />
+                 <TableLedger data={datapost} />
                 </CardBody>
                 <Col className="modal-footer">
-                  <Button color="success" className="mt-3" size="md" type="button" onClick={this.simpanGapok}>Simpan & Lanjutkan</Button>
+                  <Button color="success" className="mt-3" size="md" type="button" onClick={this.simpanGapok}>Simpan</Button>
                 </Col>
               </Card>
             </div>
