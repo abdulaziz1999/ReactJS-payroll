@@ -110,12 +110,14 @@ class ReviewCicilan extends Component {
   }  
 
   getSimpan = () => {
+    let id = this.getUriSegment3()
+    let idc = this.state.cutOffActive.id
     Swal.fire(
       'Success!',
       'Data Cicilan <br> Berhasil Disimpan.',
       'success'
     )
-    this.props.history.push('/admin/reviewledger')
+    this.props.history.push('/admin/reviewledger/'+id+'/'+idc)
   }
 
   format = amount => {
