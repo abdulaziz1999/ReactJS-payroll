@@ -112,12 +112,13 @@ class Insentif extends Component {
   }  
 
   getSimpan = () => {
+    let id  = this.getUriSegment3()
     Swal.fire(
       'Success!',
       'Data Insetif <br> Berhasil Disimpan.',
       'success'
   )
-    this.props.history.push('/admin/reviewcicilan')
+    this.props.history.push('/admin/reviewcicilan/'+id)
   }
 
   format = amount => {
