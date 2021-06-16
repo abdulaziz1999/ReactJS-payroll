@@ -67,6 +67,9 @@ const getPotonganRangeTgl = (idlembaga,startDate,endDate) => Get(`potongan/kredi
 const postPotonganRangeTgl = (idlembaga,startDate,endDate) => Post(`potongan/kredit/${idlembaga}/${startDate}/${endDate}`,true)
 const postPotonganCutoff = (idlembaga,idcutoff) => Get(`potongan/kredit/${idlembaga}/${idcutoff}`,true)
 
+//API Ledger Akhir
+const getReviewLedger = (idlembaga,idcutoff) => Get(`review/${idlembaga}/${idcutoff}`,true)
+
 //API Clear Chache
 const hapusChache = () => GetClear('clear-cache',true)
 
@@ -129,6 +132,8 @@ const API = {
     postPotonganRangeTgl,
     postPotonganCutoff,
 
+    //API review ledger akhir
+    getReviewLedger,
     getPegawai,
     kreditPegawai,
     hapusChache
