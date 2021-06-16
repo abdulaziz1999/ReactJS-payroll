@@ -10,6 +10,7 @@ import ReviewJam from "views/reviewjam/Reviewtotal"
 import ReviewInsentif from "views/reviewinsentif/Insentif"
 import ReviewCicilan from "views/reviewcicilan/ReviewCicilan"
 import ReviewLedger from "views/reviewledger/ReviewLedger"
+import Pinjaman from "views/cicilan/Pinjaman"
 
 var routes = [
   {
@@ -80,6 +81,13 @@ var routes = [
     name: "Cicilan - Keuangan",
     icon: "ni ni-credit-card text-orange",
     component: Cicilan,
+    layout: "/admin",
+  },
+  {
+    path: "/pinjaman",
+    name: "Pinjaman - Keuangan",
+    icon: "ni ni-credit-card text-orange",
+    component: Pinjaman,
     layout: "/admin",
   },
   {
