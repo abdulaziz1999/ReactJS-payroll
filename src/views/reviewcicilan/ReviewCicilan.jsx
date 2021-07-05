@@ -70,7 +70,7 @@ class ReviewCicilan extends Component {
   getDataInsentif = async() => {
     let id = this.getUriSegment3()
     axios.defaults.headers.common['Authorization'] = `Bearer ` + localStorage.token
-    const result = await axios.get(RootOnline +'/insentifCutoff/'+id )
+    const result = await axios.get(RootOnline +'/potongan/all/'+id +'/'+ this.state.cutOffActive.id )
     try{
       this.setState({
         post: result.data
@@ -84,7 +84,7 @@ class ReviewCicilan extends Component {
   handleSimpan = async(modal) => {
     await API.postInsentifPegawai(this.state.postInsentif).then((result) => {
         this.toggleClose(modal);
-        this.getDataInsentif()
+        // this.getDataInsentif()
       }).catch((err) => {
           console.log("ini eror :"+err)
       })
@@ -162,6 +162,7 @@ class ReviewCicilan extends Component {
   componentDidMount() {
     this.getDataCutOff()
     this.getNamaLembaga()
+    this.getDataInsentif()
     this.getClearChache()
   }
 

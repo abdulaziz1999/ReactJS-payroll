@@ -26,17 +26,12 @@ class Pinjaman extends Component {
   state = {
     post: [],
     formPegawai: {
-      id: "",
       idpegawai: "",
-      nama: "",
-      nama_lembaga: "",
-      total: "",
-      idstatus: "",
+      nominal: "",
+      tenor: "",
+      date: "",
     },
-    formupdate:{
-      idpegawai: "",
-      total: ""
-    },
+    dataPegawai:[],
     isUpdate: false,
   };
  
@@ -47,6 +42,14 @@ class Pinjaman extends Component {
         });
       });
   };
+
+  getPegawai = () => {
+    API.getDataPegawai().then((res) => {
+      this.setState({
+        dataPegawai : res
+      })
+    })
+  }
 
   getKreditAPI = () => {
     const config = {headers : {Authorization: `Bearer ` + localStorage.token}}
@@ -61,20 +64,12 @@ class Pinjaman extends Component {
   })
 }
 
-  postDataToAPI = () => {
-    const postData = {
-      idpegawai: this.state.formPegawai.idguru,
-      total: this.state.formPegawai.total,
-    };
-    const config = {headers : {Authorization: `Bearer ` + localStorage.token}}
-    axios.post(RootOnline + '/kredit',postData, config).then((res) =>{
-          this.getKreditAPI();
-          this.hadleFromClear();
-        //   Swal.fire(
-        //     'Success!',
-        //     'User '+res.data['nama']+' <br> Tes.',
-        //     'success'
-        // )
+  postDataToAPI = async() => {
+    await API.postDataKredit(this.state.formPegawai).then((result) => { 
+        this.getPostAPI();
+        this.hadleFromClear();
+    }).catch((err) => {
+        console.log("ini eror :"+err)
     })
   };
 
@@ -113,24 +108,18 @@ class Pinjaman extends Component {
     );
   };
 
-  handleSimpan = (modal) => {
-    if (this.state.isUpdate) {
+  handleSimpan = () => {
       this.postDataToAPI()
-      console.log(this.state.formPegawai)
-      this.toggleClose(modal);
-    } else {
-      this.putDataToAPI()
-    }
   };
 
   hadleFromClear = () => {
     this.setState({
       isUpdate: false,
       formPegawai: {
-        nama: "",
-        nama_lembaga: "",
-        total: "",
-        idstatus: "",
+        idpegawai: "",
+        nominal: "",
+        tenor: "",
+        date: "",
       },
     }); 
   };
@@ -160,25 +149,12 @@ class Pinjaman extends Component {
 
   
   componentDidMount() {
-    this.getKreditAPI();
-
+    this.getKreditAPI()
+    this.getPegawai()
   }
 
   render() {
     const datapost = this.state.post
-    // const formdata = this.state.formPegawai
-    // let nama
-    // let nama_lembaga
-    // let total
-    // if(formdata){
-    //   nama = formdata.nama
-    //   nama_lembaga = formdata.nama_lembaga
-    //   // total = formdata.total
-    // }else{
-    //   nama = ""
-    //   nama_lembaga = ""
-    //   // total = ""
-    // }
 
     return (
       <>
@@ -196,34 +172,43 @@ class Pinjaman extends Component {
                 <div className="modal-body">
             <Form>
               <Row>
+              <Col md="12">
+                  <FormGroup>
+                  <label>Pegawai :</label>
+                    <Input name="idpegawai" type="select" onChange={this.hadleUbah} required>
+                      <option disabled selected value={""}>Pilih Nama Pegawai</option>
+                      {this.state.dataPegawai.map((row, index) => {
+                          return (
+                            <option key={index} value={row.idguru}>{row.nama}</option>
+                          )
+                      })}
+                    </Input>
+                  </FormGroup>
+                </Col>
+                <Col md="12">
+                  <FormGroup>
+                  <label>Tanggal :</label>
+                    <Input name="date" value={this.state.formPegawai.date} autoComplete="off" placeholder="Tenor" type="date" onChange={this.hadleUbah}  />
+                  </FormGroup>
+                </Col>
                 <Col md="12">
                   <FormGroup>
                     <label>Besaran Pinjaman :</label>
-                    <Input name="pinjaman" autoComplete="off" placeholder="Besaran Pinjaman" type="text" onChange={this.hadleUbah} />
+                    <Input name="nominal" value={this.state.formPegawai.nominal} autoComplete="off" placeholder="Besaran Pinjaman" type="number" onChange={this.hadleUbah} />
                   </FormGroup>
                 </Col>
                 <Col md="12">
                   <FormGroup>
                   <label>Tenor :</label>
-                    <Input name="tenor" autoComplete="off" placeholder="Tenor" type="text" onChange={this.hadleUbah}  />
-                  </FormGroup>
-                </Col>
-              </Row>
-              <Row>
-                <Col md="12">
-                  <FormGroup>
-                  <label>Pegawai :</label>
-                    <Input name="total" autoComplete="off" placeholder="Nama Pegawai" type="text" onChange={this.hadleUbah} />
+                    <Input name="tenor" value={this.state.formPegawai.tenor} autoComplete="off" placeholder="Tenor" type="number" onChange={this.hadleUbah}  />
                   </FormGroup>
                 </Col>
               </Row>
             </Form>
           </div>
-          <div className="modal-footer">
-            <Button color="danger" data-dismiss="modal" type="button" size="sm" onClick={() => this.toggleClose("exampleModal")} >
-              Close
-            </Button>
-            <Button color="info" type="button" size="sm" onClick={() => this.handleSimpan("exampleModal")} > <i className="ni ni-air-baloon"></i> Update
+          <div className="modal-footer mt--5 mb-2">
+            <Button color="info" type="button" size="md" onClick={this.handleSimpan} > 
+            <i className="ni ni-air-baloon"></i> Simpan
             </Button>
           </div>
                  <TableComp data={datapost} modal={this.toggleModal} />

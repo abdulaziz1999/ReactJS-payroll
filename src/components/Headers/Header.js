@@ -25,6 +25,9 @@ class Header extends Component {
         jumlahCicilan : res.total,
         jumlahPegawai : res.totalPegawai
       })
+    },(err) => {
+      console.log("ini eror :"+err)
+      console.log(this.props)
     })
   }
 

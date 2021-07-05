@@ -17,7 +17,7 @@ import {
   import '../../views/examples/css/fixedcolumn.css'
 
 const TableKredit = ({data,modal,remove}) => {
-    // console.log(data)
+    console.log(data)
     const [searchTerm, setSearchTerm] = useState("")
     
     return (
@@ -49,7 +49,6 @@ const TableKredit = ({data,modal,remove}) => {
                   <thead className="thead-light">
                     <tr>
                       <th scope="col"><b>Nama Pegawai</b></th>
-                      <th scope="col"><b>Nama Lembaga</b></th>
                       <th scope="col"><b>Kredit</b></th>
                       <th scope="col"><b>Act</b></th>
                     </tr>
@@ -60,19 +59,16 @@ const TableKredit = ({data,modal,remove}) => {
                             return val
                         }else if(val.nama.toLowerCase().includes(searchTerm.toLowerCase())){
                             return val
-                        }else if(val.nama_lembaga.toLowerCase().includes(searchTerm.toLowerCase())){
-                          return val
                         }
                         return ""
                     }).map((post, index) => {
                       return (
                         <tr key={index}>
                           <td><b>{post.nama}</b></td>
-                          <td><b>{post.nama_lembaga}</b></td>
                           <td>
                             <Badge color="" className="badge-dot">
                               <i className="bg-info" />
-                               <b>{post.total != null ? 'Rp. '+post.total : '-'}</b>
+                               <b>{post.total_kredit != null ? 'Rp. '+post.total_kredit : '-'}</b>
                             </Badge>
                           </td>
                           <td>
@@ -85,7 +81,7 @@ const TableKredit = ({data,modal,remove}) => {
                                   modal("exampleModal", post)
                                 }
                               >
-                                <i className="fa fa-plus"></i> Tambah
+                                <i className="fa fa-plus"></i> Detail
                               </Button>
                               &nbsp;
                               {/* <Button

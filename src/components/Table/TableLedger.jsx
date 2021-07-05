@@ -44,8 +44,7 @@ const TableLedger = ({data}) => {
                       <th scope="col"><b>Insentif</b></th>
                       <th scope="col"><b>Kredit/Cicilan</b></th>
                       <th scope="col"><b>Laundry</b></th>
-                      <th scope="col"><b>Total Potongan</b></th>
-                      <th scope="col"><b>Total Gaji</b></th>
+                      <th scope="col"><b>Gaji Yang Diterima</b></th>
                       <th scope="col"><b>No Rek</b></th>
                     </tr>
                   </thead>
@@ -66,7 +65,7 @@ const TableLedger = ({data}) => {
                           <td><b>{post.insentif}</b></td>
                           <td><b>{post.kredit}</b></td>
                           <td><b>{post.laundry}</b></td>
-                          <td><b>{post.total_potongan}</b></td>
+                          {/* <td><b>{post.total_potongan}</b></td> */}
                           <td><b>{post.total_gaji}</b></td>
                           <td><b>{post.no_rek}</b></td>
                         </tr>

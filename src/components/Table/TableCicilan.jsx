@@ -51,7 +51,8 @@ const TableInsentif = ({ data, insentif, format }) => {
                     <th key={index} scope="col" rowSpan={3}>{row.insentif}</th>
                   )
               })}
-              <th scope="col" rowSpan={3}>DQ Mart</th>
+              <th scope="col" rowSpan={3}>Kredit</th>
+              <th scope="col" rowSpan={3}>Laundry</th>
               <th scope="col" rowSpan={3}>Total</th>
             </tr>
           </thead>
@@ -68,15 +69,12 @@ const TableInsentif = ({ data, insentif, format }) => {
                 return "";
               })
               .map((post, index) => {
-                var elements=[];
-                for(var i=0;i<post.insentif.length;i++){
-                  elements.push(<td key={i}><strong>{format(post.insentif[i])}</strong></td>);
-                }
                 return (
                   <tr key={index}>
                     <td><strong>{post.nama}</strong></td>
-                    {elements}
-                    <td><strong>{format(post.totalinsentif)}</strong></td>
+                    <td><strong>{post.kredit}</strong></td>
+                    <td><strong>{post.laundry}</strong></td>
+                    <td><strong>{post.total}</strong></td>
                   </tr>
                 );
               })}
