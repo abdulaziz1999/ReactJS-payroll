@@ -84,11 +84,9 @@ class ReviewTotal extends Component {
     this.props.history.push('/admin/reviewinsentif/'+id)
   }
 
-  format = amount => {
-    return Number(amount)
-      .toFixed(2)
-      .replace(/\d(?=(\d{3})+\.)/g, '$&,');
-  };
+  format = (amount) => {
+    return Number(amount).toFixed().replace(/\D/g, "").replace(/\B(?=(\d{3})+(?!\d))/g, ".")
+  }
 
 
   

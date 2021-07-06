@@ -5,7 +5,7 @@ import { useState } from "react";
 import { Col, Form, FormGroup , Input,InputGroup, InputGroupAddon,InputGroupText, Row, Table} from "reactstrap";
 import '../../views/examples/css/fixedcolumn.css'
 
-const TableLedger = ({data}) => {
+const TableLedger = ({data,format}) => {
     // console.log(save)
     const [searchTerm, setSearchTerm] = useState("")
   
@@ -40,11 +40,13 @@ const TableLedger = ({data}) => {
                     <tr>
                       <th scope="col" className="zui-sticky-col" id="table-scroll-x"><b>Nama Pegawai</b></th>
                       <th scope="col"><b>Gapok + Tunjangan</b></th>
+                      <th scope="col"><b>Tranport</b></th>
                       <th scope="col"><b>Jam</b></th>
                       <th scope="col"><b>Insentif</b></th>
-                      <th scope="col"><b>Kredit/Cicilan</b></th>
-                      <th scope="col"><b>Laundry</b></th>
-                      <th scope="col"><b>Gaji Yang Diterima</b></th>
+                      {/* <th scope="col"><b>Kredit/Cicilan</b></th>
+                      <th scope="col"><b>Laundry</b></th> */}
+                      <th scope="col" className="bg-danger text-white text-center"><b>Total Potongan</b></th>
+                      <th scope="col" className="bg-success text-white text-center"><b>Gaji Yang Diterima</b></th>
                       <th scope="col"><b>No Rek</b></th>
                     </tr>
                   </thead>
@@ -60,13 +62,14 @@ const TableLedger = ({data}) => {
                       return (
                         <tr key={index}>
                           <td><b>{post.nama}</b></td>
-                          <td><b>{post.gapoktunjangan}</b></td>
+                          <td><b>{format(post.gapoktunjangan)}</b></td>
+                          <td><b>{format(post.transport)}</b></td>
                           <td><b>{post.jam}</b></td>
-                          <td><b>{post.insentif}</b></td>
-                          <td><b>{post.kredit}</b></td>
-                          <td><b>{post.laundry}</b></td>
-                          {/* <td><b>{post.total_potongan}</b></td> */}
-                          <td><b>{post.total_gaji}</b></td>
+                          <td><b>{format(post.insentif)}</b></td>
+                          {/* <td><b>{post.kredit}</b></td>
+                          <td><b>{post.laundry}</b></td> */}
+                          <td Style="background-color:#FA9AAD !important"><b>{format(post.total_potongan)}</b></td>
+                          <td Style="background-color:#96E6C4 !important"><b>{format(post.total_gaji)}</b></td>
                           <td><b>{post.no_rek}</b></td>
                         </tr>
                       );

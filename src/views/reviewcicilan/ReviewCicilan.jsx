@@ -120,11 +120,9 @@ class ReviewCicilan extends Component {
     this.props.history.push('/admin/reviewledger/'+id+'/'+idc)
   }
 
-  format = amount => {
-    return Number(amount)
-      .toFixed(2)
-      .replace(/\d(?=(\d{3})+\.)/g, '$&,');
-  };
+  format = (amount) => {
+    return Number(amount).toFixed().replace(/\D/g, "").replace(/\B(?=(\d{3})+(?!\d))/g, ".")
+  }
 
   handleUbah = (event) => {
     let formInsentif = { ...this.state.postInsentif };

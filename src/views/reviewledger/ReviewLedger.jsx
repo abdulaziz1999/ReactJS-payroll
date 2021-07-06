@@ -125,7 +125,7 @@ class ReviewLedger extends Component {
   }
   
   format = (amount) => {
-    return Number(amount).toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,')
+    return Number(amount).toFixed().replace(/\D/g, "").replace(/\B(?=(\d{3})+(?!\d))/g, ".")
   }
 
   toggleModal = (state) => {
@@ -173,7 +173,7 @@ class ReviewLedger extends Component {
                   </Row>
                 </CardHeader>
                 <CardBody>
-                 <TableLedger data={datapost} />
+                 <TableLedger data={datapost} format={this.format} />
                 </CardBody>
                 <Col className="modal-footer">
                   <Button color="success" className="mt-3" size="md" type="button" onClick={this.simpanGapok}>Simpan</Button>
