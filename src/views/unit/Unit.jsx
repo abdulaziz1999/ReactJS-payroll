@@ -17,11 +17,13 @@ import Swal from 'sweetalert2'
 import axios from "axios"
 import { RootOnline } from "service/Config"
 import Moment from 'moment'
+import { Fragment } from "react";
 
 class Unit extends Component {
   state = {
     post: [],
     cutOffActive: [],
+    listMenu: [],
     isUpdate: false,
   };
  
@@ -38,6 +40,15 @@ class Unit extends Component {
       this.setState({
         cutOffActive: res
       })
+    })
+  }
+
+  getMenu = async() => {
+    await API.getMenu(8).then((res) => {
+      this.setState({
+        listMenu: res
+      })
+      console.log(this.state.listMenu)
     })
   }
 
@@ -58,7 +69,7 @@ class Unit extends Component {
     })
   }
 
-  getReviewGapok = (event) => {
+  getLinkMenu = (event) => {
     let id = event.target.id
     const config = {headers : {Authorization: `Bearer ` + localStorage.token}}
     axios.get(RootOnline + '/gapok/' +id,config)
@@ -70,33 +81,13 @@ class Unit extends Component {
     })
   }
 
-  getReviewJam = (event) => {
-    let id = event.target.id
-    const config = {headers : {Authorization: `Bearer ` + localStorage.token}}
-    axios.get(RootOnline + '/summary/' +id,config)
-    .then((result) => {
-      console.log(id)
-      this.props.history.push('/admin/reviewtotal/'+id)
-    }).catch((err) => {
-      console.log("ini eror :"+err)
-    })
-  }
 
-  getReviewInsentif = (event) => {
-    let id = event.target.id
-    const config = {headers : {Authorization: `Bearer ` + localStorage.token}}
-    axios.get(RootOnline + '/insentifCutoff/' +id,config)
-    .then((result) => {
-      console.log(id)
-      this.props.history.push('/admin/reviewinsentif/'+id)
-    }).catch((err) => {
-      console.log("ini eror :"+err)
-    })
-  }
-  
+
+ 
   componentDidMount() {
     this.getLembaga()
     this.getDataCutOff()
+    this.getMenu()
   }
 
   render() {
@@ -120,53 +111,34 @@ class Unit extends Component {
                   </h3>
                 </CardHeader>
                 <CardBody>
-                    {this.state.post.map((post, index) => {
+                    {this.state.listMenu.map((post, index) => {
                       return (
                         <Row key={index}>
-                          <Col md={3}>
+                          <Col md={2}>
                             <Button block color="primary" className="mt-1" size="md" id={post.id} name={post.nama_lembaga} type="button" onClick={this.getReviewLembaga} >{post.nama_lembaga} </Button>
                             <hr className="my-3" />
                           </Col>
-                          <Col md={9} className="mb-3">
-                            <Button className="btn-icon btn-2 mt-1" color="secondary" >
-                              <span className="btn-inner--icon">
-                                1 - Review Gapok <i className="ni ni-check-bold text-green" />
-                                {/* <i className="ni ni-fat-remove text-red" /> */}
-                              </span>
-                            </Button>
-                            <Button className="btn-icon btn-2 mt-1" color="secondary" >
-                              <span className="btn-inner--icon">
-                                2 - Review Jam<i className="ni ni-check-bold text-green" />
-                                {/* <i className="ni ni-fat-remove text-red" /> */}
-                              </span>
-                            </Button>
-                            <Button className="btn-icon btn-2 mt-1" color="secondary" >
-                              <span className="btn-inner--icon">
-                                3 - Review Insentif <i className="ni ni-check-bold text-green" />
-                                {/* <i className="ni ni-fat-remove text-red" /> */}
-                              </span>
-                            </Button>
-                            <Button className="btn-icon btn-2 mt-1" color="secondary" type="button">
-                              <span className="btn-inner--icon">
-                                4 - Review Cicilan 
-                                {/* <i className="ni ni-check-bold text-green" /> */}
-                                <i className="ni ni-fat-remove text-red" />
-                              </span>
-                            </Button>
-                            <Button className="btn-icon btn-2 mt-1" color="secondary" type="button">
-                              <span className="btn-inner--icon">
-                                5 - Review Ledger 
-                                {/* <i className="ni ni-check-bold text-green" /> */}
-                                <i className="ni ni-fat-remove text-red" />
-                              </span>
-                            </Button>
-                            <Button className="btn-icon btn-2 mt-1" color="secondary" type="button">
-                              <span className="btn-inner--icon">
-                                6 - Kirim Data <i className="ni ni-fat-remove text-red" />
-                              </span>
-                            </Button>
-                            <hr className="my-3" />
+                          <Col md={10} className="mb-3">
+                            {post.menu.map((row,index) => {
+                              return (
+                                <Fragment>
+                                  {row.log === 1 ?  
+                                  <Button className="btn-icon btn-2 mt-1" color="success" onClick={this.getLinkMenu} >
+                                    <span className="btn-inner--icon">
+                                      {row.menu} 
+                                    </span>
+                                  </Button>
+                                  :
+                                  <Button className="btn-icon btn-2 mt-1" color="secondary"  >
+                                    <span className="btn-inner--icon">
+                                      {row.menu} 
+                                    </span>
+                                  </Button>}
+                                </Fragment>
+                              )
+                            })}
                           </Col>
+                            <hr className="my-3" />
                         </Row>
                       )
                     })}

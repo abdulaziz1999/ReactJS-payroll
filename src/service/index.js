@@ -8,6 +8,10 @@ import GetClear from './GetClear'
 const getUnit = () => Get('lembaga',false)
 const getUnitById = (id) => Get(`lembagaById/${id}`,false)
 
+//API Menu
+const getMenu = (id) => Get(`menu/${id}`,true)
+const postLogMenu = (data) => Post(`menu`,true,data)
+
 //API User
 const getDataUser  = () => Get('user',true)
 const postDataUser = (data) => Post('user',true,data)
@@ -123,6 +127,10 @@ const API = {
     //API Lembaga
     getUnit,
     getUnitById,
+
+    //API Menu
+    getMenu,
+    postLogMenu,
 
     //API potongan
     getAllPotongan,

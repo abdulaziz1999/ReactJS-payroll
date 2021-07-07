@@ -51,7 +51,7 @@ const TableInsentif = ({ data, insentif, format }) => {
                     <th key={index} scope="col" rowSpan={3}>{row.insentif}</th>
                   )
               })}
-              <th scope="col" rowSpan={3}>Kredit</th>
+              <th scope="col" rowSpan={3}>Kredit - Angsuran/Total</th>
               <th scope="col" rowSpan={3}>Laundry</th>
               <th scope="col" rowSpan={3}>Total</th>
             </tr>

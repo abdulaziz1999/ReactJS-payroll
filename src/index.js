@@ -1,6 +1,6 @@
 import React from "react"
 import ReactDOM from "react-dom"
-import { BrowserRouter, Route, Switch, Redirect } from "react-router-dom"
+import { HashRouter, Route, Switch, Redirect } from "react-router-dom"
 
 import "assets/plugins/nucleo/css/nucleo.css"
 import "@fortawesome/fontawesome-free/css/all.min.css"
@@ -23,7 +23,7 @@ import Insentif from "views/reviewinsentif/Insentif"
 
 
 ReactDOM.render(
-  <BrowserRouter>
+  <HashRouter>
     <Switch>
       <ProtectedRoute path="/admin" component={AdminLayout} />
       <ProtectedRoute path="/dqmart" component={DqmartLayout} />
@@ -39,6 +39,6 @@ ReactDOM.render(
       <Route path="/tes" component={ArrayInsert}/>
       <Redirect from="/" to="/auth/login" />
     </Switch>
-  </BrowserRouter>,
+  </HashRouter>,
   document.getElementById("root")
 );
