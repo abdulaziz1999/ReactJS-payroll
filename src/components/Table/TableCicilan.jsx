@@ -48,7 +48,7 @@ const TableInsentif = ({ data,  format }) => {
               <th scope="col" rowSpan={3}>Nama Pegawai</th>
               <th scope="col" rowSpan={3}>Kredit - Angsuran/Total</th>
               <th scope="col" rowSpan={3}>Laundry</th>
-              <th scope="col" rowSpan={3}>Total</th>
+              <th scope="col" className="bg-success text-white text-center" rowSpan={3}>Total</th>
             </tr>
           </thead>
           <tbody>
@@ -69,7 +69,9 @@ const TableInsentif = ({ data,  format }) => {
                     <td><strong>{post.nama}</strong></td>
                     <td><strong>{post.kredit}</strong></td>
                     <td><strong>{format(post.laundry)}</strong></td>
-                    <td><strong>{format(post.total)}</strong></td>
+                    <td className="text-dark text-center" Style="background-color:#96E6C4 !important">
+                      <strong>{format(post.total)}</strong>
+                    </td>
                   </tr>
                 );
               })}

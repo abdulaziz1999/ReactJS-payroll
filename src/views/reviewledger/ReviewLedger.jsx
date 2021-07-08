@@ -198,7 +198,6 @@ class ReviewLedger extends Component {
                         sampai 
                         <strong className="ml-2">{Moment(this.state.cutOffActive.end).format('DD MMMM YYYY')}</strong>
                       </Badge>
-                        <i className="ni ni-check-bold text-green ml-1"></i>
                       </h3>
                     </Col>
                   </Row>

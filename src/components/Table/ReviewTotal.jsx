@@ -35,7 +35,7 @@ const TableGapok = ({data,format,remove}) => {
                 </Row>
             </Form>
             <div className="table-responsive">
-              <Table className="align-items-center table-flush" responsive>
+              <Table className="align-items-center table-flush table-hover" responsive>
                   <thead className="thead-light">
                     <tr>
                       <th scope="col"><b>Nama Pegawai</b></th>
@@ -45,7 +45,7 @@ const TableGapok = ({data,format,remove}) => {
                       <th scope="col"><b>Total Jam</b></th>
                       <th scope="col"><b>Kelebihan Jam</b></th>
                       <th scope="col"><b>Transport</b></th>
-                      <th scope="col"><b>Total</b></th>
+                      <th scope="col" className="bg-success text-white text-center"><b>Total</b></th>
                     </tr>
                   </thead>
                   <tbody >
@@ -66,7 +66,9 @@ const TableGapok = ({data,format,remove}) => {
                           <td><b>{format(post.total_jam)}</b></td>
                           <td><b>{format(post.total_jam_tambahan)}</b></td>
                           <td><b>{format(post.transport)}</b></td>
-                          <td><b>{format(post.total_jam+post.transport+post.total_jam_tambahan)}</b></td>
+                          <td className="text-dark text-center" Style="background-color:#96E6C4 !important">
+                            <b>{format(post.total_jam+post.transport+post.total_jam_tambahan)}</b>
+                          </td>
                         </tr>
                       );
                     })}

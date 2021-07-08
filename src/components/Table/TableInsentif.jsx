@@ -52,7 +52,7 @@ const TableInsentif = ({ data, insentif, format }) => {
                     <th key={index} scope="col" rowSpan={3}>{row.nama_kegiatan}</th>
                   )
               })}
-              <th scope="col" rowSpan={3}>Total</th>
+              <th scope="col" className="bg-success text-white text-center" rowSpan={3}>Total</th>
             </tr>
             {/* <tr>
               <th className="text-center" scope="col" colSpan={5} >Nominal</th>
@@ -91,7 +91,9 @@ const TableInsentif = ({ data, insentif, format }) => {
                     <td>4</td>
                     <td>5</td> */}
                     {elements}
-                    <td><strong>{format(post.totalinsentif)}</strong></td>
+                    <td className="text-dark text-center" Style="background-color:#96E6C4 !important">
+                      <strong>{format(post.totalinsentif)}</strong>
+                    </td>
                   </tr>
                 );
               })}

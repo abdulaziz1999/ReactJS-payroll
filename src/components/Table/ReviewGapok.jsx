@@ -35,7 +35,7 @@ const TableGapok = ({data,format,listTunjangan}) => {
                 </Row>
             </Form>
             <div className="table-responsive">
-              <Table className="align-items-center table-flush" responsive>
+              <Table className="align-items-center table-flush table-hover" responsive>
                   <thead className="thead-light">
                     <tr>
                       <th scope="col" className="zui-sticky-col" id="table-scroll-x"><b>Nama Pegawai</b></th>
@@ -50,7 +50,7 @@ const TableGapok = ({data,format,listTunjangan}) => {
                               <th key={index} scope="col" rowSpan={3}>{row.tunjangan}</th>
                             )
                         })}
-                      <th scope="col"><b>Gapok + Tunjangan</b></th>
+                      <th scope="col" className="bg-success text-white text-center"><b>Gapok + Tunjangan</b></th>
                     </tr>
                   </thead>
                   <tbody >
@@ -76,7 +76,9 @@ const TableGapok = ({data,format,listTunjangan}) => {
                           <td><b>{post.idstatus}</b></td>
                           <td><b>{format(post.gapok)}</b></td>
                           {elements}
-                          <td><b>{format(post.total_gapok_tunjangan)}</b></td>
+                          <td className="text-dark text-center" Style="background-color:#96E6C4 !important">
+                            <b>{format(post.total_gapok_tunjangan)}</b>
+                          </td>
                         </tr>
                       );
                     })}

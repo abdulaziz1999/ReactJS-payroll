@@ -1,6 +1,5 @@
 import Index from "views/Index.js"
 import Kredit from "views/kredit/Kredit"
-import Cicilan from "views/cicilan/Cicilan"
 import User from "views/user/User"
 import Cutoff from "views/cutoff/CutOff"
 import Unit from "views/unit/Unit"
@@ -71,16 +70,9 @@ var routes = [
   },
   {
     path: "/kredit",
-    name: "Cicilan - Berkah",
+    name: "Potongan - Berkah",
     icon: "ni ni-credit-card text-red",
     component: Kredit,
-    layout: "/admin",
-  },
-  {
-    path: "/cicilan",
-    name: "Cicilan - Keuangan",
-    icon: "ni ni-credit-card text-orange",
-    component: Cicilan,
     layout: "/admin",
   },
   {

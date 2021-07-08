@@ -250,7 +250,6 @@ class Insentif extends Component {
                         sampai 
                         <strong className="ml-2">{akhir}</strong>
                       </Badge>
-                     <i className="ni ni-check-bold text-green ml-1"></i>
                       </h3>
                     </Col>
                     <Col md="6" sm="6" className="text-right">
