@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import axios from "axios";
 // reactstrap components
 import {
   Card,
@@ -16,24 +15,16 @@ import '../examples/css/Style.css';
 import TableComp from "components/Table/TableCicilan";
 import API from '../../service';
 import Swal from 'sweetalert2'
-import { RootOnline } from "service/Config";
 import Moment from 'moment'
 
 class ReviewCicilan extends Component {
   state = {
     post: [],
-    insentif: [],
-    insentifAll:[],
     namaLembaga: "",
     isUpdate: false,
     searchTerm: "",
     idinsentif: [],
     cutOffActive: [],
-    postInsentif: {
-      idguru: "",
-      idinsentif: "",
-      nominal: ""
-    }
   };
 
   getUriSegment3 = () => {
@@ -43,40 +34,63 @@ class ReviewCicilan extends Component {
     return id
   }
 
+  getUriSegment4 = () => {
+    let URL= this.props.location.pathname
+    let arr= URL.split('/')
+    let id = arr[4]
+    return id
+  }
+
   getClearChache = async() => {
     await API.hapusChache().then((res) => {
     })
   }
 
-  getDataCutOff = () => {
-    API.getDataCutOff().then((res) => {
+  getDataCutOff = async() => {
+    await API.getDataCutOff().then((res) => {
       this.setState({
         cutOffActive: res
       })
     })
+    this.getPotonganAll()
   }
 
-  getNamaLembaga = async() => {
+  getNamaLembaga = async(uri=false) => {
     let id = this.getUriSegment3()
-    await API.getUnitById(id).then((result) => {
-      this.setState({
-        namaLembaga : result[0]['nama_lembaga']
+    if(uri){
+      await API.getUnitById(uri).then((result) => {
+        this.setState({
+          namaLembaga : result[0]['nama_lembaga']
+        })
+      }).catch((err) => {
+        console.log("ini eror : "+err)
       })
-    }).catch((err) => {
-      console.log("ini eror : "+err)
-    })
+    }else{
+      await API.getUnitById(id).then((result) => {
+        this.setState({
+          namaLembaga : result[0]['nama_lembaga']
+        })
+      }).catch((err) => {
+        console.log("ini eror : "+err)
+      })
+    }
   }
 
-  getDataInsentif = async() => {
+  getPotonganAll = async(uri=false) => {
     let id = this.getUriSegment3()
-    axios.defaults.headers.common['Authorization'] = `Bearer ` + localStorage.token
-    const result = await axios.get(RootOnline +'/potongan/all/'+id +'/'+ this.state.cutOffActive.id )
-    try{
-      this.setState({
-        post: result.data
-      });
-    }catch(err) {
-      console.log("ini eror :"+err)
+    let idc = this.state.cutOffActive.id
+    if(uri){
+      await API.getPotonganAll(uri,idc).then((res) => {
+        this.setState({
+          post: res
+        })
+      })
+    }else{
+      await API.getPotonganAll(id,idc).then((res) => {
+        this.setState({
+          post: res
+        })
+      })
     }
   }
 
@@ -84,40 +98,30 @@ class ReviewCicilan extends Component {
   handleSimpan = async(modal) => {
     await API.postInsentifPegawai(this.state.postInsentif).then((result) => {
         this.toggleClose(modal);
-        // this.getDataInsentif()
+        // this.getPotonganAll()
       }).catch((err) => {
           console.log("ini eror :"+err)
       })
   }
 
-  getAddInsentifPerCutOff = () => {
-    API.postDataInsentifCutoff(this.state.idinsentif).then((res) => {
-      console.log(res)
-    })
-  }
-
-  getInsentif = async() => {
-    axios.defaults.headers.common['Authorization'] = `Bearer ` + localStorage.token
-    const result = await axios.get(RootOnline +'/insentif/cutoff' )
-    // const result = await axios.post(RootOnline +'/insentifCutoff',this.state.idinsentif) 
-    try{
-      this.setState({
-        insentif: result.data
-      });
-    }catch(err) {
-      console.log("ini eror :"+err)
-    }
-  }  
-
-  getSimpan = () => {
+  getSimpan = async() => {
     let id = this.getUriSegment3()
     let idc = this.state.cutOffActive.id
+    let data = {
+      idmenu: 4,
+      idcutoff: idc,
+      idlembaga: id
+    }
+    await API.postLogMenu(data).then((res) => {
+    }).catch((err) => {
+      console.log("ini eror : "+err)
+    })
     Swal.fire(
       'Success!',
       'Data Cicilan <br> Berhasil Disimpan.',
       'success'
     )
-    this.props.history.push('/admin/reviewledger/'+id+'/'+idc)
+    this.props.history.push('/admin/reviewledger/'+id)
   }
 
   format = (amount) => {
@@ -156,12 +160,30 @@ class ReviewCicilan extends Component {
     });
   };
 
+  handleLocalStorage = () => {
+    let idl = localStorage.idl
+    this.props.history.push('/admin/reviewcicilan/'+idl)
+    this.getNamaLembaga(idl)
+    this.getDataCutOff()
+    this.getClearChache()
+    this.getPotonganAll(idl)
+  }
+
+  setLocalStorage = () => {
+    let id = this.getUriSegment3()
+    localStorage.setItem('idl', id)
+  }
 
   componentDidMount() {
-    this.getDataCutOff()
-    this.getNamaLembaga()
-    this.getDataInsentif()
-    this.getClearChache()
+    let id= this.getUriSegment3()
+    if(!id){
+      this.handleLocalStorage()
+    }else{
+      this.setLocalStorage()
+      this.getDataCutOff()
+      this.getNamaLembaga()
+      this.getClearChache()
+    }
   }
 
   render() {

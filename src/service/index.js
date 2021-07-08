@@ -70,6 +70,7 @@ const PotonganKredit = (data) => Post('potongan/pegawai/kredit',true,data)
 const getPotonganRangeTgl = (idlembaga,startDate,endDate) => Get(`potongan/kredit/${idlembaga}/${startDate}/${endDate}`,true)
 const postPotonganRangeTgl = (idlembaga,startDate,endDate) => Post(`potongan/kredit/${idlembaga}/${startDate}/${endDate}`,true)
 const postPotonganCutoff = (idlembaga,idcutoff) => Get(`potongan/kredit/${idlembaga}/${idcutoff}`,true)
+const getPotonganAll = (idlembaga,idcutoff) => Get(`potongan/all/${idlembaga}/${idcutoff}`,true)
 
 //API Ledger Akhir
 const getReviewLedger = (idlembaga,idcutoff) => Get(`review/${idlembaga}/${idcutoff}`,true)
@@ -139,6 +140,7 @@ const API = {
     getPotonganRangeTgl,
     postPotonganRangeTgl,
     postPotonganCutoff,
+    getPotonganAll,
 
     //API review ledger akhir
     getReviewLedger,

@@ -53,28 +53,47 @@ class Review extends Component {
     })
   }
 
-  getNamaLembaga = async() => {
+  getNamaLembaga = async(uri=false) => {
     let id = this.getUriSegment3()
-    await API.getUnitById(id).then((result) => {
-      this.setState({
-        namaLembaga : result[0]['nama_lembaga']
+    if(uri){
+      await API.getUnitById(uri).then((result) => {
+        this.setState({
+          namaLembaga : result[0]['nama_lembaga']
+        })
+      }).catch((err) => {
+        console.log("ini eror : "+err)
       })
-    }).catch((err) => {
-      console.log("ini eror : "+err)
-    })
+    }else{
+      await API.getUnitById(id).then((result) => {
+        this.setState({
+          namaLembaga : result[0]['nama_lembaga']
+        })
+      }).catch((err) => {
+        console.log("ini eror : "+err)
+      })
+    }
   }
 
-  getReviewGapok = async() => {
+  getReviewGapok = async(uri=false) => {
     this.getClearChache()
     let id = this.getUriSegment3()
-    await API.getDataGapok(id).then((res) => {
-      this.setState({
-        post: res
+    if(uri){
+      await API.getDataGapok(uri).then((res) => {
+        this.setState({
+          post: res
+        })
+      },(err) => {
+        console.log("ini eror :"+err)
       })
-      // console.log(res)
-    },(err) => {
-      console.log("ini eror :"+err)
-    })
+    }else{
+      await API.getDataGapok(id).then((res) => {
+        this.setState({
+          post: res
+        })
+      },(err) => {
+        console.log("ini eror :"+err)
+      })
+    }
   }
 
   simpanGapok = async() => {
@@ -82,6 +101,16 @@ class Review extends Component {
     let id = this.getUriSegment3()
     await API.postDataGapok(id).then((result) => {
       this.props.history.push('/admin/reviewtotal/'+id)
+    }).catch((err) => {
+      console.log("ini eror : "+err)
+    })
+
+    let data = {
+      idmenu: 1,
+      idcutoff: this.state.cutOffActive.id,
+      idlembaga: this.getUriSegment3()
+    }
+    await API.postLogMenu(data).then((res) => {
     }).catch((err) => {
       console.log("ini eror : "+err)
     })
@@ -137,14 +166,6 @@ class Review extends Component {
       }
     })
   }
-
-  handleLocalStorage = () => {
-    localStorage.setItem('lastRev', '/admin/review/5')
-    let url = localStorage.lastRev
-    this.props.history.push(url)
-    // this.getNamaLembaga()
-    this.getReviewGapok()
-  }
   
   format = (amount) => {
     return Number(amount).toFixed().replace(/\D/g, "").replace(/\B(?=(\d{3})+(?!\d))/g, ".")
@@ -161,12 +182,28 @@ class Review extends Component {
       [state]: !this.state[state],
     })
   }
+
+  handleLocalStorage = () => {
+    let idl = localStorage.idl
+    this.props.history.push('/admin/review/'+idl)
+    this.getNamaLembaga(idl)
+    this.getDataCutOff()
+    this.getClearChache()
+    this.getReviewGapok(idl)
+    this.getTunjangan()
+  }
+
+  setLocalStorage = () => {
+    let id = this.getUriSegment3()
+    localStorage.setItem('idl', id)
+  }
   
   componentDidMount() {
     let id = this.getUriSegment3()
     if(!id){
-      // this.handleLocalStorage()
+      this.handleLocalStorage()
     }else{
+      this.setLocalStorage()
       this.getNamaLembaga()
       this.getDataCutOff()
       this.getClearChache()

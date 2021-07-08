@@ -13,7 +13,7 @@ import {
 } from "reactstrap";
 import '../../views/examples/css/fixedcolumn.css'
 
-const TableInsentif = ({ data, insentif, format }) => {
+const TableInsentif = ({ data,  format }) => {
   const [searchTerm, setSearchTerm] = useState("");
 
   return (
@@ -46,11 +46,6 @@ const TableInsentif = ({ data, insentif, format }) => {
           <thead className="thead-light">
             <tr>
               <th scope="col" rowSpan={3}>Nama Pegawai</th>
-              {insentif.map((row, index) => {
-                  return(
-                    <th key={index} scope="col" rowSpan={3}>{row.insentif}</th>
-                  )
-              })}
               <th scope="col" rowSpan={3}>Kredit - Angsuran/Total</th>
               <th scope="col" rowSpan={3}>Laundry</th>
               <th scope="col" rowSpan={3}>Total</th>
@@ -73,8 +68,8 @@ const TableInsentif = ({ data, insentif, format }) => {
                   <tr key={index}>
                     <td><strong>{post.nama}</strong></td>
                     <td><strong>{post.kredit}</strong></td>
-                    <td><strong>{post.laundry}</strong></td>
-                    <td><strong>{post.total}</strong></td>
+                    <td><strong>{format(post.laundry)}</strong></td>
+                    <td><strong>{format(post.total)}</strong></td>
                   </tr>
                 );
               })}

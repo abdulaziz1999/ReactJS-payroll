@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import axios from "axios";
 // reactstrap components
 import {
   Card,
@@ -16,7 +15,6 @@ import '../examples/css/Style.css';
 import TableComp from "components/Table/TableInsentif";
 import API from '../../service';
 import Swal from 'sweetalert2'
-import { RootOnline } from "service/Config";
 import ModalInsentif from "../../components/Modal/ModalInsentif";
 import Moment from 'moment'
 
@@ -45,6 +43,13 @@ class Insentif extends Component {
     return id
   }
 
+  getUriSegment4 = () => {
+    let URL= this.props.location.pathname
+    let arr= URL.split('/')
+    let id = arr[4]
+    return id
+  }
+
   getClearChache = async() => {
     await API.hapusChache().then((res) => {
     })
@@ -58,29 +63,57 @@ class Insentif extends Component {
     })
   }
 
-  getNamaLembaga = async() => {
+  getNamaLembaga = async(uri=false) => {
     let id = this.getUriSegment3()
-    await API.getUnitById(id).then((result) => {
-      this.setState({
-        namaLembaga : result[0]['nama_lembaga']
+    if(uri){
+      await API.getUnitById(uri).then((result) => {
+        this.setState({
+          namaLembaga : result[0]['nama_lembaga']
+        })
+      }).catch((err) => {
+        console.log("ini eror : "+err)
       })
-    }).catch((err) => {
-      console.log("ini eror : "+err)
-    })
-  }
-
-  getDataInsentif = async() => {
-    let id = this.getUriSegment3()
-    axios.defaults.headers.common['Authorization'] = `Bearer ` + localStorage.token
-    const result = await axios.get(RootOnline +'/insentifCutoff/'+id )
-    try{
-      this.setState({
-        post: result.data
-      });
-    }catch(err) {
-      console.log("ini eror :"+err)
+    }else{
+      await API.getUnitById(id).then((result) => {
+        this.setState({
+          namaLembaga : result[0]['nama_lembaga']
+        })
+      }).catch((err) => {
+        console.log("ini eror : "+err)
+      })
     }
   }
+
+  getDataInsentif = async(uri=false) => {
+    let id = this.getUriSegment3()
+    if(uri){
+      await API.getDataInsentifCutoff(uri).then((res) => {
+        this.setState({
+          post: res
+        })
+      }).catch((err) => {
+          console.log("ini eror : "+err)
+      })
+    }else{
+      await API.getDataInsentifCutoff(id).then((res) => {
+        this.setState({
+          post: res
+        })
+      }).catch((err) => {
+          console.log("ini eror : "+err)
+      })
+    }
+  }
+
+  getInsentif = async() => {
+    await API.getAllInsentif().then((res) => {
+        this.setState({
+          insentif: res
+        })
+      }).catch((err) => {
+          console.log("ini eror : "+err)
+      })
+  } 
 
 
   handleSimpan = async(modal) => {
@@ -98,21 +131,18 @@ class Insentif extends Component {
     })
   }
 
-  getInsentif = async() => {
-    axios.defaults.headers.common['Authorization'] = `Bearer ` + localStorage.token
-    const result = await axios.get(RootOnline +'/kegiatan' )
-    // const result = await axios.post(RootOnline +'/insentifCutoff',this.state.idinsentif) 
-    try{
-      this.setState({
-        insentif: result.data
-      });
-    }catch(err) {
-      console.log("ini eror :"+err)
-    }
-  }  
 
-  getSimpan = () => {
+  getSimpan = async() => {
     let id  = this.getUriSegment3()
+    let data = {
+      idmenu: 3,
+      idcutoff: this.state.cutOffActive.id,
+      idlembaga: id
+    }
+    await API.postLogMenu(data).then((res) => {
+    }).catch((err) => {
+      console.log("ini eror : "+err)
+    })
     Swal.fire(
       'Success!',
       'Data Insetif <br> Berhasil Disimpan.',
@@ -155,13 +185,13 @@ class Insentif extends Component {
       exampleModal: !this.state[state],
     });
     
-    this.setState({
-      formPegawai: post,
-      isUpdate: true,
-    },
-    (err) => {
-      console.log('error : ', err)
-  });
+      this.setState({
+        formPegawai: post,
+        isUpdate: true,
+      },
+      (err) => {
+        console.log('error : ', err)
+    });
   
   };
 
@@ -171,19 +201,31 @@ class Insentif extends Component {
     });
   };
 
-
-  componentDidMount() {
+  handleLocalStorage = () => {
+    let idl = localStorage.idl
+    this.props.history.push('/admin/reviewinsentif/'+idl)
+    this.getNamaLembaga(idl)
     this.getDataCutOff()
-    this.getNamaLembaga()
     this.getClearChache()
     this.getInsentif()
-    this.getDataInsentif()
-    let tableHeaderTop = document.querySelector('.sticky-table thead').getBoundingClientRect().top;
-    let ths = document.querySelectorAll('.sticky-table thead th')
+    this.getDataInsentif(idl)
+  }
 
-    for(let i = 0; i < ths.length; i++) {
-      let th = ths[i];
-      th.style.top = th.getBoundingClientRect().top - tableHeaderTop + "px";
+  setLocalStorage = () => {
+    let id = this.getUriSegment3()
+    localStorage.setItem('idl', id)
+  }
+
+  componentDidMount() {
+    let id = this.getUriSegment3()
+    if(!id){
+      this.handleLocalStorage()
+    }else{
+      this.getDataCutOff()
+      this.getNamaLembaga()
+      this.getInsentif()
+      this.getDataInsentif()
+      this.getClearChache()
     }
   }
 
@@ -202,7 +244,7 @@ class Insentif extends Component {
                 <CardHeader className="border-0">
                   <Row>
                     <Col md="6" sm="6" className="text-left">
-                      <h3 className="mb-0">Data Insentif Pegawai Lembaga - {this.state.namaLembaga}
+                      <h3 className="mb-0">Data Insentif Pegawai Lembaga - {this.state.namaLembaga} 
                       <Badge className="ml-3" color="info">
                         <strong className="mr-2">{awal}</strong>
                         sampai 

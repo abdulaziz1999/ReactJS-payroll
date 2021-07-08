@@ -14,8 +14,6 @@ import {
 import '../examples/css/Style.css'
 import API from '../../service';
 import Swal from 'sweetalert2'
-import axios from "axios"
-import { RootOnline } from "service/Config"
 import Moment from 'moment'
 import { Fragment } from "react";
 
@@ -25,6 +23,7 @@ class Unit extends Component {
     cutOffActive: [],
     listMenu: [],
     isUpdate: false,
+    idcut:''
   };
  
   getLembaga = async() => {
@@ -41,53 +40,45 @@ class Unit extends Component {
         cutOffActive: res
       })
     })
+    this.getMenu()
   }
 
   getMenu = async() => {
-    await API.getMenu(8).then((res) => {
+    let id = this.state.cutOffActive.id
+    await API.getMenu(id).then((res) => {
       this.setState({
         listMenu: res
       })
-      console.log(this.state.listMenu)
     })
   }
 
-  getReviewLembaga = (event) => {
+  getReviewLembaga = async(event) => {
     let id = event.target.id
     let data = event.target.name
-    const config = {headers : {Authorization: `Bearer ` + localStorage.token}}
     Swal.fire(
       'Success!',
       'Review Gapok Lembaga '+data+'.',
       'success'
     )
-    axios.get(RootOnline + '/gapok/' +id,config)
-    .then((result) => {
+    await API.getDataGapok(id).then((result) => {
       this.props.history.push('/admin/review/'+id)
     }).catch((err) => {
       console.log("ini eror :"+err)
     })
   }
-
-  getLinkMenu = (event) => {
-    let id = event.target.id
-    const config = {headers : {Authorization: `Bearer ` + localStorage.token}}
-    axios.get(RootOnline + '/gapok/' +id,config)
-    .then((result) => {
-      console.log(id)
-      this.props.history.push('/admin/review/'+id)
-    }).catch((err) => {
-      console.log("ini eror :"+err)
-    })
+  
+  getLinkMenu = (event,id) => {
+    let idc = this.state.cutOffActive.id
+    if(event === 'reviewinsentif' || event === 'reviewcicilan' || event === 'reviewledger' ){
+      this.props.history.push('/admin/'+event+'/'+id+'/'+idc)
+    }else{
+      this.props.history.push('/admin/'+event+'/'+id)
+    }
   }
 
-
-
- 
   componentDidMount() {
     this.getLembaga()
     this.getDataCutOff()
-    this.getMenu()
   }
 
   render() {
@@ -101,7 +92,7 @@ class Unit extends Component {
             <div className="col">
               <Card className="shadow">
                 <CardHeader className="border-0">
-                  <h3 className="mb-0">Pilih Lembaga 
+                  <h3 className="mb-0">Pilih Lembaga  
                       <Badge className="ml-3" color="info">
                         <strong className="mr-2">{Moment(this.state.cutOffActive.start).format('DD MMMM YYYY')}</strong>
                         sampai 
@@ -121,15 +112,15 @@ class Unit extends Component {
                           <Col md={10} className="mb-3">
                             {post.menu.map((row,index) => {
                               return (
-                                <Fragment>
+                                <Fragment key={index}>
                                   {row.log === 1 ?  
-                                  <Button className="btn-icon btn-2 mt-1" color="success" onClick={this.getLinkMenu} >
+                                  <Button className="btn-icon btn-2 mt-1" color="success" onClick={() => this.getLinkMenu(row.link,post.id)}  >
                                     <span className="btn-inner--icon">
                                       {row.menu} 
                                     </span>
                                   </Button>
                                   :
-                                  <Button className="btn-icon btn-2 mt-1" color="secondary"  >
+                                  <Button className="btn-icon btn-2 mt-1" color="secondary" onClick={() => this.getLinkMenu(row.link,post.id)} >
                                     <span className="btn-inner--icon">
                                       {row.menu} 
                                     </span>

@@ -51,31 +51,61 @@ class ReviewTotal extends Component {
       })
   }
 
-  getNamaLembaga = async() => {
+  getNamaLembaga = async(uri=false) => {
     let id = this.getUriSegment3()
-    await API.getUnitById(id).then((result) => {
-      this.setState({
-        namaLembaga : result[0]['nama_lembaga']
+    if(uri){
+      await API.getUnitById(uri).then((result) => {
+        this.setState({
+          namaLembaga : result[0]['nama_lembaga']
+        })
+      }).catch((err) => {
+        console.log("ini eror : "+err)
       })
-    }).catch((err) => {
-      console.log("ini eror : "+err)
-    })
+    }else{
+      await API.getUnitById(id).then((result) => {
+        this.setState({
+          namaLembaga : result[0]['nama_lembaga']
+        })
+      }).catch((err) => {
+        console.log("ini eror : "+err)
+      })
+    }
   }
 
-  getDataSummary = async() => {
+  getDataSummary = async(uri=false) => {
     this.getClearChache()
     let id = this.getUriSegment3()
-    await API.getDataSummary(id).then((result) => {
-      this.setState({
-        post: result
+    if(uri){
+      await API.getDataSummary(uri).then((result) => {
+        this.setState({
+          post: result
+        })
+      }).catch((err) => {
+        console.log("ini eror : "+err)
       })
+    }else{
+      await API.getDataSummary(id).then((result) => {
+        this.setState({
+          post: result
+        })
+      }).catch((err) => {
+        console.log("ini eror : "+err)
+      })
+    }
+  }
+
+  getStepInsentif = async() => {
+    let id = this.getUriSegment3()
+    let data = {
+      idmenu: 2,
+      idcutoff: this.state.cutOffActive.id,
+      idlembaga: id
+    }
+    await API.postLogMenu(data).then((res) => {
+      console.log(res)
     }).catch((err) => {
       console.log("ini eror : "+err)
     })
-  }
-
-  getStepInsentif = () => {
-    let id = this.getUriSegment3()
     Swal.fire(
       'Success!',
       'Data Jam Tambahan<br> Berhasil Disimpan.',
@@ -88,13 +118,27 @@ class ReviewTotal extends Component {
     return Number(amount).toFixed().replace(/\D/g, "").replace(/\B(?=(\d{3})+(?!\d))/g, ".")
   }
 
+  handleLocalStorage = () => {
+    let idl = localStorage.idl
+    this.props.history.push('/admin/reviewtotal/'+idl)
+    this.getNamaLembaga(idl)
+    this.getDataCutOff()
+    this.getClearChache()
+    this.getDataSummary(idl)
+  }
 
-  
+  setLocalStorage = () => {
+    let id = this.getUriSegment3()
+    localStorage.setItem('idl', id)
+  }
+
+
   componentDidMount() {
     let id = this.getUriSegment3()
     if(!id){
-
+      this.handleLocalStorage()
     }else{
+      this.setLocalStorage()
       this.getNamaLembaga()
       this.getDataCutOff()
       this.getClearChache()

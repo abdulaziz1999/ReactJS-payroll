@@ -41,38 +41,48 @@ class ReviewLedger extends Component {
         cutOffActive: res
       })
     })
+    this.getLedger()
   }
 
-  getNamaLembaga = async() => {
+  getNamaLembaga = async(uri=false) => {
     let id = this.getUriSegment3()
-    await API.getUnitById(id).then((result) => {
-      this.setState({
-        namaLembaga : result[0]['nama_lembaga']
+    if(uri){
+      await API.getUnitById(uri).then((result) => {
+        this.setState({
+          namaLembaga : result[0]['nama_lembaga']
+        })
+      }).catch((err) => {
+        console.log("ini eror : "+err)
       })
+    }else{
+      await API.getUnitById(id).then((result) => {
+        this.setState({
+          namaLembaga : result[0]['nama_lembaga']
+        })
+      }).catch((err) => {
+        console.log("ini eror : "+err)
+      })
+    }
+  }
+
+  simpanLedger = async() => {
+    let id = this.getUriSegment3()
+    let idc = this.state.cutOffActive.id
+    let data = {
+      idmenu: 5,
+      idcutoff: idc,
+      idlembaga: id
+    }
+    await API.postLogMenu(data).then((res) => {
     }).catch((err) => {
       console.log("ini eror : "+err)
     })
-  }
-
-  handleUbah = (event) => {
-    let formTunjangan = { ...this.state.dataTunjangan };
-    formTunjangan[event.target.name] = event.target.value;
-    this.setState({
-        dataTunjangan: formTunjangan,
-      })
-    console.log(this.state.dataTunjangan)
-  }
-
-  handleSimpan = async(modal) => {
-    let data = {
-      idtunjangan: document.getElementById("tunjanganid").value,
-      idguru: document.getElementById("guruid").value,
-      nominal:document.getElementById("nomtunjangan").value
-    }
-    await API.postTunjanganPegawai(data).then((res) => {
-      this.toggleClose(modal);
-      this.getReviewGapok()
-    })
+    Swal.fire(
+      'Success!',
+      'Data Ledger <br> Berhasil Disimpan.',
+      'success'
+    )
+    this.props.history.push('/admin/unit')
   }
 
   loadingData = () => {
@@ -105,23 +115,25 @@ class ReviewLedger extends Component {
     })
   }
 
-  handleLocalStorage = () => {
-    localStorage.setItem('lastRev', '/admin/review/5')
-    let url = localStorage.lastRev
-    this.props.history.push(url)
-    // this.getNamaLembaga()
-    this.getReviewGapok()
-  }
 
-  getLedger = async() => {
+  getLedger = async(uri=false) => {
     let id = this.getUriSegment3()
-    let idcut = this.getUriSegment4()
-    await API.getReviewLedger(id,idcut).then((res) => {
-      this.setState({
-        post : res
+    let idcut = this.state.cutOffActive.id
+    if(uri){
+      await API.getReviewLedger(uri,idcut).then((res) => {
+        this.setState({
+          post : res
+        })
+        console.log(this.state.post)
       })
-      console.log(this.state.post)
-    })
+    }else{
+      await API.getReviewLedger(id,idcut).then((res) => {
+        this.setState({
+          post : res
+        })
+        console.log(this.state.post)
+      })
+    }
   }
   
   format = (amount) => {
@@ -139,12 +151,31 @@ class ReviewLedger extends Component {
       [state]: !this.state[state],
     })
   }
+
+  handleLocalStorage = () => {
+    let idl = localStorage.idl
+    this.props.history.push('/admin/reviewledger/'+idl)
+    this.getNamaLembaga(idl)
+    this.getDataCutOff()
+    this.getClearChache()
+    this.getLedger(idl)
+  }
+
+  setLocalStorage = () => {
+    let id = this.getUriSegment3()
+    localStorage.setItem('idl', id)
+  }
   
-  componentDidMount() {   
-      this.getNamaLembaga()
-      this.getDataCutOff()
-      this.getClearChache()
-      this.getLedger()
+  componentDidMount() {  
+      let id = this.getUriSegment3()
+      if(!id){
+        this.handleLocalStorage()
+      }else{
+        this.setLocalStorage()
+        this.getNamaLembaga()
+        this.getDataCutOff()
+        this.getClearChache()
+      }
   }
 
   render() {
@@ -176,7 +207,7 @@ class ReviewLedger extends Component {
                  <TableLedger data={datapost} format={this.format} />
                 </CardBody>
                 <Col className="modal-footer">
-                  <Button color="success" className="mt-3" size="md" type="button" onClick={this.simpanGapok}>Simpan</Button>
+                  <Button color="success" className="mt-3" size="md" type="button" onClick={this.simpanLedger}>Simpan</Button>
                 </Col>
               </Card>
             </div>
