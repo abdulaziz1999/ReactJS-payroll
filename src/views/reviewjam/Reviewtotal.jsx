@@ -121,7 +121,7 @@ class ReviewTotal extends Component {
   handleLocalStorage = () => {
     let idl = localStorage.idl
     let role = JSON.parse(localStorage.user).role
-    this.props.history.push('/'+role+'/review/'+idl)
+    this.props.history.push('/'+role+'/reviewtotal/'+idl)
     this.getNamaLembaga(idl)
     this.getDataCutOff()
     this.getClearChache()
@@ -150,7 +150,7 @@ class ReviewTotal extends Component {
 
   render() {
     const datapost = this.state.post
-    
+    const role  = JSON.parse(localStorage.user).role
     return (
       <>
         <div className="header bg-gradient-info pb-8 pt-5 pt-md-8">   
@@ -167,13 +167,16 @@ class ReviewTotal extends Component {
                         sampai 
                         <strong className="ml-2">{Moment(this.state.cutOffActive.end).format('DD MMMM YYYY')}</strong>
                       </Badge>
+                      <Badge className="ml-3" color="success">
+                          Read Only
+                      </Badge>
                   </h3>
                 </CardHeader>
                 <CardBody>
                  <ReviewGapok data={datapost} modal={this.toggleModal} format={this.format} />
                 </CardBody>
                 <Col className="modal-footer">
-                  <Button color="success" className="mt-3" size="md" type="button" onClick={this.getStepInsentif}>Simpan & Lanjutkan</Button>
+                  {role === 'admin' ? <Button color="success" className="mt-3" size="md" type="button" onClick={this.getStepInsentif}>Simpan & Lanjutkan</Button> : ''}
                 </Col>
               </Card>
             </div>

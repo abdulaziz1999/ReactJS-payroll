@@ -215,6 +215,7 @@ class Review extends Component {
 
   render() {
     let datapost =  this.state.post
+    let role = JSON.parse(localStorage.user).role
     return (
       <>
         <div className="header bg-gradient-info pb-8 pt-5 pt-md-8">   
@@ -233,12 +234,18 @@ class Review extends Component {
                         sampai 
                         <strong className="ml-2">{Moment(this.state.cutOffActive.end).format('DD MMMM YYYY')}</strong>
                       </Badge>
+                      <Badge className="ml-3" color="success">
+                          Read Only
+                      </Badge>
                       </h3>
                     </Col>
                     <Col md="6" sm="6" className="text-right">
+                      {role === 'admin' ? 
                       <Button color="success" type="button" size="sm" onClick={() =>   this.toggleModal("exampleModal") }>
                         <i className="fa fa-plus"></i> Tunjangan
-                      </Button>
+                      </Button> 
+                      : '' 
+                    }
                     </Col>
                   </Row>
                 </CardHeader>
@@ -246,7 +253,7 @@ class Review extends Component {
                  <ReviewGapok data={datapost} save={this.simpanGapok} format={this.format} listTunjangan={this.state.listTunjangan}/>
                 </CardBody>
                 <Col className="modal-footer">
-                  <Button color="success" className="mt-3" size="md" type="button" onClick={this.simpanGapok}>Simpan & Lanjutkan</Button>
+                  {role === 'admin' ? <Button color="success" className="mt-3" size="md" type="button" onClick={this.simpanGapok}>Simpan & Lanjutkan</Button>:''}
                 </Col>
               </Card>
             </div>

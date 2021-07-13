@@ -204,7 +204,7 @@ class Insentif extends Component {
   handleLocalStorage = () => {
     let idl = localStorage.idl
     let role = JSON.parse(localStorage.user).role
-    this.props.history.push('/'+role+'/review/'+idl)
+    this.props.history.push('/'+role+'/reviewinsentif/'+idl)
     this.getNamaLembaga(idl)
     this.getDataCutOff()
     this.getClearChache()
@@ -233,6 +233,7 @@ class Insentif extends Component {
   render() {
     const awal = Moment(this.state.cutOffActive.start).format('DD MMMM YYYY')
     const akhir = Moment(this.state.cutOffActive.end).format('DD MMMM YYYY')
+    const role  = JSON.parse(localStorage.user).role
     return (
       <>
         <div className="header bg-gradient-info pb-8 pt-5 pt-md-8">   
@@ -251,12 +252,17 @@ class Insentif extends Component {
                         sampai 
                         <strong className="ml-2">{akhir}</strong>
                       </Badge>
+                      <Badge className="ml-3" color="success">
+                          Read Only
+                      </Badge>
                       </h3>
                     </Col>
                     <Col md="6" sm="6" className="text-right">
+                    {role === 'admin' ?
                       <Button color="success" type="button" size="sm" onClick={() => this.toggleModal("exampleModal") }>
                         <i className="fa fa-plus"></i> Insentif
                       </Button>
+                    : ''}
                       {/* <Button color="success" type="button" size="sm" onClick={this.getAddInsentifPerCutOff}>
                         <i className="fa fa-plus"></i> Add Insentif
                       </Button> */}
@@ -267,7 +273,7 @@ class Insentif extends Component {
                  <TableComp data={this.state.post} insentif={this.state.insentif} format={this.format}/>
                 </CardBody>
                 <Col className="modal-footer">
-                  <Button color="success" className="mt-3" size="md" type="button" onClick={this.getSimpan}>Simpan & Lanjutkan</Button>
+                  {role === 'admin' ? <Button color="success" className="mt-3" size="md" type="button" onClick={this.getSimpan}>Simpan & Lanjutkan</Button> : ''}
                 </Col>
               </Card>
             </div>

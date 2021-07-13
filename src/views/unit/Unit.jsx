@@ -55,20 +55,26 @@ class Unit extends Component {
   getReviewLembaga = async(event) => {
     let id = event.target.id
     let data = event.target.name
-    Swal.fire(
-      'Success!',
-      'Review Gapok Lembaga '+data+'.',
-      'success'
-    )
-    await API.getDataGapok(id).then((result) => {
-      this.props.history.push('/admin/review/'+id)
-    }).catch((err) => {
-      console.log("ini eror :"+err)
-    })
+    let role = JSON.parse(localStorage.user).role
+    if(role === 'admin'){
+      Swal.fire(
+        'Success!',
+        'Review Gapok Lembaga '+data+'.',
+        'success'
+      )
+      await API.getDataGapok(id).then((result) => {
+        this.props.history.push('/admin/review/'+id)
+      }).catch((err) => {
+        console.log("ini eror :"+err)
+      })
+    }else{
+      this.props.history.push('/'+role+'/review/'+id)
+    }
   }
   
   getLinkMenu = (link,id) => {
-    this.props.history.push('/admin/'+link+'/'+id)
+    let role = JSON.parse(localStorage.user).role
+    this.props.history.push('/'+role+'/'+link+'/'+id)
   }
 
   componentDidMount() {

@@ -153,7 +153,7 @@ class ReviewLedger extends Component {
   handleLocalStorage = () => {
     let idl = localStorage.idl
     let role = JSON.parse(localStorage.user).role
-    this.props.history.push('/'+role+'/review/'+idl)
+    this.props.history.push('/'+role+'/reviewledger/'+idl)
     this.getNamaLembaga(idl)
     this.getDataCutOff()
     this.getClearChache()
@@ -179,6 +179,7 @@ class ReviewLedger extends Component {
 
   render() {
     let datapost =  this.state.post
+    const role = JSON.parse(localStorage.user).role
     return (
       <>
         <div className="header bg-gradient-info pb-8 pt-5 pt-md-8">   
@@ -197,6 +198,9 @@ class ReviewLedger extends Component {
                         sampai 
                         <strong className="ml-2">{Moment(this.state.cutOffActive.end).format('DD MMMM YYYY')}</strong>
                       </Badge>
+                      <Badge className="ml-3" color="success">
+                          Read Only
+                      </Badge>
                       </h3>
                     </Col>
                   </Row>
@@ -205,7 +209,7 @@ class ReviewLedger extends Component {
                  <TableLedger data={datapost} format={this.format} />
                 </CardBody>
                 <Col className="modal-footer">
-                  <Button color="success" className="mt-3" size="md" type="button" onClick={this.simpanLedger}>Simpan</Button>
+                  {role === 'admin' ? <Button color="success" className="mt-3" size="md" type="button" onClick={this.simpanLedger}>Simpan</Button> :''}
                 </Col>
               </Card>
             </div>
