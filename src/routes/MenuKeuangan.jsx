@@ -1,5 +1,5 @@
 import Index from "views/Dash/DashKeuangan";
-import Insentif from "views/reviewinsentif/Insentif";
+import Pinjaman from "views/review/Review";
 
 var routes = [
   {
@@ -10,10 +10,10 @@ var routes = [
     layout: "/keuangan",
   },
   {
-    path: "/insentif",
-    name: "Insentif",
+    path: "/review",
+    name: "Pinjaman",
     icon: "fa fa-money-bill-alt text-green",
-    component: Insentif,
+    component: Pinjaman,
     layout: "/keuangan",
   }
 ];

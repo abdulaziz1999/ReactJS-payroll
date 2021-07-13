@@ -162,7 +162,8 @@ class ReviewCicilan extends Component {
 
   handleLocalStorage = () => {
     let idl = localStorage.idl
-    this.props.history.push('/admin/reviewcicilan/'+idl)
+    let role = JSON.parse(localStorage.user).role
+    this.props.history.push('/'+role+'/review/'+idl)
     this.getNamaLembaga(idl)
     this.getDataCutOff()
     this.getClearChache()

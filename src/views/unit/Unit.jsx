@@ -67,13 +67,8 @@ class Unit extends Component {
     })
   }
   
-  getLinkMenu = (event,id) => {
-    let idc = this.state.cutOffActive.id
-    if(event === 'reviewinsentif' || event === 'reviewcicilan' || event === 'reviewledger' ){
-      this.props.history.push('/admin/'+event+'/'+id+'/'+idc)
-    }else{
-      this.props.history.push('/admin/'+event+'/'+id)
-    }
+  getLinkMenu = (link,id) => {
+    this.props.history.push('/admin/'+link+'/'+id)
   }
 
   componentDidMount() {

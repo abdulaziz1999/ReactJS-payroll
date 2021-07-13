@@ -199,7 +199,9 @@ class Kredit extends Component {
             <div className="col">
               <Card className="shadow">
                 <CardHeader className="border-0">
-                  <h3 className="mb-0">Data Kredit Pegawai</h3>
+                  <h3 className="mb-0">Data Kredit Berkah</h3>
+                  <Button color="info" type="button" size="md" > <i className="ni ni-air-baloon"></i> Laudry</Button>
+                  <Button color="info" type="button" size="md" > <i className="ni ni-air-baloon"></i> DQ Mart</Button>
                   {/* <Form>
                     <Input name="lembaga" id="lembaga" type="select" required>
                       {this.state.lembaga.map((row,index) => {

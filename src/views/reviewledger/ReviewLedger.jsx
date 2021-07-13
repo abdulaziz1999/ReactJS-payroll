@@ -124,14 +124,12 @@ class ReviewLedger extends Component {
         this.setState({
           post : res
         })
-        console.log(this.state.post)
       })
     }else{
       await API.getReviewLedger(id,idcut).then((res) => {
         this.setState({
           post : res
         })
-        console.log(this.state.post)
       })
     }
   }
@@ -154,7 +152,8 @@ class ReviewLedger extends Component {
 
   handleLocalStorage = () => {
     let idl = localStorage.idl
-    this.props.history.push('/admin/reviewledger/'+idl)
+    let role = JSON.parse(localStorage.user).role
+    this.props.history.push('/'+role+'/review/'+idl)
     this.getNamaLembaga(idl)
     this.getDataCutOff()
     this.getClearChache()
