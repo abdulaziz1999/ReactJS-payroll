@@ -63,12 +63,12 @@ class Unit extends Component {
         'success'
       )
       await API.getDataGapok(id).then((result) => {
-        this.props.history.push('/admin/review/'+id)
+        this.props.history.push('/admin/rev_gapok/'+id)
       }).catch((err) => {
         console.log("ini eror :"+err)
       })
     }else{
-      this.props.history.push('/'+role+'/review/'+id)
+      this.props.history.push('/'+role+'/rev_gapok/'+id)
     }
   }
   
