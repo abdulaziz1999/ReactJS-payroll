@@ -16,7 +16,7 @@
 
 */
 /*eslint-disable*/
-import React, { useState } from "react";
+import React, { Fragment, useState } from "react";
 import { NavLink as NavLinkRRD, Link } from "react-router-dom";
 // nodejs library to set properties for components
 import { PropTypes } from "prop-types";
@@ -88,6 +88,7 @@ const Sidebar = (props) => {
     });
   };
 
+  let role = JSON.parse(localStorage.user).role
   const { bgColor, routes, logo } = props;
   let navbarBrandProps;
   if (logo && logo.innerLink) {
@@ -187,28 +188,25 @@ const Sidebar = (props) => {
           {/* Divider */}
           <hr className="my-3" />
           {/* Heading */}
-          <h6 className="navbar-heading text-muted">Master Data</h6>
-          {/* Navigation */}
-          <Nav className="mb-md-3" navbar>
-            {/* <NavItem>
-              <NavLink href="#">
-                <i className="ni ni-spaceship te" />
-                Index ruang
-              </NavLink>
-            </NavItem> */}
-            <NavItem>
-              <NavLink href="/admin/datapegawai">
-                <i className="ni ni-single-02" />
-                Data Pegawai
-              </NavLink>
-            </NavItem>
-            <NavItem>
-              <NavLink href="#">
-                <i className="ni ni-ui-04" />
-                Index Ruang
-              </NavLink>
-            </NavItem>
-          </Nav>
+          {role === 'admin' ?
+           <Fragment>
+             <h6 className="navbar-heading text-muted">Master Data</h6>
+             <Nav className="mb-md-3" navbar>
+             <NavItem>
+               <NavLink href="/#/admin/datapegawai">
+                 <i className="ni ni-single-02" />
+                 Data Pegawai
+               </NavLink>
+             </NavItem>
+             <NavItem>
+               <NavLink href="#">
+                 <i className="ni ni-ui-04" />
+                 Index Ruang
+               </NavLink>
+             </NavItem>
+           </Nav>
+           </Fragment>
+           : ''  }
           {/* <Nav className="mb-md-3" navbar>
             <NavItem className="active-pro active">
               <NavLink href="#">

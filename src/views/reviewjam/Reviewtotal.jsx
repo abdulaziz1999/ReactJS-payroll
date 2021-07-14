@@ -121,7 +121,7 @@ class ReviewTotal extends Component {
   handleLocalStorage = () => {
     let idl = localStorage.idl
     let role = JSON.parse(localStorage.user).role
-    this.props.history.push('/'+role+'/reviewtotal/'+idl)
+    this.props.history.push('/'+role+'/rev_jam/'+idl)
     this.getNamaLembaga(idl)
     this.getDataCutOff()
     this.getClearChache()
@@ -167,9 +167,11 @@ class ReviewTotal extends Component {
                         sampai 
                         <strong className="ml-2">{Moment(this.state.cutOffActive.end).format('DD MMMM YYYY')}</strong>
                       </Badge>
+                      {role === 'keuangan' ? 
                       <Badge className="ml-3" color="success">
                           Read Only
                       </Badge>
+                      :''}
                   </h3>
                 </CardHeader>
                 <CardBody>

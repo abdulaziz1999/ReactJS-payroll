@@ -16,6 +16,7 @@ import {
   InputGroup,
   // Row,
   Col,
+  // Alert,
 } from "reactstrap";
 
 const Login = (props) => {
@@ -47,13 +48,15 @@ const Login = (props) => {
           props.history.push("/dqmart/index");
         } else if (session === "keuangan") {
           props.history.push("/keuangan/index");
+        } else if (session === "unit") {
+          props.history.push("/unit/index");
         }
       })
       .catch((error) => {
         setLoading(false);
         if (error.response.status === 200)
           setError(error.response.data.message);
-        else setError("Something went wrong. Please try again later.");
+        else setError("Username Atau Password Tidak Sesuai");
       });
   };
 
@@ -71,8 +74,10 @@ const Login = (props) => {
             </div>
             {error && (
               <>
+              <div className="text-center">
                 <small style={{ color: "red" }}>{error}</small>
-                <br />
+              </div>
+                {/* <Alert className="text-center" color="danger">{error}</Alert> */}
               </>
             )}
             <br />

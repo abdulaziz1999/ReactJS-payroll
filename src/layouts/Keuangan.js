@@ -10,7 +10,7 @@ import Sidebar from "components/Sidebar/Sidebar.js";
 
 import routes from "routes/MenuKeuangan";
 
-const Dqmart = (props) => {
+const Keuangan = (props) => {
   const mainContent = React.useRef(null);
   const location = useLocation();
 
@@ -75,4 +75,4 @@ const Dqmart = (props) => {
   );
 };
 
-export default Dqmart;
+export default Keuangan;

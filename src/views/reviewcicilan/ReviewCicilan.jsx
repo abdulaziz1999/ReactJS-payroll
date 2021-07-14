@@ -163,7 +163,7 @@ class ReviewCicilan extends Component {
   handleLocalStorage = () => {
     let idl = localStorage.idl
     let role = JSON.parse(localStorage.user).role
-    this.props.history.push('/'+role+'/reviewcicilan/'+idl)
+    this.props.history.push('/'+role+'/rev_cicilan/'+idl)
     this.getNamaLembaga(idl)
     this.getDataCutOff()
     this.getClearChache()
@@ -209,9 +209,11 @@ class ReviewCicilan extends Component {
                         sampai 
                         <strong className="ml-2">{akhir}</strong>
                       </Badge>
+                      {role === 'keuangan' ?
                       <Badge className="ml-3" color="success">
                           Read Only
                       </Badge>
+                      : ''} 
                       </h3>
                     </Col>
                     <Col md="6" sm="6" className="text-right">

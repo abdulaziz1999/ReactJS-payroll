@@ -37,7 +37,7 @@ const TablPegawai = ({data}) => {
                     {data.filter((val) => {
                         if(searchTerm === ""){
                             return val
-                        }else if(val.name.toLowerCase().includes(searchTerm.toLowerCase())){
+                        }else if(val.nama.toLowerCase().includes(searchTerm.toLowerCase())){
                             return val
                         }
                         return ""

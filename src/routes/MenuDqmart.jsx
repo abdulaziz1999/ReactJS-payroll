@@ -11,7 +11,7 @@ var routes = [
   },
   {
     path: "/kredit",
-    name: "Kredit",
+    name: "Potongan",
     icon: "ni ni-credit-card text-red",
     component: Kredit,
     layout: "/dqmart",

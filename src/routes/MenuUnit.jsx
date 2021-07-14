@@ -1,20 +1,20 @@
-import Index from "views/Dash/DashKeuangan";
-import Insentif from "views/reviewinsentif/Insentif";
+import Index from "views/Dash/DashUnit";
+import Insentif from "views/insentif/Insentif";
 
 var routes = [
   {
     path: "/index",
-    name: "Home Keuangan",
+    name: "Home Unit",
     icon: "ni ni-shop text-primary",
     component: Index,
-    layout: "/keuangan",
+    layout: "/unit",
   },
   {
     path: "/insentif",
     name: "Insentif",
     icon: "fa fa-money-bill-alt text-green",
     component: Insentif,
-    layout: "/keuangan",
+    layout: "/unit",
   }
 ];
 

@@ -17,7 +17,6 @@ import {
   import '../../views/examples/css/fixedcolumn.css'
 
 const TableKredit = ({data,modal,remove}) => {
-    console.log(data)
     const [searchTerm, setSearchTerm] = useState("")
     
     return (

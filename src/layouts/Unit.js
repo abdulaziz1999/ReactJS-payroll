@@ -8,9 +8,9 @@ import AdminNavbar from "components/Navbars/AdminNavbar.js";
 import AdminFooter from "components/Footers/AdminFooter.js";
 import Sidebar from "components/Sidebar/Sidebar.js";
 
-import routes from "routes/MenuKeuangan";
+import routes from "routes/MenuUnit";
 
-const Dqmart = (props) => {
+const Unit = (props) => {
   const mainContent = React.useRef(null);
   const location = useLocation();
 
@@ -22,7 +22,7 @@ const Dqmart = (props) => {
 
   const getRoutes = (routes) => {
     return routes.map((prop, key) => {
-      if (prop.layout === "/keuangan") {
+      if (prop.layout === "/unit") {
         return (
           <Route
             path={prop.layout + prop.path}
@@ -53,7 +53,7 @@ const Dqmart = (props) => {
         {...props}
         routes={routes}
         logo={{
-          innerLink: "/keuangan/index",
+          innerLink: "/unit/index",
           imgSrc: require("../assets/img/brand/argon-react.png").default,
           imgAlt: "...",
         }}
@@ -65,7 +65,7 @@ const Dqmart = (props) => {
         />
         <Switch>
           {getRoutes(routes)}
-          <Redirect from="*" to="/keuangan/index" />
+          <Redirect from="*" to="/unit/index" />
         </Switch>
         <Container fluid>
           <AdminFooter />
@@ -75,4 +75,4 @@ const Dqmart = (props) => {
   );
 };
 
-export default Dqmart;
+export default Unit;

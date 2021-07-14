@@ -153,7 +153,7 @@ class ReviewLedger extends Component {
   handleLocalStorage = () => {
     let idl = localStorage.idl
     let role = JSON.parse(localStorage.user).role
-    this.props.history.push('/'+role+'/reviewledger/'+idl)
+    this.props.history.push('/'+role+'/rev_ledger/'+idl)
     this.getNamaLembaga(idl)
     this.getDataCutOff()
     this.getClearChache()
@@ -198,9 +198,11 @@ class ReviewLedger extends Component {
                         sampai 
                         <strong className="ml-2">{Moment(this.state.cutOffActive.end).format('DD MMMM YYYY')}</strong>
                       </Badge>
+                      {role === 'keuangan' ? 
                       <Badge className="ml-3" color="success">
                           Read Only
                       </Badge>
+                      :''}
                       </h3>
                     </Col>
                   </Row>
