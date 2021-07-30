@@ -64,7 +64,7 @@ class Insentif extends Component {
   }
 
   getNamaLembaga = async(uri=false) => {
-    let id = this.getUriSegment3()
+    let id = this.getUriSegment3() 
     if(uri){
       await API.getUnitById(uri).then((result) => {
         this.setState({
@@ -117,12 +117,23 @@ class Insentif extends Component {
 
 
   handleSimpan = async(modal) => {
-    await API.postInsentifPegawai(this.state.postInsentif).then((result) => {
+    let URL= document.getElementById("nominal").value
+    let arr= URL.split('_')
+    let id_insentif = arr[0]
+    let nom = arr[1]
+    
+    let postInsentif = {
+      idguru: document.getElementById("idguru").value,
+      idinsentif: id_insentif,
+      nominal: nom 
+    }
+    await API.postInsentifPegawai(postInsentif).then((result) => {
         this.toggleClose(modal);
         this.getDataInsentif()
       }).catch((err) => {
           console.log("ini eror :"+err)
       })
+    console.log(postInsentif)
   }
 
   getAddInsentifPerCutOff = () => {

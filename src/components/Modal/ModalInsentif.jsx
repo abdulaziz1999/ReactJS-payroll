@@ -38,7 +38,7 @@ class ModalTunjangan extends Component {
         console.log("ini eror :"+err)
     })
   }
-
+ 
   getKegiatanId = async(event) => {
     let id = event.target.value;
     await API.getKegiatanId(id).then((result) => {
@@ -58,7 +58,7 @@ class ModalTunjangan extends Component {
 
   render() {
     const uri = parseInt(this.props.uri)
-    const ubah = this.props.ubah
+    // const ubah = this.props.ubah
     const save = this.props.save
     return (
       <>
@@ -88,7 +88,7 @@ class ModalTunjangan extends Component {
                 <Col md="12">
                   <FormGroup>
                     <label htmlFor="exampleFormControlSelect1">Nama Pegawai :</label>
-                    <Input name="idguru" id="exampleFormControlSelect1" type="select" onChange={ubah} required>
+                    <Input name="idguru" id="idguru" type="select" required>
                       <option disabled selected defaultValue={''}>Pilih Nama Pegawai</option>
                       {this.state.dataPegawai.filter(row => row.idlembaga === uri)
                       .map((row, index) => {
@@ -102,7 +102,7 @@ class ModalTunjangan extends Component {
                 <Col md="12">
                   <FormGroup>
                   <label htmlFor="exampleFormControlSelect2">Kegiatan - Skala:</label>
-                    <Input name="idinsentif" id="exampleFormControlSelect2" type="select" onChange={ubah} required>
+                    <Input name="idinsentif" id="exampleFormControlSelect2" type="select" required>
                       <option value="1">Pilih Kegiatan</option>
                       {this.state.insentifAll.map((row, index) => {
                           return (
@@ -117,11 +117,11 @@ class ModalTunjangan extends Component {
                 <Col md="12">
                   <FormGroup>
                   <label>Jabatan :</label>
-                    <Input name="nominal" id="exampleFormControlSelect2" type="select" onChange={ubah} required>
+                    <Input name="nominal" id="nominal" type="select" required>
                       <option value="">Pilih Jabatan</option>
                       {this.props.kegiatanId.map((row, index) => {
                           return (
-                            <option key={index} value={row.nominal}>{row.jabatan}</option>
+                            <option key={index} value={row.id+'_'+row.nominal}>{row.jabatan}</option>
                           )
                       })}
                     </Input>
