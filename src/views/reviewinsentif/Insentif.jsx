@@ -117,8 +117,8 @@ class Insentif extends Component {
 
 
   handleSimpan = async(modal) => {
-    let URL= document.getElementById("nominal").value
-    let arr= URL.split('_')
+    let data  = document.getElementById("nominal").value
+    let arr   = data.split('_')
     let id_insentif = arr[0]
     let nom = arr[1]
     
@@ -133,7 +133,6 @@ class Insentif extends Component {
       }).catch((err) => {
           console.log("ini eror :"+err)
       })
-    console.log(postInsentif)
   }
 
   getAddInsentifPerCutOff = () => {
