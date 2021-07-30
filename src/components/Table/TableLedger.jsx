@@ -68,8 +68,8 @@ const TableLedger = ({data,format}) => {
                           <td><b>{format(post.insentif)}</b></td>
                           {/* <td><b>{post.kredit}</b></td>
                           <td><b>{post.laundry}</b></td> */}
-                          <td className="text-dark" Style="background-color:#FA9AAD !important"><b>{format(post.total_potongan)}</b></td>
-                          <td className="text-dark text-center" Style="background-color:#96E6C4 !important"><b>{format(post.total_gaji)}</b></td>
+                          <td className="text-dark" style={{backgroundColor:"#FA9AAD !important"}}><b>{format(post.total_potongan)}</b></td>
+                          <td className="text-dark text-center" style={{backgroundColor:"#96E6C4 !important"}}><b>{format(post.total_gaji)}</b></td>
                           <td><b>{post.no_rek}</b></td>
                         </tr>
                       );

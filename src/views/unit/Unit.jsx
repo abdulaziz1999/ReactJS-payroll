@@ -83,6 +83,7 @@ class Unit extends Component {
   }
 
   render() {
+    let role = JSON.parse(localStorage.user).role
     return (
       <>
         <div className="header bg-gradient-info pb-8 pt-5 pt-md-8">   
@@ -114,18 +115,31 @@ class Unit extends Component {
                             {post.menu.map((row,index) => {
                               return (
                                 <Fragment key={index}>
-                                  {row.log === 1 ?  
-                                  <Button className="btn-icon btn-2 mt-1" color="success" onClick={() => this.getLinkMenu(row.link,post.id)}  >
-                                    <span className="btn-inner--icon">
-                                      {row.menu} 
-                                    </span>
-                                  </Button>
+                                  {role === 'admin' ?
+                                    <Fragment>
+                                      {row.log === 1 ?  
+                                      <Button className="btn-icon btn-2 mt-1" color="success" onClick={() => this.getLinkMenu(row.link,post.id)}  >
+                                        <span className="btn-inner--icon">
+                                          {row.menu} 
+                                        </span>
+                                      </Button>
+                                      :
+                                      <Button className="btn-icon btn-2 mt-1" color="secondary" onClick={() => this.getLinkMenu(row.link,post.id)} >
+                                        <span className="btn-inner--icon">
+                                          {row.menu} 
+                                        </span>
+                                      </Button>} 
+                                    </Fragment>
                                   :
-                                  <Button className="btn-icon btn-2 mt-1" color="secondary" onClick={() => this.getLinkMenu(row.link,post.id)} >
-                                    <span className="btn-inner--icon">
-                                      {row.menu} 
-                                    </span>
-                                  </Button>}
+                                    <Fragment>
+                                      {row.log === 1 ?  
+                                      <Button className="btn-icon btn-2 mt-1" color="success" onClick={() => this.getLinkMenu(row.link,post.id)}  >
+                                        <span className="btn-inner--icon">
+                                          {row.menu} 
+                                        </span>
+                                      </Button> : ''} 
+                                    </Fragment> 
+                                  }
                                 </Fragment>
                               )
                             })}

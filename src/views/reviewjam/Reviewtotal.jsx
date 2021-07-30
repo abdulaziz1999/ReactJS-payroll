@@ -111,7 +111,7 @@ class ReviewTotal extends Component {
       'Data Jam Tambahan<br> Berhasil Disimpan.',
       'success'
     )
-    this.props.history.push('/admin/reviewinsentif/'+id)
+    this.props.history.push('/admin/rev_insentif/'+id)
   }
 
   format = (amount) => {

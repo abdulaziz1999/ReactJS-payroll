@@ -121,7 +121,7 @@ class ReviewCicilan extends Component {
       'Data Cicilan <br> Berhasil Disimpan.',
       'success'
     )
-    this.props.history.push('/admin/reviewledger/'+id)
+    this.props.history.push('/admin/rev_ledger/'+id)
   }
 
   format = (amount) => {

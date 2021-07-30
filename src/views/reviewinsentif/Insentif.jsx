@@ -148,7 +148,7 @@ class Insentif extends Component {
       'Data Insetif <br> Berhasil Disimpan.',
       'success'
   )
-    this.props.history.push('/admin/reviewcicilan/'+id)
+    this.props.history.push('/admin/rev_cicilan/'+id)
   }
 
   format = (amount) => {
@@ -204,7 +204,7 @@ class Insentif extends Component {
   handleLocalStorage = () => {
     let idl = localStorage.idl
     let role = JSON.parse(localStorage.user).role
-    this.props.history.push('/'+role+'/rev_insentif/'+idl)
+    this.props.history.push('/'+role+'/rev_insentif/'+idl) 
     this.getNamaLembaga(idl)
     this.getDataCutOff()
     this.getClearChache()

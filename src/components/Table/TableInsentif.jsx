@@ -91,7 +91,7 @@ const TableInsentif = ({ data, insentif, format }) => {
                     <td>4</td>
                     <td>5</td> */}
                     {elements}
-                    <td className="text-dark text-center" Style="background-color:#96E6C4 !important">
+                    <td className="text-dark text-center" style={{backgroundColor:"#96E6C4 !important"}}>
                       <strong>{format(post.totalinsentif)}</strong>
                     </td>
                   </tr>
