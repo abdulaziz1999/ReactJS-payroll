@@ -66,8 +66,9 @@ const TableGapok = ({data,format,remove}) => {
                           <td><b>{format(post.total_jam)}</b></td>
                           <td><b>{format(post.total_jam_tambahan)}</b></td>
                           <td><b>{format(post.transport)}</b></td>
-                          <td className="text-dark text-center" style={{backgroundColor:"#96E6C4 !important"}}>
-                            <b>{format(post.total_jam+post.transport+post.total_jam_tambahan)}</b>
+                          <td className="text-dark text-center" style={{backgroundColor:"#96E6C4"}}>
+                            {/* <b>{format(post.total_jam+post.transport+post.total_jam_tambahan)}</b> */}
+                            <strong>{format(post.total_akhir)}</strong>
                           </td>
                         </tr>
                       );

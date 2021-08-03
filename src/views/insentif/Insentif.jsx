@@ -12,8 +12,8 @@ class User extends Component {
   state = {
     post: [],
     formUser: {
-      insentif: "",
-      nominal: ""
+      nama_kegiatan: "",
+      jenis: ""
     },
     isUpdate: false,
     insentifAll: [],
@@ -42,11 +42,11 @@ class User extends Component {
     })
   }
 
-  putDataUser = () => {
-    API.putDataUser(this.state.formUser).then((res) => {
-        this.getDataUser()
-        this.handleFromClear()
-      })
+  putDataInsentif = async() => {
+    // await API.putDataUser(this.state.formUser).then((res) => {
+    //     this.getDataUser()
+    //     this.handleFromClear()
+    //   })
   }
 
   handleRemove = (id) => {
@@ -74,7 +74,6 @@ class User extends Component {
 
   handleSimpan = (modal) => {
     if (this.state.isUpdate) {
-      this.putDataUser()
       this.toggleClose(modal)
     } else {
       this.postDataInsentif()
@@ -137,7 +136,7 @@ class User extends Component {
 
   render() {
     const dataInsentifAll = this.state.insentifAll 
-    const dataInsetifActive = this.state.insentifActive 
+    // const dataInsetifActive = this.state.insentifActive 
     return (
       <>
         <div className="header bg-gradient-info pb-8 pt-5 pt-md-8">   
@@ -160,13 +159,13 @@ class User extends Component {
                   </Row>
                 </CardHeader>
                 <CardBody>
-                 <TableInsentif data={dataInsentifAll} insentif={true} modal={this.toggleModal} format={this.format}/>
+                 <TableInsentif data={dataInsentifAll} insentif={false} modal={this.toggleModal} format={this.format}/>
                 </CardBody>
               </Card>
             </div>
           </Row>
           {/* Table */}
-          <Row>
+          {/* <Row>
             <div className="col mt-5">
               <Card className="shadow">
                 <CardHeader className="border-0">
@@ -186,7 +185,7 @@ class User extends Component {
                 </CardBody>
               </Card>
             </div>
-          </Row>
+          </Row> */}
         </Container>
 
         <ModaAddInsentif 

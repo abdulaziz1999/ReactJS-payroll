@@ -1,9 +1,9 @@
 import React from "react";
 import { useState } from "react";
-import { Col, Form, FormGroup , Input,InputGroup, InputGroupAddon,InputGroupText, Row, Table, Button} from "reactstrap";
+import { Col, Form, FormGroup , Input,InputGroup, InputGroupAddon,InputGroupText, Row, Table, Button, Badge} from "reactstrap";
 
 
-const TableInsentif = ({data,remove,format,insentif}) => {
+const TableInsentif = ({data,remove,modal,format,insentif}) => {
     const [searchTerm, setSearchTerm] = useState("")
     
     return (
@@ -28,7 +28,7 @@ const TableInsentif = ({data,remove,format,insentif}) => {
                   <thead className="thead-light">
                     <tr >
                       <th scope="col">Insentif</th>
-                      <th scope="col">Nominal</th>
+                      <th scope="col">Skala</th>
                       {insentif ? null :
                       <th scope="col" className="text-center">Act</th>
                       }
@@ -45,15 +45,23 @@ const TableInsentif = ({data,remove,format,insentif}) => {
                     }).map((post, index) => {
                       return (
                         <tr key={index} className="text-left">
-                          <td><b>{post.insentif}</b></td>
-                          <td><b>{format(post.nominal)}</b></td>
+                          <td><b>{post.nama_kegiatan}</b></td>
+                          <td>
+                            <Badge color="success" >
+                              <strong>{post.jenis}</strong>
+                            </Badge>
+                          </td>
                           {insentif ? null :
                               <td>
                                 <div className="btn-group">
-                                  {/* <Button color="info" type="button" size="sm" onClick={() => modal("exampleModal", post)} >
+                                  <Button color="info" type="button" size="sm" onClick={() => modal("exampleModal", post)} >
                                     <i className="ni ni-ruler-pencil"></i> Update
                                   </Button>
-                                  &nbsp; */}
+                                  &nbsp;
+                                  <Button color="success" type="button" size="sm"  >
+                                    <i className="ni ni-tag"></i> Detail
+                                  </Button>
+                                  &nbsp;
                                   <Button color="danger" type="button" size="sm" onClick={() => remove(post.id)} >
                                     <i className="fa fa-trash"></i> Delete
                                   </Button>

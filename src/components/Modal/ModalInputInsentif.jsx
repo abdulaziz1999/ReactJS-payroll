@@ -22,13 +22,13 @@ class ModalUser extends Component {
     const status = this.props.status
     const formdata = this.props.data
     const ubah = this.props.updateField
-    let insentif, nominal
+    let nama_kegiatan, jenis
     if(formdata){
-      insentif = formdata.insentif
-      nominal = formdata.nominal
+      nama_kegiatan = formdata.nama_kegiatan
+      jenis = formdata.jenis
     }else{
-      insentif = ""
-      nominal = ""
+      nama_kegiatan = ""
+      jenis = ""
     }
 
     return (
@@ -47,16 +47,51 @@ class ModalUser extends Component {
               <Row>
                 <Col md="6">
                   <FormGroup>
-                    <label>Nama Insentif :</label>
-                    <Input placeholder="Insentif" name="insentif" autoComplete="off" type="text" onChange={ubah} value={insentif}
-                    />
+                    <label>Nama Kegiatan :</label>
+                    <Input placeholder="Nama Kegiatan" name="nama_kegiatan" autoComplete="off" type="text" onChange={ubah} value={nama_kegiatan}/>
                   </FormGroup>
                 </Col>
                 <Col md="6">
                   <FormGroup>
-                    <label>Nominal :</label>
-                    <Input placeholder="Nominal" name="nominal" autoComplete="off" type="text" onChange={ubah} value={nominal}
-                    />
+                    <label>Jenis :</label>
+                    <Input placeholder="Skala Kegiatan" name="jenis" autoComplete="off" type="select" onChange={ubah}>
+                    {!status ?
+                      <Fragment>
+                        <option selected disabled>Pilih Skala</option>
+                        <option value="kecil" >Kecil</option>
+                        <option value="sedang" >Sedang</option>
+                        <option value="besar" >Besar</option>
+                      </Fragment>
+                      :
+                      <Fragment>
+                        <option selected disabled> Pilih Skala</option>
+                        {jenis === 'kecil' ?
+                        <Fragment>
+                          <option value="kecil" selected>Kecil</option>
+                          <option value="sedang" >Sedang</option>
+                          <option value="besar" >Besar</option> 
+                        </Fragment>
+                        : ""}
+                        {jenis === 'sedang' ?
+                          <Fragment>
+                            <option value="kecil" >Kecil</option>
+                            <option value="sedang" selected>Sedang</option>
+                            <option value="besar" >Besar</option> 
+                          </Fragment> 
+                          : ""
+                        }
+                        {jenis === 'besar' ?
+                          <Fragment>
+                            <option value="kecil">Kecil</option>
+                            <option value="sedang" >Sedang</option>
+                            <option value="besar" selected>Besar</option> 
+                          </Fragment> 
+                          : ""
+                        }
+                      </Fragment>
+                      }
+                    </Input>
+                    
                   </FormGroup>
                 </Col>
               </Row>
