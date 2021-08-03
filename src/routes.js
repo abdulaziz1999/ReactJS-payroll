@@ -1,5 +1,5 @@
 import Index from "views/Index.js"
-import Kredit from "views/kredit/Kredit"
+import Berkah from "views/masterData/Berkah"
 import User from "views/user/User"
 import Cutoff from "views/cutoff/CutOff"
 import Unit from "views/unit/Unit"
@@ -9,6 +9,7 @@ import ReviewJam from "views/reviewjam/Reviewtotal"
 import ReviewInsentif from "views/reviewinsentif/Insentif"
 import ReviewCicilan from "views/reviewcicilan/ReviewCicilan"
 import ReviewLedger from "views/reviewledger/ReviewLedger"
+import KirimData from "views/kirim/Kirim"
 import Pinjaman from "views/cicilan/Pinjaman"
 
 var routes = [
@@ -69,10 +70,17 @@ var routes = [
     layout: "/admin",
   },
   {
-    path: "/kredit",
+    path: "/kirim",
+    name: "Kirim Data - 8",
+    icon: "ni ni-send text-blue",
+    component: KirimData,
+    layout: "/admin",
+  },
+  {
+    path: "/berkah",
     name: "Potongan - Berkah",
     icon: "ni ni-credit-card text-red",
-    component: Kredit,
+    component: Berkah,
     layout: "/admin",
   },
   {
