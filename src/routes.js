@@ -1,16 +1,13 @@
 import Index from "views/Index.js"
-import Berkah from "views/masterData/Berkah"
-import User from "views/user/User"
 import Cutoff from "views/cutoff/CutOff"
 import Unit from "views/unit/Unit"
-import InputInsentif from "views/insentif/Insentif"
 import ReviewGapok from "views/review/Review"
 import ReviewJam from "views/reviewjam/Reviewtotal"
 import ReviewInsentif from "views/reviewinsentif/Insentif"
 import ReviewCicilan from "views/reviewcicilan/ReviewCicilan"
 import ReviewLedger from "views/reviewledger/ReviewLedger"
 import KirimData from "views/kirim/Kirim"
-import Pinjaman from "views/cicilan/Pinjaman"
+import User from "views/user/User"
 
 var routes = [
   {
@@ -74,27 +71,6 @@ var routes = [
     name: "Kirim Data - 8",
     icon: "ni ni-send text-blue",
     component: KirimData,
-    layout: "/admin",
-  },
-  {
-    path: "/berkah",
-    name: "Potongan - Berkah",
-    icon: "ni ni-credit-card text-red",
-    component: Berkah,
-    layout: "/admin",
-  },
-  {
-    path: "/pinjaman",
-    name: "Pinjaman - Keuangan",
-    icon: "ni ni-credit-card text-orange",
-    component: Pinjaman,
-    layout: "/admin",
-  },
-  {
-    path: "/insentif",
-    name: "Insentif - Unit",
-    icon: "ni ni-credit-card text-green",
-    component: InputInsentif,
     layout: "/admin",
   },
   {

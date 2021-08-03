@@ -50,6 +50,7 @@ import {
   Row,
   Col,
 } from "reactstrap";
+import routesmaster from "routes/RouterMaster";
 
 var ps;
 
@@ -188,33 +189,8 @@ const Sidebar = (props) => {
           {/* Divider */}
           <hr className="my-3" />
           {/* Heading */}
-          {role === 'admin' ?
-           <Fragment>
-             <h6 className="navbar-heading text-muted">Master Data</h6>
-             <Nav className="mb-md-3" navbar>
-             <NavItem>
-               <NavLink href="/#/admin/datapegawai">
-                 <i className="ni ni-single-02" />
-                 Data Pegawai
-               </NavLink>
-             </NavItem>
-             <NavItem>
-               <NavLink href="#">
-                 <i className="ni ni-ui-04" />
-                 Index Ruang
-               </NavLink>
-             </NavItem>
-           </Nav>
-           </Fragment>
-           : ''  }
-          {/* <Nav className="mb-md-3" navbar>
-            <NavItem className="active-pro active">
-              <NavLink href="#">
-                <i className="ni ni-spaceship" />
-                Upgrade to PRO
-              </NavLink>
-            </NavItem>
-          </Nav> */}
+          <h6 className="navbar-heading text-muted">Master Data</h6>
+          <Nav navbar>{createLinks(routesmaster)}</Nav>
         </Collapse>
       </Container>
     </Navbar>
