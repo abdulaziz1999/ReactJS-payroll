@@ -26,6 +26,7 @@ class Insentif extends Component {
       jabatan : "",
     },
     isUpdate: false,
+    namaDetail: "",
     insentifAll: [],
     insentifActive: []
   }
@@ -35,6 +36,14 @@ class Insentif extends Component {
     let arr= URL.split('/')
     let id = arr[3]
     return id
+  }
+
+  getNamaDetail = async(uri) => {
+    await API.getDetailKegiatan(uri).then((res) => {
+      this.setState({
+        namaDetail : res.nama_kegiatan
+      })
+    })
   }
 
   getDataInsentifAll = async() => {
@@ -95,7 +104,6 @@ class Insentif extends Component {
       })
   }
    
-
   getDetail = async(uri) => {
     await API.getDetailKegiatan(uri).then((res) => {
       this.setState({
@@ -107,6 +115,7 @@ class Insentif extends Component {
   viewDetail = (id) => {
     this.props.history.push('/admin/insentif/'+id)
     this.getDetail(id)
+    this.getNamaDetail(id)
   }
 
   handleRemove = (id) => {
@@ -256,6 +265,7 @@ class Insentif extends Component {
     let uri = this.getUriSegment3()
     if(uri){
       this.getDetail(uri)
+      this.getNamaDetail(uri)
     }
     this.getDataInsentifAll()
     this.getDataInsentifActive()
@@ -278,7 +288,7 @@ class Insentif extends Component {
                 <CardHeader className="border-0">
                   <Row>
                   <Col md="6" sm="6" className="text-left">
-                    <h3 className="mb-0">Data Insentif</h3>
+                    <h3 className="mb-0"><strong>{!uri ? 'Data Insentif' : 'Detail Insentif '+this.state.namaDetail}</strong></h3>
                   </Col>
                   <Col md="6" sm="6" className="text-right">
                     <input type="hidden" id="uri" value="" />

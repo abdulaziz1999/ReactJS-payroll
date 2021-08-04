@@ -19,13 +19,12 @@ class ModalUser extends Component {
   }
 
   render() {
-    const status = this.props.status
-    const formdata = this.props.data
+    const status    = this.props.status
+    const formdata  = this.props.data
     const formdata2 = this.props.data2
-    const ubah = this.props.updateField
-    const uri = this.props.uri
+    const ubah      = this.props.updateField
+    const uri       = this.props.uri
 
-    
     let nama_kegiatan, jenis, nominal, jabatan
     if(formdata){
       nama_kegiatan = formdata.nama_kegiatan
@@ -104,7 +103,6 @@ class ModalUser extends Component {
                       </Fragment>
                       }
                     </Input>
-                    
                   </FormGroup>
                 </Col>
               </Row>
@@ -115,14 +113,14 @@ class ModalUser extends Component {
                 <input type="hidden" id="kegiatanId" value={uri} />
                 <Col md="6">
                   <FormGroup>
-                    <label>Nominal :</label>
-                    <Input placeholder="Masukan Nominal" name="nominal" autoComplete="off" type="text" onChange={ubah} value={nominal}/>
+                    <label>Jabatan :</label>
+                    <Input placeholder="Masukan Jabatan" name="jabatan" autoComplete="off" type="text" onChange={ubah} value={jabatan}/>
                   </FormGroup>
                 </Col>
                 <Col md="6">
                   <FormGroup>
-                    <label>Jabatan :</label>
-                    <Input placeholder="Masukan Jabatan" name="jabatan" autoComplete="off" type="text" onChange={ubah} value={jabatan}/>
+                    <label>Nominal :</label>
+                    <Input placeholder="Masukan Nominal" name="nominal" autoComplete="off" type="text" onChange={ubah} value={nominal}/>
                   </FormGroup>
                 </Col>
               </Row>
@@ -134,7 +132,7 @@ class ModalUser extends Component {
               Close
             </Button>
             <Button color="info" type="button" size="sm" onClick={() => this.props.save("exampleModal")} >
-              <i className="ni ni-air-baloon"></i> {status === true ? 'Update' : 'Tambah'}
+              <i className="ni ni-air-baloon"></i> {status === true ? 'Update' : 'Save'}
             </Button>
           </div>
         </Modal>
