@@ -30,6 +30,10 @@ const TablPegawai = ({data}) => {
                   <thead className="thead-light">
                     <tr >
                       <th scope="col">Nama</th>
+                      <th scope="col">Status</th>
+                      <th scope="col">Golongan</th>
+                      <th scope="col">Satuan Index</th>
+                      <th scope="col">Tahun Masuk</th>
                       {/* <th scope="col">Lembaga</th> */}
                     </tr>
                   </thead>
@@ -42,9 +46,14 @@ const TablPegawai = ({data}) => {
                         }
                         return ""
                     }).map((post, index) => {
+                      let no = index+1
                       return (
                         <tr key={index} className="text-left">
-                          <td><b>{post.nama}</b></td>
+                          <td><b>{no++}. | {post.nama}</b></td>
+                          <td><b>{post.idstatus}</b></td>
+                          <td><b>{post.golongan}</b></td>
+                          <td><b>{post.satuanindex}</b></td>
+                          <td><b>{post.tahunmasuk}</b></td>
                           {/* <td><b>{post.idlembaga}</b></td> */}
                         </tr>
                       );
