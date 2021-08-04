@@ -1,9 +1,9 @@
 import React from "react";
 import { useState } from "react";
-import { Col, Form, FormGroup , Input,InputGroup, InputGroupAddon,InputGroupText, Row, Table, Button, Badge} from "reactstrap";
+import { Col, Form, FormGroup , Input,InputGroup, InputGroupAddon,InputGroupText, Row, Table, Button} from "reactstrap";
 
 
-const TableInsentif = ({data,remove,modal,viewdetail,format,insentif}) => {
+const TableInsentif = ({data,remove,modal,format,insentif}) => {
     const [searchTerm, setSearchTerm] = useState("")
     
     return (
@@ -27,8 +27,8 @@ const TableInsentif = ({data,remove,modal,viewdetail,format,insentif}) => {
             <Table className="align-items-center table-flush" responsive>
                   <thead className="thead-light">
                     <tr >
-                      <th scope="col">Insentif</th>
-                      <th scope="col">Skala</th>
+                      <th scope="col">Jabatan</th>
+                      <th scope="col">Nominal</th>
                       {/* <th scope="col">Detail</th> */}
                       {insentif ? null :
                       <th scope="col" className="text-center">Act</th>
@@ -39,28 +39,20 @@ const TableInsentif = ({data,remove,modal,viewdetail,format,insentif}) => {
                     {data.filter((val) => {
                         if(searchTerm === ""){
                             return val
-                        }else if(val.nama_kegiatan.toLowerCase().includes(searchTerm.toLowerCase())){
+                        }else if(val.jabatan.toLowerCase().includes(searchTerm.toLowerCase())){
                             return val
                         }
                         return ""
                     }).map((post, index) => {
                       return (
                         <tr key={index} className="text-left">
-                          <td><b>{post.nama_kegiatan}</b></td>
-                          <td>
-                            <Badge color="success" >
-                              <strong>{post.jenis}</strong>
-                            </Badge>
-                          </td>
+                          <td><b>{post.jabatan}</b></td>
+                          <td><b>{format(post.nominal)}</b></td>
                           {insentif ? null :
                               <td>
                                 <div className="btn-group">
                                   <Button color="info" type="button" size="sm" onClick={() => modal("exampleModal", post)} >
                                     <i className="ni ni-ruler-pencil"></i> Update
-                                  </Button>
-                                  &nbsp;
-                                  <Button color="success" type="button" size="sm" onClick={() => viewdetail(post.id)} >
-                                    <i className="ni ni-tag"></i> Detail
                                   </Button>
                                   &nbsp;
                                   <Button color="danger" type="button" size="sm" onClick={() => remove(post.id)} >

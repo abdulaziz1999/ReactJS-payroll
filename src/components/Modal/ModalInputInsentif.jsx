@@ -9,10 +9,10 @@ import {
   Col,
   Row,
 } from "reactstrap";
-
 class ModalUser extends Component {
   state = {
     post: [],
+    insentifAll: [],
   }
 
   componentDidMount() {
@@ -21,14 +21,26 @@ class ModalUser extends Component {
   render() {
     const status = this.props.status
     const formdata = this.props.data
+    const formdata2 = this.props.data2
     const ubah = this.props.updateField
-    let nama_kegiatan, jenis
+    const uri = this.props.uri
+
+    
+    let nama_kegiatan, jenis, nominal, jabatan
     if(formdata){
       nama_kegiatan = formdata.nama_kegiatan
       jenis = formdata.jenis
     }else{
       nama_kegiatan = ""
       jenis = ""
+    }
+    
+    if(formdata2){
+      nominal = formdata2.nominal
+      jabatan = formdata2.jabatan
+    }else{
+      nominal = ""
+      jabatan = ""
     }
 
     return (
@@ -43,6 +55,7 @@ class ModalUser extends Component {
             </button>
           </div>
           <div className="modal-body">
+            {!uri ?
             <Form>
               <Row>
                 <Col md="6">
@@ -96,6 +109,25 @@ class ModalUser extends Component {
                 </Col>
               </Row>
             </Form>
+            :
+            <Form>
+              <Row>
+                <input type="hidden" id="kegiatanId" value={uri} />
+                <Col md="6">
+                  <FormGroup>
+                    <label>Nominal :</label>
+                    <Input placeholder="Masukan Nominal" name="nominal" autoComplete="off" type="text" onChange={ubah} value={nominal}/>
+                  </FormGroup>
+                </Col>
+                <Col md="6">
+                  <FormGroup>
+                    <label>Jabatan :</label>
+                    <Input placeholder="Masukan Jabatan" name="jabatan" autoComplete="off" type="text" onChange={ubah} value={jabatan}/>
+                  </FormGroup>
+                </Col>
+              </Row>
+            </Form>
+            } 
           </div>
           <div className="modal-footer">
             <Button color="danger" data-dismiss="modal" type="button" size="sm" onClick={() => this.props.modalTutup("exampleModal")} >

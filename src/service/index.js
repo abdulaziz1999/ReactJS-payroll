@@ -40,6 +40,7 @@ const getDataSummary = (id) => Get(`summary/${id}`,true)
 
 //API Review Insentif / Kegiatan
 const getAllInsentif = () => Get(`kegiatan`,true)
+const getKegiatanId = (id) => Get(`kegiatan/${id}`,true)
 const postDataInsentif = (data) => Post(`kegiatan`,true,data)
 const putKegiatan = (data) => Put(`kegiatan`,true,data)
 const deleteKegiatan = (id) => Delete(`kegiatan/${id}`,true)
@@ -51,11 +52,9 @@ const deleteDetailKegiatan = (id) => Delete(`kegiatan/detail/${id}`,true)
 
 const getInsentifPerCutOff = () => Get(`insentif`,true)
 const postInsentifPegawai = (data) => Post(`insentifPegawai`,true,data)
-
 const getDataInsentifCutoff = (id) => Get(`insentifCutoff/${id}`,true)
 const postDataInsentifCutoff = (data) => Post(`insentifCutoff`,true,data)
 const deleteDataInsentifCutoff = (id) => Delete(`insentifCutoff/${id}`,true)
-const getKegiatanId = (id) => Get(`kegiatan/${id}`,true)
 
 //API Tunjangan
 const getDataTunjangan  = () => Get(`tunjangan`,true)
