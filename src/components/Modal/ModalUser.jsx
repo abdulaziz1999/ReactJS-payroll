@@ -22,15 +22,17 @@ class ModalUser extends Component {
     const status = this.props.status
     const formdata = this.props.data
     const ubah = this.props.updateField
-    let nama, role, email
+    let nama, role, email, password
     if(formdata){
       nama = formdata.name
       role = formdata.role
       email = formdata.email
+      password = formdata.password
     }else{
       nama = ""
       role = ""
       email = ""
+      password = ""
     }
 
     return (
@@ -50,8 +52,7 @@ class ModalUser extends Component {
                 <Col md="6">
                   <FormGroup>
                     <label>Nama User :</label>
-                    <Input readOnly placeholder="Nama" name="name" type="text" onChange={ubah} value={nama}
-                    />
+                    <Input placeholder="Nama" name="name" autoComplete="off" type="text" onChange={ubah} value={nama} required/>
                   </FormGroup>
                 </Col>
                 <Col md="6">
@@ -114,19 +115,18 @@ class ModalUser extends Component {
                 <Col md="6">
                   <FormGroup>
                   <label>Email :</label>
-                  <Input placeholder="Email" name="email" type="text"  onChange={ubah}  value={email} />
+                  <Input placeholder="Email" name="email" autoComplete="off" type="text"  onChange={ubah}  value={email} required/>
                     {/* <Input placeholder="Email" name="email" type="text" /> */}
                   </FormGroup>
                 </Col>
                 {!status ?
                   <Col md="6">
-                  <FormGroup>
-                  <label>Password :</label>
-                    <Input placeholder="Password" name="password" type="text" id="passwordUser" />
-                  </FormGroup>
-                </Col>
-                :""
-                }
+                    <FormGroup>
+                    <label>Password :</label>
+                      <Input placeholder="Password" autoComplete="off" name="password" type="text" id="passwordUser" onChange={ubah} value={password} required/>
+                    </FormGroup>
+                  </Col>
+                  : ""}
               </Row>
             </Form>
           </div>
@@ -135,7 +135,7 @@ class ModalUser extends Component {
               Close
             </Button>
             <Button color="info" type="button" size="sm" onClick={() => this.props.save("exampleModal")} >
-              <i className="ni ni-air-baloon"></i> Update
+              <i className="ni ni-air-baloon"></i> {status === true ? 'Update' : 'Save'}
             </Button>
           </div>
         </Modal>

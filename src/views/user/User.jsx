@@ -16,6 +16,7 @@ class User extends Component {
       name: "",
       role: "",
       email: "",
+      password: ""
     },
     isUpdate: false,
   }
@@ -47,12 +48,7 @@ class User extends Component {
   }
 
   postDataUser = async() => {
-    let data = {
-      role: this.state.formUser.role,
-      email: this.state.formUser.email,
-      password: document.getElementById("passwordUser").value
-    }
-    await API.postDataUser(data).then((res) => {
+    await API.postDataUser(this.state.formUser).then((res) => {
       this.getDataUser()
     }) 
   }
@@ -106,7 +102,8 @@ class User extends Component {
       formUser: {
         name: "",
         role: "",
-        email: ""
+        email: "",
+        password: ""
       },
     })
   }
