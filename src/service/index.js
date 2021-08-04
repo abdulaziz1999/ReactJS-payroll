@@ -26,7 +26,7 @@ const postDataKredit  = (data) => Post('kredit',true,data)
 
 //API Cut Off
 const getDataCutOff  = () => Get('cutoff/active',true)
-const getRangeTgl  = () => Get('cutoff',true)
+const getRangeTgl    = () => Get('cutoff',true)
 const postDataCutOff = (data) => Post('cutoff',true,data)
 const putDataCutOff  = (data,id) => Put(`cutoff/${id}`,true,data)
 const deleteCutOff   = (id) => Delete(`cutoff/${id}`,true)
@@ -38,10 +38,18 @@ const postDataGapok = (id) => Post(`gapok/${id}`,true)
 //API Review Jam Tambahan (Summary)
 const getDataSummary = (id) => Get(`summary/${id}`,true)
 
-//API Review Insentif
+//API Review Insentif / Kegiatan
 const getAllInsentif = () => Get(`kegiatan`,true)
-const getInsentifPerCutOff = () => Get(`insentif`,true)
 const postDataInsentif = (data) => Post(`kegiatan`,true,data)
+const putKegiatan = (data) => Put(`kegiatan`,true,data)
+const deleteKegiatan = (id) => Delete(`kegiatan/${id}`,true)
+
+const getDetailKegiatan = (id) => Get(`kegiatan/${id}`,true)
+const postDetailKegiatan = (data) => Post(`kegiatan/detail`,true,data)
+const putDetailKegiatan = (data) => Put(`kegiatan/detail`,true,data)
+const deleteDetailKegiatan = (id) => Delete(`kegiatan/detail/${id}`,true)
+
+const getInsentifPerCutOff = () => Get(`insentif`,true)
 const postInsentifPegawai = (data) => Post(`insentifPegawai`,true,data)
 
 const getDataInsentifCutoff = (id) => Get(`insentifCutoff/${id}`,true)
@@ -113,6 +121,13 @@ const API = {
 
     //API Insentif
     getAllInsentif,
+    putKegiatan,
+    deleteKegiatan,
+    getDetailKegiatan,
+    postDetailKegiatan,
+    putDetailKegiatan,
+    deleteDetailKegiatan,
+
     getDataInsentifCutoff,
     getInsentifPerCutOff,
     postDataInsentifCutoff,

@@ -2,6 +2,8 @@ import Berkah from "views/masterData/Berkah"
 import Pinjaman from "views/cicilan/Pinjaman"
 import InputInsentif from "views/insentif/Insentif"
 import DataPegawai from "views/masterData/dataPegawai"
+import User from "views/user/User"
+
 var routesmaster = [
     {
         path: "/pegawai",
@@ -29,6 +31,13 @@ var routesmaster = [
         name: "Insentif - Unit",
         icon: "ni ni-credit-card text-green",
         component: InputInsentif,
+        layout: "/admin",
+      },
+      {
+        path: "/user",
+        name: "Pengguna",
+        icon: "ni ni-circle-08 text-orange",
+        component: User,
         layout: "/admin",
       },
 ];
