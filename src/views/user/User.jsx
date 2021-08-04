@@ -20,28 +20,39 @@ class User extends Component {
     isUpdate: false,
   }
 
-  getDataUser = () => {
-      API.getDataUser().then((res) => {
+  getDataUser = async() => {
+      await API.getDataUser().then((res) => {
         this.setState({
           post: res
         })
       })
   }
 
-  putDataUser = () => {
-    API.putDataUser(this.state.formUser).then((res) => {
+  putDataUser = async() => {
+    await API.putDataUser(this.state.formUser).then((res) => {
         this.getDataUser()
         this.handleFromClear()
       })
   }
 
-  postDataUser = () => {
+  deleteDataUser = async(id) => {
+    await API.deleteUser(id).then(() => {
+      this.getDataUser()
+      Swal.fire(
+        'Deleted!',
+        'Your User '+ id +' been deleted.',
+        'success'
+      )
+    })
+  }
+
+  postDataUser = async() => {
     let data = {
       role: this.state.formUser.role,
       email: this.state.formUser.email,
       password: document.getElementById("passwordUser").value
     }
-    API.postDataUser(data).then((res) => {
+    await API.postDataUser(data).then((res) => {
       this.getDataUser()
     }) 
   }
@@ -57,14 +68,7 @@ class User extends Component {
       confirmButtonText: 'Yes, delete it!'
     }).then((result) => {
       if (result.isConfirmed) {
-        API.deleteUser(id).then(() => {
-          this.getDataRangeTgl()
-          Swal.fire(
-            'Deleted!',
-            'Your User '+ id +' been deleted.',
-            'success'
-          )
-        })
+        this.deleteDataUser(id)
       }
     })
   }
