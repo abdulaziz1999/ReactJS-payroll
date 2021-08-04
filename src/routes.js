@@ -7,77 +7,69 @@ import ReviewInsentif from "views/reviewinsentif/Insentif"
 import ReviewCicilan from "views/reviewcicilan/ReviewCicilan"
 import ReviewLedger from "views/reviewledger/ReviewLedger"
 import KirimData from "views/kirim/Kirim"
-import User from "views/user/User"
 
 var routes = [
   {
     path: "/index",
     name: "Dashboard",
-    icon: "ni ni-tv-2 text-blue",
+    icon: "ni ni-tv-2 text-primary",
     component: Index,
     layout: "/admin",
   },
   {
     path: "/cutoff",
     name: "Cutoff - 1",
-    icon: "ni ni-scissors text-blue",
+    icon: "ni ni-scissors text-primary",
     component: Cutoff,
     layout: "/admin",
   },
   {
     path: "/unit",
     name: "Pilih Unit - 2",
-    icon: "ni ni-building text-blue",
+    icon: "ni ni-building text-primary",
     component: Unit,
     layout: "/admin",
   },
   {
     path: "/rev_gapok",
     name: "Review Gapok - 3",
-    icon: "ni ni-money-coins text-blue",
+    icon: "ni ni-money-coins text-primary",
     component: ReviewGapok,
     layout: "/admin",
   },
   {
     path: "/rev_jam",
     name: "Review Jam - 4",
-    icon: "ni ni-time-alarm text-blue",
+    icon: "ni ni-time-alarm text-primary",
     component: ReviewJam,
     layout: "/admin",
   },
   {
     path: "/rev_insentif",
     name: "Review Insentif - 5",
-    icon: "ni ni-single-copy-04 text-blue",
+    icon: "ni ni-single-copy-04 text-primary",
     component: ReviewInsentif,
     layout: "/admin",
   },
   {
     path: "/rev_cicilan",
     name: "Review Cicilan - 6",
-    icon: "ni ni-credit-card text-blue",
+    icon: "ni ni-credit-card text-primary",
     component: ReviewCicilan,
     layout: "/admin",
   },
   {
     path: "/rev_ledger",
     name: "Review Ledger - 7",
-    icon: "ni ni-map-big text-blue",
+    icon: "ni ni-map-big text-primary",
     component: ReviewLedger,
     layout: "/admin",
   },
   {
     path: "/kirim",
     name: "Kirim Data - 8",
-    icon: "ni ni-send text-blue",
+    icon: "ni ni-send text-primary",
     component: KirimData,
-    layout: "/admin",
-  },
-  {
-    path: "/user",
-    name: "Pengguna",
-    icon: "ni ni-circle-08 text-orange",
-    component: User,
     layout: "/admin",
   },
 ];
