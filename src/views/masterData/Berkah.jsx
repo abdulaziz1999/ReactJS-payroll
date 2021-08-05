@@ -10,7 +10,6 @@ import {
     NavLink,
     TabContent,
     TabPane , 
-    Table,
     FormGroup,
     InputGroup,
     InputGroupAddon,
@@ -23,6 +22,8 @@ import API from '../../service';
 // import Swal from 'sweetalert2'
 import classnames from "classnames";
 // import Moment from 'moment'
+import TableBerkah from "components/Table/TableBerkah";
+import ModalBerkah from "components/Modal/ModalBerkah";
 
 class KirimData extends Component {
   state = {
@@ -35,8 +36,14 @@ class KirimData extends Component {
         endDatae : "",
         lembaga : ""
     },
+    formPotongan : {
+      idguru : "",
+      nominal : "",
+      tanggal : ""
+    },
     jenis : "",
-    firstJenis : []
+    firstJenis : [],
+    isUpdate: false,
   };
 
   toggleNavs = (e, state, index, jenisp) => {
@@ -83,6 +90,7 @@ class KirimData extends Component {
   }
 
   tampilkan = async() => {
+    localStorage.setItem('lmg', this.state.dataDate.lembaga)
     let jenis       = localStorage.idp
     let idlembaga   = this.state.dataDate.lembaga
     let startDate   = this.state.dataDate.startDate
@@ -92,6 +100,78 @@ class KirimData extends Component {
             data : res
         })
     })
+  }
+
+  postPotonganPegawai = async() => {
+    let id   = localStorage.idp
+    await API.postPotonganPegawai(id,this.state.formPotongan).then((res) => {
+
+    })
+  }
+
+  handleUpdateP = (data) => {
+    console.log(data)
+    this.setState({
+      formPotongan: data,
+      isUpdate: true,
+    })
+  }
+
+  handleUbah = (event) => {
+    let formPotonganNew = { ...this.state.formPotongan }
+    formPotonganNew[event.target.name] = event.target.value
+    this.setState(
+      {
+        formPotongan: formPotonganNew,
+      })
+  }
+
+  handleSimpan = (modal) => {
+    if (this.state.isUpdate) {
+      this.toggleClose(modal)
+    } else {
+      this.postPotonganPegawai()
+      this.toggleClose(modal)
+    }
+  }
+
+  handleFromClear = () => {
+    this.setState({
+      isUpdate: false,
+      formPotongan: {
+        idguru: "",
+        nominal: "",
+        tanggal: ""
+      },
+    })
+  }
+
+  toggleModal = (state, post,e) => {
+      this.setState({
+        exampleModal: !this.state[state],
+      });
+      this.setState({
+        formPotongan: post,
+        isUpdate: true,
+      },(err) => {
+        console.log('error : ', err)
+    })
+  }
+
+  toggleModalAdd = (state, e) => {
+    this.setState({
+      exampleModal: !this.state[state],
+    });
+    this.handleFromClear()
+    this.setState({
+      isUpdate: false,
+    },(err) => {
+      console.log('error : ', err)
+    })
+  }
+
+  toggleClose = (state) => {
+    this.setState({ [state]: !this.state[state]})
   }
 
   componentDidMount() {  
@@ -147,87 +227,83 @@ class KirimData extends Component {
                     })}
                 </Nav>
                 </div>
-                <Card className="shadow">
-                    <CardBody>
-                        <TabContent activeTab={"tabs" + this.state.tabs}>
-                        {this.state.post.map((row,index) => {
-                            let no = index+1
-                            return (
-                                <TabPane tabId={"tabs"+no} key={index}>
-                                    <h1 className="text-center mb-3"><u>{row.potongan}</u></h1>
-                                    <FormGroup>
-                                        <Row>
-                                            <Col md="3">
-                                              <InputGroup className="input-group-alternative">
-                                                  <InputGroupAddon addonType="prepend">
-                                                  <InputGroupText>
-                                                      <i className="ni ni-calendar-grid-58" />
-                                                  </InputGroupText>
-                                                  </InputGroupAddon>
-                                                  <Input className="form-control-alternative" name="startDate" onChange={this.handleUpdate} placeholder="Tgl" type="date" />
-                                              </InputGroup>
-                                            </Col>
-                                            <Col md="3">
-                                              <InputGroup className="input-group-alternative">
-                                                  <InputGroupAddon addonType="prepend">
-                                                  <InputGroupText>
-                                                      <i className="ni ni-calendar-grid-58" />
-                                                  </InputGroupText>
-                                                  </InputGroupAddon>
-                                                  <Input className="form-control-alternative" name="endDate" onChange={this.handleUpdate} placeholder="Tgl" type="date" />
-                                              </InputGroup>
-                                            </Col>
-                                            <Col md="3">
-                                              <InputGroup className="input-group-alternative">
-                                                  <InputGroupAddon addonType="prepend">
-                                                  <InputGroupText>
-                                                      <i className="ni ni-building" />
-                                                  </InputGroupText>
-                                                  </InputGroupAddon>
-                                                  <Input className="form-control-alternative" name="lembaga" onChange={this.handleUpdate} type="select" >
-                                                      <option> --- Pilih Lembaga --- </option>
-                                                      {this.state.lembaga.map((prop, index) => {
-                                                        return (
-                                                          <option key={index} value={prop.id}> {prop.nama_lembaga} </option>
-                                                        )
-                                                      })}
-                                                  </Input>
-                                              </InputGroup>
-                                            </Col>
-                                            <Col md="3" className="mt--3">
-                                                <Button color="success" className="mt-3" size="md" type="button" onClick={this.tampilkan} >Tampilkan</Button>
-                                            </Col>
-                                        </Row>
-                                    </FormGroup>
-                                    
-                                    <Table className="align-items-center table-flush" responsive>
-                                        <thead className="thead-light">
-                                            <tr >
-                                            <th scope="col">Nama</th>
-                                            <th scope="col">Jumlah</th>
-                                            <th scope="col" className="text-center">Act</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody >
-                                            {this.state.data.map((row,index) => {
-                                                return(
-                                                    <tr className="text-left" key={index}>
-                                                        <td>{row.nama}</td>
-                                                        <td>{row.total}</td>
-                                                        <td></td>
-                                                    </tr>
-                                                )
-                                            })}
-                                        </tbody>
-                                    </Table>
-                                </TabPane>
-                            )
-                        })}
-                        </TabContent>
-                    </CardBody>
-                </Card>
-      
+              <Card className="shadow">
+                <CardBody>
+                  <TabContent activeTab={"tabs" + this.state.tabs}>
+                  {this.state.post.map((row,index) => {
+                      let no = index+1
+                      return (
+                          <TabPane tabId={"tabs"+no} key={index}>
+                              <h1 className="text-center mb-3"><u>{row.potongan}</u></h1>
+                              <FormGroup>
+                                  <Row>
+                                      <Col md="3">
+                                        <InputGroup className="input-group-alternative">
+                                            <InputGroupAddon addonType="prepend">
+                                            <InputGroupText>
+                                                <i className="ni ni-calendar-grid-58" />
+                                            </InputGroupText>
+                                            </InputGroupAddon>
+                                            <Input className="form-control-alternative" name="startDate" onChange={this.handleUpdate} placeholder="Tgl" type="date" />
+                                        </InputGroup>
+                                      </Col>
+                                      <Col md="3">
+                                        <InputGroup className="input-group-alternative">
+                                            <InputGroupAddon addonType="prepend">
+                                            <InputGroupText>
+                                                <i className="ni ni-calendar-grid-58" />
+                                            </InputGroupText>
+                                            </InputGroupAddon>
+                                            <Input className="form-control-alternative" name="endDate" onChange={this.handleUpdate} placeholder="Tgl" type="date" />
+                                        </InputGroup>
+                                      </Col>
+                                      <Col md="3">
+                                        <InputGroup className="input-group-alternative">
+                                            <InputGroupAddon addonType="prepend">
+                                            <InputGroupText>
+                                                <i className="ni ni-building" />
+                                            </InputGroupText>
+                                            </InputGroupAddon>
+                                            <Input className="form-control-alternative" name="lembaga" onChange={this.handleUpdate} type="select" >
+                                                <option> --- Pilih Lembaga --- </option>
+                                                {this.state.lembaga.map((prop, index) => {
+                                                  return (
+                                                    <option key={index} value={prop.id}> {prop.nama_lembaga} </option>
+                                                  )
+                                                })}
+                                            </Input>
+                                        </InputGroup>
+                                      </Col>
+                                      <Col md="3" className="mt--3">
+                                          <Button color="success" className="mt-3" size="md" type="button" onClick={this.tampilkan} >Tampilkan</Button>
+                                      </Col>
+                                  </Row>
+                              </FormGroup>
+                              {this.state.data.length > 0 ? 
+                              <Button className="mb-2" color="success" type="button" size="md" onClick={() => this.toggleModalAdd("exampleModal")} >
+                                <i className="fa fa-plus"></i> Create
+                              </Button>
+                              : ""}
+
+                              <TableBerkah 
+                              data={this.state.data} 
+                              modal={this.toggleModal} 
+                              remove={this.handleRemove}
+                              stateExample={this.state.exampleModal} 
+                              modalBuka={this.toggleModal} 
+                              modalTutup={this.toggleClose} 
+                              updateField={this.handleUbah} 
+                              save={this.handleSimpan} 
+                              status={this.state.isUpdate}
+                              />
+                          </TabPane>
+                      )
+                  })}
+                  </TabContent>
                 </CardBody>
+              </Card>
+      
+              </CardBody>
                 {/* <Col className="modal-footer">
                   {role === 'admin' ? <Button color="success" className="mt-3" size="md" type="button" onClick={this.simpanLedger}>Simpan</Button> :''}
                 </Col> */}
@@ -235,7 +311,17 @@ class KirimData extends Component {
             </div>
           </Row>
         </Container>
-        
+
+        <ModalBerkah
+        data={this.state.formPotongan} 
+        idlmg={this.state.dataDate.lembaga}
+        stateExample={this.state.exampleModal} 
+        modalBuka={this.toggleModal} 
+        modalTutup={this.toggleClose} 
+        updateField={this.handleUbah} 
+        save={this.handleSimpan} 
+        status={this.state.isUpdate}
+        />
       </>
     );
   }

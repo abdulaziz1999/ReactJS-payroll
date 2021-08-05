@@ -48,7 +48,7 @@ const TableKredit = ({data,modal,remove}) => {
                   <thead className="thead-light">
                     <tr>
                       <th scope="col"><b>Nama Pegawai</b></th>
-                      <th scope="col"><b>Kredit</b></th>
+                      <th scope="col"><b>Pinjaman</b></th>
                       <th scope="col"><b>Act</b></th>
                     </tr>
                   </thead>

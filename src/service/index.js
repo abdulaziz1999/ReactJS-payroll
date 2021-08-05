@@ -75,6 +75,9 @@ const postPotongan = (data) => Post(`potongan`,true,data)
 const putPotongan = (data) => Put(`potongan`,true,data)
 const deletePotongan = (id) => Delete(`potongan/${id}`,true)
 
+//API Potongan Pegawai
+const postPotonganPegawai = (id,data) => Post(`potongan/pegawai/${id}`,true,data)
+
 //API Potongan
 const getAllPotongan = () => Get('potongan',true)
 const postAllPotongan = (data) => Post('potongan',true,data)
@@ -157,6 +160,7 @@ const API = {
     postPotongan,
     putPotongan,
     deletePotongan,
+    postPotonganPegawai,
 
     //API potongan
     getAllPotongan,
