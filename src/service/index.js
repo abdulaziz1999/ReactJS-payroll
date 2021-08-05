@@ -70,11 +70,17 @@ const getSycnPegawai = () => Get('syncPegawai',true)
 const kreditPegawai = (config) => Get('kredit',true,config)
 const getPegawai    = () => Get('kredit',true)
 
+//API Master Potongan
+const postPotongan = (data) => Post(`potongan`,true,data)
+const putPotongan = (data) => Put(`potongan`,true,data)
+const deletePotongan = (id) => Delete(`potongan/${id}`,true)
+
 //API Potongan
 const getAllPotongan = () => Get('potongan',true)
 const postAllPotongan = (data) => Post('potongan',true,data)
 const PotonganKredit = (data) => Post('potongan/pegawai/kredit',true,data)
 const getPotonganRangeTgl = (jenis,idlembaga,startDate,endDate) => Get(`potongan/${jenis}/${idlembaga}/${startDate}/${endDate}`,true)
+
 const postPotonganRangeTgl = (idlembaga,startDate,endDate) => Post(`potongan/kredit/${idlembaga}/${startDate}/${endDate}`,true)
 const postPotonganCutoff = (idlembaga,idcutoff) => Get(`potongan/kredit/${idlembaga}/${idcutoff}`,true)
 const getPotonganAll = (idlembaga,idcutoff) => Get(`potongan/all/${idlembaga}/${idcutoff}`,true)
@@ -146,6 +152,11 @@ const API = {
     //API Menu
     getMenu,
     postLogMenu,
+
+    //API master potongan
+    postPotongan,
+    putPotongan,
+    deletePotongan,
 
     //API potongan
     getAllPotongan,
