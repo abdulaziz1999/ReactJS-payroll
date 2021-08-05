@@ -80,7 +80,14 @@ const TableInsentif = ({ data, insentif, format }) => {
               .map((post, index) => {
                 var elements=[];
                 for(var i=0;i<post.insentif.length;i++){
-                  elements.push(<td key={i}><strong>{format(post.insentif[i])}</strong></td>);
+                  if(post.insentif[i] !== 0){
+                    let split = post.insentif[i]
+                    let arr   = split.split('_')
+                    let detailIns = 'Kegiatan : '+arr[1]+', Jabatan : '+arr[2] 
+                    elements.push(<td key={i} ><strong title={detailIns}>{arr[0]}</strong></td>);
+                  }else{
+                    elements.push(<td key={i} ><strong>{post.insentif[i]}</strong></td>);
+                  }
                 }
                 return (
                   <tr key={index}>
