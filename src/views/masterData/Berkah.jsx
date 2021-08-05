@@ -35,17 +35,19 @@ class KirimData extends Component {
         endDatae : "",
         lembaga : ""
     },
-    jenis : ""
+    jenis : "",
+    firstJenis : []
   };
 
   toggleNavs = (e, state, index, jenisp) => {
-    e.preventDefault();
+    e.preventDefault()
     this.setState({
       [state]: index,
       jenis : jenisp,
       data : []
-    });
-  };
+    })
+    localStorage.setItem('idp', jenisp)
+  }
 
   getLembaga = async() => {
     await API.getUnit().then((res) =>{
@@ -53,6 +55,15 @@ class KirimData extends Component {
         lembaga : res
       })
     })
+  }
+
+  getIdFirst = async() => {
+    await API.getAllPotongan().then((res) => {
+        this.setState({
+            firstJenis : res[0]['id']
+        })
+    })
+    localStorage.setItem('idp', this.state.firstJenis)
   }
 
   getallPotongan = async() => {
@@ -72,7 +83,7 @@ class KirimData extends Component {
   }
 
   tampilkan = async() => {
-    let jenis       = this.state.jenis
+    let jenis       = localStorage.idp
     let idlembaga   = this.state.dataDate.lembaga
     let startDate   = this.state.dataDate.startDate
     let endDate     = this.state.dataDate.endDate
@@ -84,6 +95,7 @@ class KirimData extends Component {
   }
 
   componentDidMount() {  
+    this.getIdFirst()
     this.getallPotongan()
     this.getLembaga()
   }
