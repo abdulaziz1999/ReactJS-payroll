@@ -7,9 +7,10 @@ import { Col, Form, FormGroup , Input,InputGroup, InputGroupAddon,InputGroupText
 
 const TableUser = ({data,modal,remove}) => {
     const [searchTerm, setSearchTerm] = useState("")
-    
+
     return (
         <div className="">
+            {data.length > 0 ? 
             <Form>
                 <Row>
                     <Col md="12">
@@ -26,6 +27,8 @@ const TableUser = ({data,modal,remove}) => {
                     </Col>
                 </Row>
             </Form>
+            : "" }
+
             <Table className="align-items-center table-flush" responsive>
                 <thead className="thead-light">
                     <tr >
@@ -38,7 +41,7 @@ const TableUser = ({data,modal,remove}) => {
                     {data.filter((val) => {
                         if(searchTerm === ""){
                             return val
-                        }else if(val.name.toLowerCase().includes(searchTerm.toLowerCase())){
+                        }else if(val.nama.toLowerCase().includes(searchTerm.toLowerCase())){
                             return val
                         }
                         return ""
