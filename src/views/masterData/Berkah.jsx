@@ -139,7 +139,7 @@ class KirimData extends Component {
   postPotonganPegawai = async() => {
     let id   = localStorage.idp
     await API.postPotonganPegawai(id,this.state.formPotongan).then((res) => {
-
+       this.tampilkanHistory()
     })
   }
 

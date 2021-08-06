@@ -2,7 +2,7 @@
 
 import React from "react";
 import { useState } from "react";
-import { Col, Form, FormGroup , Input,InputGroup, InputGroupAddon,InputGroupText, Row, Table, Button} from "reactstrap";
+import { Col, Form, FormGroup , Input,InputGroup, InputGroupAddon,InputGroupText, Row, Table, Button, Alert} from "reactstrap";
 
 
 const TableUser = ({data,modal,remove}) => {
@@ -38,7 +38,7 @@ const TableUser = ({data,modal,remove}) => {
                     </tr>
                 </thead>
                 <tbody >
-                    {data.filter((val) => {
+                    {data.length > 0 ? data.filter((val) => {
                         if(searchTerm === ""){
                             return val
                         }else if(val.nama.toLowerCase().includes(searchTerm.toLowerCase())){
@@ -73,7 +73,16 @@ const TableUser = ({data,modal,remove}) => {
                                 </td>
                             </tr>
                         )
-                    })}
+                    })
+                : 
+                    <tr>
+                        <td colSpan="3">
+                            <Alert color="warning" className="text-center mr-6 ml-3">
+                                <strong>Warning!</strong> Silahkan Filter Range Tanggal dan Nama Lembaga nya terlebih Dahulu
+                            </Alert>
+                        </td>
+                    </tr>
+                }
                 </tbody>
             </Table>
         </div>
