@@ -214,6 +214,10 @@ class KirimData extends Component {
     this.setState({ [state]: !this.state[state]})
   }
 
+  format = (amount) => {
+    return Number(amount).toFixed().replace(/\D/g, "").replace(/\B(?=(\d{3})+(?!\d))/g, ".")
+  }
+
   componentDidMount() { 
     if(!localStorage.idp){
       this.getIdFirst()
@@ -331,7 +335,8 @@ class KirimData extends Component {
                               : ""}
 
                               <TableBerkah 
-                              data={this.state.data} 
+                              data={this.state.data}
+                              format={this.format}
                               modal={this.toggleModal} 
                               remove={this.handleRemove}
                               stateExample={this.state.exampleModal} 

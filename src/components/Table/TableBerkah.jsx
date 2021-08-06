@@ -2,10 +2,10 @@
 
 import React from "react";
 import { useState } from "react";
-import { Col, Form, FormGroup , Input,InputGroup, InputGroupAddon,InputGroupText, Row, Table, Button, Alert} from "reactstrap";
+import { Col, Form, FormGroup , Input,InputGroup, InputGroupAddon,InputGroupText, Row, Table, Alert} from "reactstrap";
 
 
-const TableUser = ({data,modal,remove}) => {
+const TableUser = ({data,modal,remove,format}) => {
     const [searchTerm, setSearchTerm] = useState("")
 
     return (
@@ -48,8 +48,8 @@ const TableUser = ({data,modal,remove}) => {
                     }).map((row,index) => {
                         return(
                             <tr className="text-left" key={index}>
-                                <td>{row.nama}</td>
-                                <td>{row.total}</td>
+                                <td><b>{row.nama}</b></td>
+                                <td><b>{format(row.total)}</b></td>
                                 <td>
                                     <div className="btn-group">
                                         {/* <Button
@@ -61,14 +61,14 @@ const TableUser = ({data,modal,remove}) => {
                                             <i className="ni ni-ruler-pencil"></i> Update
                                         </Button>
                                         &nbsp; */}
-                                        <Button
+                                        {/* <Button
                                             color="danger"
                                             type="button"
                                             size="sm"
-                                            // onClick={() => remove(post.id)}
+                                            onClick={() => remove(post.id)}
                                         >
                                             <i className="fa fa-trash"></i> Delete
-                                        </Button>
+                                        </Button> */}
                                     </div>
                                 </td>
                             </tr>
