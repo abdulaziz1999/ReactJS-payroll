@@ -19,7 +19,7 @@ import {
 import '../examples/css/Style.css';
 import TableComp from "components/Table/TableInsentif";
 import API from '../../service';
-import Swal from 'sweetalert2'
+// import Swal from 'sweetalert2'
 import ModalInsentif from "../../components/Modal/ModalInsentif";
 import Moment from 'moment'
 
@@ -39,6 +39,9 @@ class Insentif extends Component {
       idguru: "",
       idinsentif: "",
       nominal: ""
+    },
+    dataLembaga : {
+      lembaga : ""
     }
   };
 
@@ -46,13 +49,6 @@ class Insentif extends Component {
     let URL= this.props.location.pathname
     let arr= URL.split('/')
     let id = arr[3]
-    return id
-  }
-
-  getUriSegment4 = () => {
-    let URL= this.props.location.pathname
-    let arr= URL.split('/')
-    let id = arr[4]
     return id
   }
 
@@ -155,23 +151,11 @@ class Insentif extends Component {
     })
   }
 
-  getSimpan = async() => {
-    let id  = this.getUriSegment3()
-    let data = {
-      idmenu: 3,
-      idcutoff: this.state.cutOffActive.id,
-      idlembaga: id
-    }
-    await API.postLogMenu(data).then((res) => {
-    }).catch((err) => {
-      console.log("ini eror : "+err)
-    })
-    Swal.fire(
-      'Success!',
-      'Data Insetif <br> Berhasil Disimpan.',
-      'success'
-  )
-    this.props.history.push('/admin/rev_cicilan/'+id)
+  handleUbah1 = (event) => {
+      let dataLembagaNew = { ...this.state.dataLembaga }
+      dataLembagaNew[event.target.name] = event.target.value
+      this.setState({dataLembaga: dataLembagaNew})
+      console.log(this.state.dataLembaga.lembaga)
   }
 
   format = (amount) => {
@@ -223,6 +207,11 @@ class Insentif extends Component {
       [state]: !this.state[state],
     });
   };
+
+  tampilkan = () => {
+    this.getDataInsentif(this.state.dataLembaga.lembaga)
+    this.props.history.push('/admin/insentifPegawai/'+this.state.dataLembaga.lembaga) 
+  }
 
   handleLocalStorage = () => {
     let idl = localStorage.idl
@@ -293,7 +282,7 @@ class Insentif extends Component {
                                       <i className="ni ni-building" />
                                   </InputGroupText>
                                   </InputGroupAddon>
-                                  <Input className="form-control-alternative" name="lembaga" onChange={this.handleUpdate} type="select" >
+                                  <Input className="form-control-alternative" name="lembaga" onChange={this.handleUbah1} type="select" >
                                       <option> --- Pilih Lembaga --- </option>
                                       {this.state.lembaga.map((prop, index) => {
                                         return (
