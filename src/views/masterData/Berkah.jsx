@@ -43,7 +43,11 @@ class KirimData extends Component {
     },
     jenis : "",
     firstJenis : [],
+    value : "",
     isUpdate: false,
+    s : "",
+    e : "",
+    l : ""
   };
 
   toggleNavs = (e, state, index, jenisp) => {
@@ -51,8 +55,17 @@ class KirimData extends Component {
     this.setState({
       [state]: index,
       jenis : jenisp,
-      data : []
+      data : [],
+      dataDate : {
+        startDate : "",
+        endDatae : "",
+        lembaga : ""
+      },
+      s : "",
+      e : "",
+      l : ""
     })
+    localStorage.setItem('tabs', index)
     localStorage.setItem('idp', jenisp)
   }
 
@@ -90,14 +103,35 @@ class KirimData extends Component {
   }
 
   tampilkan = async() => {
-    localStorage.setItem('lmg', this.state.dataDate.lembaga)
+    if(!localStorage.startD){
+      this.setLocalStorage()
+    }
     let jenis       = localStorage.idp
-    let idlembaga   = this.state.dataDate.lembaga
-    let startDate   = this.state.dataDate.startDate
-    let endDate     = this.state.dataDate.endDate
+    let idlembaga   = !this.state.dataDate.lembaga ? localStorage.lmg : this.state.dataDate.lembaga
+    let startDate   = !this.state.dataDate.startDate ? localStorage.startD : this.state.dataDate.startDate
+    let endDate     = !this.state.dataDate.endDate ? localStorage.endD : this.state.dataDate.endDate
     await API.getPotonganRangeTgl(jenis,idlembaga,startDate,endDate).then((res) => {
         this.setState({
             data : res
+        })
+    })
+  }
+
+  tampilkanHistory = async() => {
+    let jenis       = localStorage.idp
+    let idlembaga   = localStorage.lmg
+    let startDate   = localStorage.startD
+    let endDate     = localStorage.endD
+    let tabsActive  = parseInt(localStorage.tabs)
+    this.setState({
+      s : localStorage.startD,
+      e : localStorage.endD,
+      l : localStorage.lmg
+    })
+    await API.getPotonganRangeTgl(jenis,idlembaga,startDate,endDate).then((res) => {
+        this.setState({
+            data : res,
+            tabs : tabsActive,
         })
     })
   }
@@ -146,6 +180,12 @@ class KirimData extends Component {
     })
   }
 
+  setLocalStorage = () => {
+    localStorage.setItem('lmg', this.state.dataDate.lembaga)
+    localStorage.setItem('startD', this.state.dataDate.startDate)
+    localStorage.setItem('endD', this.state.dataDate.endDate)
+  }
+
   toggleModal = (state, post,e) => {
       this.setState({
         exampleModal: !this.state[state],
@@ -174,8 +214,13 @@ class KirimData extends Component {
     this.setState({ [state]: !this.state[state]})
   }
 
-  componentDidMount() {  
-    this.getIdFirst()
+  componentDidMount() { 
+    if(!localStorage.idp){
+      this.getIdFirst()
+    }
+    if(localStorage.startD){
+      this.tampilkanHistory()
+    }
     this.getallPotongan()
     this.getLembaga()
   }
@@ -244,7 +289,7 @@ class KirimData extends Component {
                                                 <i className="ni ni-calendar-grid-58" />
                                             </InputGroupText>
                                             </InputGroupAddon>
-                                            <Input className="form-control-alternative" name="startDate" onChange={this.handleUpdate} placeholder="Tgl" type="date" />
+                                            <Input className="form-control-alternative" name="startDate" onChange={this.handleUpdate} placeholder="Tgl" type="date" value={!this.state.dataDate.startDate ? this.state.s : this.state.dataDate.startDate} />
                                         </InputGroup>
                                       </Col>
                                       <Col md="3">
@@ -254,7 +299,7 @@ class KirimData extends Component {
                                                 <i className="ni ni-calendar-grid-58" />
                                             </InputGroupText>
                                             </InputGroupAddon>
-                                            <Input className="form-control-alternative" name="endDate" onChange={this.handleUpdate} placeholder="Tgl" type="date" />
+                                            <Input className="form-control-alternative" name="endDate" onChange={this.handleUpdate} placeholder="Tgl" type="date" value={!this.state.dataDate.endDate ? this.state.e : this.state.dataDate.endDate}/>
                                         </InputGroup>
                                       </Col>
                                       <Col md="3">
@@ -264,11 +309,11 @@ class KirimData extends Component {
                                                 <i className="ni ni-building" />
                                             </InputGroupText>
                                             </InputGroupAddon>
-                                            <Input className="form-control-alternative" name="lembaga" onChange={this.handleUpdate} type="select" >
+                                            <Input className="form-control-alternative" name="lembaga" onChange={this.handleUpdate} value={!this.state.dataDate.lembaga ? this.state.l : this.state.dataDate.lembaga} type="select" >
                                                 <option> --- Pilih Lembaga --- </option>
-                                                {this.state.lembaga.map((prop, index) => {
+                                                {this.state.lembaga.map((prop, index,) => {
                                                   return (
-                                                    <option key={index} value={prop.id}> {prop.nama_lembaga} </option>
+                                                    <option key={index} value={prop.id} > {prop.nama_lembaga} </option>
                                                   )
                                                 })}
                                             </Input>

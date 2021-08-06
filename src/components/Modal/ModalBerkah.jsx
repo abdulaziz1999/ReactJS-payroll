@@ -44,7 +44,6 @@ class ModalBerkah extends Component {
       nominal = ""
       tanggal = ""
     }
-    console.log(lmg)
     return (
       <>
         <Modal className="modal-dialog-centered" isOpen={this.props.stateExample} toggle={() => this.props.modalBuka("exampleModal")} size="lg">
