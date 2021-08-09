@@ -1,4 +1,5 @@
-import Berkah from "views/masterData/Berkah"
+import Berkah from "views/masterData/BerkahInput"
+import MasterTunjangan from "views/masterData/MasterTunjangan"
 import BerkahMaster from "views/masterData/BerkahMaster"
 import InputInsentif from "views/insentif/Insentif"
 import InsentifPegawai from "views/insentif/InsentifPegawai"
@@ -7,11 +8,18 @@ import DataPegawai from "views/masterData/dataPegawai"
 import User from "views/user/User"
 
 var routesmaster = [
-    {
+      {
         path: "/pegawai",
         name: "Data Pegawai",
         icon: "fa fa-users text-green",
         component: DataPegawai,
+        layout: "/admin",
+      },
+      {
+        path: "/tunjangan",
+        name: "Master Tunjangan",
+        icon: "fa fa-users text-green",
+        component: MasterTunjangan,
         layout: "/admin",
       },
       {
