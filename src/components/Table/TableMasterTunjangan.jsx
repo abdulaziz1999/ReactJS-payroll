@@ -46,9 +46,9 @@ const TableTunjangan = ({data,modal,remove}) => {
                     }).map((post, index) => {
                       return (
                         <tr key={index} className="text-left">
-                          <td>{post.tunjangan}</td>
-                          <td>{post.nominal}</td>
-                          <td>{post.type_name}</td>
+                          <td><b>{post.tunjangan}</b></td>
+                          <td><b>{post.nominal ? post.nominal : '-'}</b></td>
+                          <td><b>{post.type_name}</b></td>
                           <td>
                             <div className="btn-group">
                               <Button

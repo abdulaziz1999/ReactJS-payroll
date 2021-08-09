@@ -24,7 +24,7 @@ var routesmaster = [
       },
       {
         path: "/berkahMaster",
-        name: "Potongan Master - Berkah",
+        name: "Master Potongan ",
         icon: "ni ni-credit-card text-red",
         component: BerkahMaster,
         layout: "/admin",

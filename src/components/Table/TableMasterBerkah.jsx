@@ -44,7 +44,7 @@ const TableBerkah = ({data,modal,remove}) => {
                     }).map((post, index) => {
                       return (
                         <tr key={index} className="text-left">
-                          <td>{post.potongan}</td>
+                          <td><b>{post.potongan}</b></td>
                           <td>
                             <div className="btn-group">
                               <Button
