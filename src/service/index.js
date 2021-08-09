@@ -20,6 +20,7 @@ const deleteUser   = (id) => Delete(`user/${id}`,true)
 
 //API Kredit
 const getDataKredit   = () => Get('kredit',true)
+const getDetailKreditP= (id) => Get(`kredit/pegawai/${id}`,true)
 const getAllKredit    = () => Get('kredit/all',true)
 const getDetailKredit = (id) => Get(`kredit/detail/${id}`,true)
 const postDataKredit  = (data) => Post('kredit',true,data)
@@ -61,6 +62,12 @@ const getDataTunjangan  = () => Get(`tunjangan`,true)
 const getDetailTunjangan  = (id) => Get(`tunjangan/${id}`,true)
 const postDataTunjangan = (data) => Post(`tunjangan`,true,data)
 const postTunjanganPegawai = (data) => Post(`tunjangan/pegawai`,true,data)
+
+// API Master Tunjangan
+const getTunjangan = () => Get(`tunjangan`,true)
+const postTunjangan = (data) => Post(`tunjangan`,true,data)
+const putTunjangan = (data) => Put(`tunjangan`,true,data)
+const deleteTunjangan = (id) => Delete(`tunjangan/${id}`,true)
 
 //API Pegawai
 const getDataPegawai = () => Get('pegawai',true)
@@ -110,6 +117,7 @@ const API = {
 
     //API Kredit
     getDataKredit,
+    getDetailKreditP,
     getAllKredit,
     getDetailKredit,
     postDataKredit,
@@ -126,6 +134,12 @@ const API = {
     getDetailTunjangan,
     postDataTunjangan,
     postTunjanganPegawai,
+
+    //API master tunjangan
+    getTunjangan,
+    postTunjangan,
+    putTunjangan,
+    deleteTunjangan,
 
     //API Insentif
     getAllInsentif,
