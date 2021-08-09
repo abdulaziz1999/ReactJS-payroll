@@ -30,7 +30,7 @@ const TableGapok = ({data,format,remove}) => {
                                 }}
                             />
                             </InputGroup>
-                        </FormGroup>
+                        </FormGroup> 
                     </Col>
                 </Row>
             </Form>
@@ -39,6 +39,7 @@ const TableGapok = ({data,format,remove}) => {
                   <thead className="thead-light">
                     <tr>
                       <th scope="col"><b>Nama Pegawai</b></th>
+                      <th scope="col"><b>PT/PTT</b></th>
                       <th scope="col"><b>Jam Quran</b></th>
                       <th scope="col"><b>Jam Kelas</b></th>
                       <th scope="col"><b>Jam Asrama</b></th>
@@ -49,7 +50,7 @@ const TableGapok = ({data,format,remove}) => {
                     </tr>
                   </thead>
                   <tbody >
-                    {data.filter((val) => {
+                    {data.length > 0 ? data.filter((val) => {
                         if(searchTerm === ""){
                             return val
                         }else if(val.nama.toLowerCase().includes(searchTerm.toLowerCase())){
@@ -60,6 +61,7 @@ const TableGapok = ({data,format,remove}) => {
                       return (
                         <tr key={index}>
                           <td><b>{post.nama}</b></td>
+                          <td><b>{post.idstatus}</b></td>
                           <td><b>{post.quran}</b></td>
                           <td><b>{post.kelas}</b></td>
                           <td><b>{post.asrama}</b></td>
@@ -72,7 +74,16 @@ const TableGapok = ({data,format,remove}) => {
                           </td>
                         </tr>
                       );
-                    })}
+                    })
+                    :
+                    <tr>
+                        <td colSpan="8">
+                            <div className="text-center">
+                              <img alt="loading ..." width="200" height="120" src={require("assets/img/brand/loading.gif").default}/>
+                            </div>
+                        </td>
+                    </tr>
+                    }
                   </tbody>
                 </Table>
             </div>
