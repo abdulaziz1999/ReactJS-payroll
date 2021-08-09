@@ -1,5 +1,6 @@
 import Index from "views/Dash/DashUnit";
-import Insentif from "views/insentif/Insentif";
+import InputInsentif from "views/insentif/Insentif"
+import InsentifPegawai from "views/insentif/InsentifPegawai"
 
 var routes = [
   {
@@ -10,12 +11,12 @@ var routes = [
     layout: "/unit",
   },
   {
-    path: "/insentif",
-    name: "Insentif",
-    icon: "fa fa-money-bill-alt text-green",
-    component: Insentif,
-    layout: "/unit",
-  }
+    path: "/insentifPegawai",
+    name: "Insentif Pegawai - Unit",
+    icon: "ni ni-credit-card text-primary",
+    component: InsentifPegawai,
+    layout: "/admin",
+  },
 ];
 
 export default routes;
