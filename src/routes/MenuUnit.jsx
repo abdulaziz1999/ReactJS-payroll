@@ -1,5 +1,5 @@
 import Index from "views/Dash/DashUnit";
-import InputInsentif from "views/insentif/Insentif"
+// import InputInsentif from "views/insentif/Insentif"
 import InsentifPegawai from "views/insentif/InsentifPegawai"
 
 var routes = [
