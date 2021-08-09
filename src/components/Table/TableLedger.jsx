@@ -39,6 +39,7 @@ const TableLedger = ({data,format}) => {
                   <thead className="thead-light">
                     <tr>
                       <th scope="col" className="zui-sticky-col" id="table-scroll-x"><b>Nama Pegawai</b></th>
+                      <th scope="col" className="zui-sticky-col" id="table-scroll-x"><b>PT/PTT</b></th>
                       <th scope="col"><b>Gapok + Tunjangan</b></th>
                       <th scope="col"><b>Tranport</b></th>
                       <th scope="col"><b>Jam</b></th>
@@ -62,6 +63,7 @@ const TableLedger = ({data,format}) => {
                       return (
                         <tr key={index}>
                           <td><b>{post.nama}</b></td>
+                          <td><b>{post.idstatus}</b></td>
                           <td><b>{format(post.gapoktunjangan)}</b></td>
                           <td><b>{format(post.transport)}</b></td>
                           <td><b>{post.jam}</b></td>
