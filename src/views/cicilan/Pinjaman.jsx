@@ -18,10 +18,7 @@ import {
 import '../examples/css/Style.css';
 import TableComp from "components/Table/TableKredit";
 import API from '../../service';
-import { RootOnline } from "../../service/Config"
 // import Swal from 'sweetalert2'
-import axios from "axios";
-
 class Pinjaman extends Component {
   state = {
     post: [],
@@ -34,14 +31,6 @@ class Pinjaman extends Component {
     dataPegawai:[],
     isUpdate: false,
   };
- 
-  getPostAPI = () => {
-    API.getPegawai().then((result) => {
-        this.setState({
-          post: result
-        });
-      });
-  };
 
   getPegawai = () => {
     API.getDataPegawai().then((res) => {
@@ -51,14 +40,11 @@ class Pinjaman extends Component {
     })
   }
 
-  getKreditAPI = () => {
-    const config = {headers : {Authorization: `Bearer ` + localStorage.token}}
-    axios.get(RootOnline + '/kredit',config)
-    .then((result) => {
+  getKreditAPI = async() => {
+    await API.getDataKredit().then((result) => {
       this.setState({
-        post: result.data
+        post: result
       });
-      // console.log(result.data[2]['nama'])
     }).catch((err) => {
       console.log("ini eror :"+err)
   })
@@ -188,7 +174,7 @@ class Pinjaman extends Component {
                 <Col md="12">
                   <FormGroup>
                   <label>Tanggal :</label>
-                    <Input name="date" value={this.state.formPegawai.date} autoComplete="off" placeholder="Tenor" type="date" onChange={this.hadleUbah}  />
+                    <Input name="date" value={!this.state.formPegawai.date ? '' : this.state.formPegawai.date} autoComplete="off" placeholder="Tenor" type="date" onChange={this.hadleUbah}  />
                   </FormGroup>
                 </Col>
                 <Col md="12">
@@ -239,7 +225,7 @@ class Pinjaman extends Component {
             </button>
           </div>
           <div className="modal-body">
-            <Form>
+            {/* <Form>
               <Row>
                 <Col md="6">
                   <FormGroup>
@@ -262,7 +248,7 @@ class Pinjaman extends Component {
                   </FormGroup>
                 </Col>
               </Row>
-            </Form>
+            </Form> */}
           </div>
           <div className="modal-footer">
             <Button color="danger" data-dismiss="modal" type="button" size="sm" onClick={() => this.toggleClose("exampleModal")} >
