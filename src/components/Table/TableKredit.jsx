@@ -46,14 +46,14 @@ const TableKredit = ({data,modal,format,remove}) => {
             </Form>
             <Table className="align-items-center table-flush" responsive>
                   <thead className="thead-light">
-                    <tr>
+                    <tr >
                       <th scope="col"><b>Nama Pegawai</b></th>
                       <th scope="col"><b>Pinjaman</b></th>
                       <th scope="col"><b>Act</b></th>
                     </tr>
                   </thead>
                   <tbody >
-                    {data.filter((val) => {
+                    {data.length > 0 ? data.filter((val) => {
                         if(searchTerm === ""){
                             return val
                         }else if(val.nama.toLowerCase().includes(searchTerm.toLowerCase())){
@@ -95,7 +95,16 @@ const TableKredit = ({data,modal,format,remove}) => {
                           </td>
                         </tr>
                       );
-                    })}
+                    })
+                    :
+                    <tr>
+                        <td colSpan="3">
+                            <div className="text-center">
+                              <img alt="loading ..." width="200" height="120" src={require("assets/img/brand/loading.gif").default}/>
+                            </div>
+                        </td>
+                    </tr>
+                    }
                   </tbody>
                 </Table>
         </div>

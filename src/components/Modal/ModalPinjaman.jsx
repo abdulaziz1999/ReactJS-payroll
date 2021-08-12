@@ -41,7 +41,7 @@ class ModalPinjaman extends Component {
           className="modal-dialog-centered"
           isOpen={this.props.stateExample}
           toggle={() => this.props.modalBuka("exampleModal")}
-          size="lg"
+          size="xl"
         >
           <div className="modal-header mb--3">
             <h5 className="modal-title" id="exampleModalLabel">
@@ -97,13 +97,13 @@ class ModalPinjaman extends Component {
               </Form>
               : 
               <Table className="align-items-center" responsive>
-                <thead className="thead-light">
+                <thead className="thead-dark">
                   <tr>
-                    <th>Nominal Pinjaman</th>
-                    <th>Tenor</th>
-                    <th>Angsuran</th>
-                    <th>Sisa Bayar</th>
-                    <th>Tanggal</th>
+                    <th className="text-white">Nominal Pinjaman</th>
+                    <th className="text-white">Tenor</th>
+                    <th className="text-white">Angsuran</th>
+                    <th className="text-white">Sisa Bayar</th>
+                    <th className="text-white">Tanggal</th>
                   </tr>
                 </thead>
                 <tbody>
