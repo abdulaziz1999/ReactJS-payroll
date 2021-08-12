@@ -13,7 +13,7 @@ import {
 } from "reactstrap";
 import '../../views/examples/css/fixedcolumn.css'
 
-const TableInsentif = ({ data, insentif, format }) => {
+const TableInsentif = ({ data, insentif, format ,remove}) => {
   const [searchTerm, setSearchTerm] = useState("");
 
   return (
@@ -84,7 +84,10 @@ const TableInsentif = ({ data, insentif, format }) => {
                     let split = post.insentif[i]
                     let arr   = split.split('_')
                     let detailIns = 'Kegiatan : '+arr[1]+', Jabatan : '+arr[2] 
-                    elements.push(<td key={i} ><strong title={detailIns}>{format(arr[0])}</strong></td>);
+                    elements.push(
+                    <td key={i} >
+                    <strong title={detailIns}>{format(arr[0])}</strong>
+                    </td>);
                   }else{
                     elements.push(<td key={i} ><strong>{post.insentif[i]}</strong></td>);
                   }

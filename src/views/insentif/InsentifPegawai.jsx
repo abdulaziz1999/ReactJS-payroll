@@ -17,9 +17,9 @@ import {
 } from "reactstrap";
 // core components
 import '../examples/css/Style.css';
-import TableComp from "components/Table/TableInsentif";
+import TableComp from "components/Table/TableInsentifPegawai";
 import API from '../../service';
-// import Swal from 'sweetalert2'
+import Swal from 'sweetalert2'
 import ModalInsentif from "../../components/Modal/ModalInsentif";
 import Moment from 'moment'
 
@@ -145,6 +145,14 @@ class Insentif extends Component {
       })
   }
 
+  handleDelete = async(postInsentif) => {
+    await API.postInsentifPegawai(postInsentif).then((result) => {
+        this.getDataInsentif()
+      }).catch((err) => {
+          console.log("ini eror :"+err)
+      })
+  }
+
   getAddInsentifPerCutOff = () => {
     API.postDataInsentifCutoff(this.state.idinsentif).then((res) => {
       console.log(res)
@@ -155,7 +163,7 @@ class Insentif extends Component {
       let dataLembagaNew = { ...this.state.dataLembaga }
       dataLembagaNew[event.target.name] = event.target.value
       this.setState({dataLembaga: dataLembagaNew})
-      console.log(this.state.dataLembaga.lembaga)
+      // console.log(this.state.dataLembaga.lembaga)
   }
 
   format = (amount) => {
@@ -172,6 +180,22 @@ class Insentif extends Component {
       console.log("ini eror :"+err)
     })
   }
+
+  handleRemove = (id) => {
+    Swal.fire({
+    title: 'Are you sure?',
+    text: "You won't be able to revert this!",
+    icon: 'warning',
+    showCancelButton: true,
+    confirmButtonColor: '#3085d6',
+    cancelButtonColor: '#d33',
+    confirmButtonText: 'Yes, delete it!'
+  }).then((result) => {
+    if (result.isConfirmed) {
+      this.handleDelete(id)
+    }
+  })
+}
 
   handleUbah = (event) => {
     let formInsentif = { ...this.state.postInsentif };
@@ -297,7 +321,7 @@ class Insentif extends Component {
                             </Col>
                         </Row>
                     </FormGroup>
-                 <TableComp data={this.state.post} insentif={this.state.insentif} format={this.format}/>
+                 <TableComp data={this.state.post} insentif={this.state.insentif} format={this.format} remove={this.handleRemove}/>
                 </CardBody>
                 {/* <Col className="modal-footer">
                   {role === 'admin' ? <Button color="success" className="mt-3" size="md" type="button" onClick={this.getSimpan}>Simpan & Lanjutkan</Button> : ''}
