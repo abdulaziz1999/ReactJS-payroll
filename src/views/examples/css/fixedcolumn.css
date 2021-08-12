@@ -27,3 +27,6 @@ thead tr th {
 }
 th:first-child, th:last-child {z-index:2;background-color:red;}
 
+#cursor {
+  cursor: pointer;
+}
