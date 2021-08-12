@@ -148,6 +148,11 @@ class Insentif extends Component {
   handleDelete = async(postInsentif) => {
     await API.postInsentifPegawai(postInsentif).then((result) => {
         this.getDataInsentif()
+        Swal.fire(
+          'Deleted!',
+          'Your Data Insentif been deleted.',
+          'success'
+        )
       }).catch((err) => {
           console.log("ini eror :"+err)
       })
