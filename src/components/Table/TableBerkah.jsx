@@ -2,7 +2,7 @@
 
 import React from "react";
 import { useState } from "react";
-import { Col, Form, FormGroup , Input,InputGroup, InputGroupAddon,InputGroupText, Row, Table, Alert} from "reactstrap";
+import { Col, Form, FormGroup , Input,InputGroup, InputGroupAddon,InputGroupText, Row, Table} from "reactstrap";
 
 
 const TableUser = ({data,modal,remove,format}) => {
@@ -33,8 +33,9 @@ const TableUser = ({data,modal,remove,format}) => {
                 <thead className="thead-light">
                     <tr >
                     <th scope="col">Nama</th>
+                    <th scope="col">Nama Lembaga</th>
                     <th scope="col">Jumlah</th>
-                    <th scope="col" className="text-center">Act</th>
+                    {/* <th scope="col" className="text-center">Act</th> */}
                     </tr>
                 </thead>
                 <tbody >
@@ -43,16 +44,19 @@ const TableUser = ({data,modal,remove,format}) => {
                             return val
                         }else if(val.nama.toLowerCase().includes(searchTerm.toLowerCase())){
                             return val
+                        }else if(val.nama_lembaga.toLowerCase().includes(searchTerm.toLowerCase())){
+                            return val
                         }
                         return ""
                     }).map((row,index) => {
                         return(
                             <tr className="text-left" key={index}>
                                 <td><b>{row.nama}</b></td>
+                                <td><b>{row.nama_lembaga}</b></td>
                                 <td><b>{format(row.total)}</b></td>
-                                <td>
+                                {/* <td>
                                     <div className="btn-group">
-                                        {/* <Button
+                                        <Button
                                             color="info"
                                             type="button"
                                             size="sm"
@@ -60,26 +64,26 @@ const TableUser = ({data,modal,remove,format}) => {
                                         >
                                             <i className="ni ni-ruler-pencil"></i> Update
                                         </Button>
-                                        &nbsp; */}
-                                        {/* <Button
+                                        &nbsp;
+                                        <Button
                                             color="danger"
                                             type="button"
                                             size="sm"
                                             onClick={() => remove(post.id)}
                                         >
                                             <i className="fa fa-trash"></i> Delete
-                                        </Button> */}
+                                        </Button>
                                     </div>
-                                </td>
+                                </td> */}
                             </tr>
                         )
                     })
                 : 
                     <tr>
                         <td colSpan="3">
-                            <Alert color="warning" className="text-center mr-6 ml-3">
-                                <strong>Warning!</strong> Silahkan Filter Range Tanggal dan Nama Lembaga nya terlebih Dahulu
-                            </Alert>
+                            <div className="text-center">
+                              <img alt="loading ..." width="200" height="120" src={require("assets/img/brand/loading.gif").default}/>
+                            </div>
                         </td>
                     </tr>
                 }

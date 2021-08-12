@@ -33,7 +33,6 @@ class ModalBerkah extends Component {
     const status = this.props.status
     const formdata = this.props.data
     const ubah = this.props.updateField
-    const lmg = parseInt(localStorage.lmg)
     let idguru, nominal, tanggal
     if(formdata){
       idguru = formdata.idguru
@@ -63,8 +62,7 @@ class ModalBerkah extends Component {
                     <label htmlFor="exampleFormControlSelect1" id={idguru}>Nama Pegawai :</label>
                     <Input name="idguru" id="guruId" type="select" onChange={ubah} required>
                       <option disabled selected value={""}>Pilih Nama Pegawai</option>
-                      {this.state.dataPegawai.filter(row => row.idlembaga === lmg)
-                        .map((row, index) => {
+                      {this.state.dataPegawai.map((row, index) => {
                             return (
                                 <option key={index} value={row.idguru} >{row.nama}</option>
                             )

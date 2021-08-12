@@ -10,19 +10,12 @@ import {
     NavLink,
     TabContent,
     TabPane , 
-    FormGroup,
-    InputGroup,
-    InputGroupAddon,
-    InputGroupText,
-    Input,
     Button, 
-    Badge
 } from "reactstrap"
 import '../examples/css/Style.css'
 import API from '../../service';
 // import Swal from 'sweetalert2'
 import classnames from "classnames";
-import Moment from 'moment'
 import TableBerkah from "components/Table/TableBerkah";
 import ModalBerkah from "components/Modal/ModalBerkah";
 
@@ -33,11 +26,6 @@ class BerkahInput extends Component {
     lembaga: [],
     cutOffActive : [],
     tabs:1,
-    dataDate : {
-        startDate : "",
-        endDatae : "",
-        lembaga : ""
-    },
     formPotongan : {
       idguru : "",
       nominal : "",
@@ -47,9 +35,6 @@ class BerkahInput extends Component {
     firstJenis : [],
     value : "",
     isUpdate: false,
-    s : "",
-    e : "",
-    l : ""
   };
 
   toggleNavs = (e, state, index, jenisp) => {
@@ -57,18 +42,11 @@ class BerkahInput extends Component {
     this.setState({
       [state]: index,
       jenis : jenisp,
-      data : [],
-      dataDate : {
-        startDate : "",
-        endDatae : "",
-        lembaga : ""
-      },
-      s : "",
-      e : "",
-      l : ""
+      data :[]
     })
     localStorage.setItem('tabs', index)
     localStorage.setItem('idp', jenisp)
+    this.tampilkanHistory()
   }
 
   getLembaga = async() => {
@@ -93,7 +71,9 @@ class BerkahInput extends Component {
             firstJenis : res[0]['id']
         })
     })
+    localStorage.setItem('tabs', 1)
     localStorage.setItem('idp', this.state.firstJenis)
+    this.tampilkanHistory()
   }
 
   getallPotongan = async() => {
@@ -110,33 +90,12 @@ class BerkahInput extends Component {
     this.setState({dataDate : formDateNew})
   }
 
-  tampilkan = async() => {
-    if(!localStorage.startD){
-      this.setLocalStorage()
-    }
-    let jenis       = localStorage.idp
-    let idlembaga   = !this.state.dataDate.lembaga ? localStorage.lmg : this.state.dataDate.lembaga
-    let startDate   = this.state.cutOffActive.start
-    let endDate     = this.state.cutOffActive.end
-    await API.getPotonganRangeTgl(jenis,idlembaga,startDate,endDate).then((res) => {
-        this.setState({
-            data : res
-        })
-    })
-  }
-
   tampilkanHistory = async() => {
     let jenis       = localStorage.idp
-    let idlembaga   = localStorage.lmg
     let startDate   = this.state.cutOffActive.start
     let endDate     = this.state.cutOffActive.end
     let tabsActive  = parseInt(localStorage.tabs)
-    this.setState({
-      s : localStorage.startD,
-      e : localStorage.endD,
-      l : localStorage.lmg
-    })
-    await API.getPotonganRangeTgl(jenis,idlembaga,startDate,endDate).then((res) => {
+    await API.getPotonganAllLembaga(jenis,startDate,endDate).then((res) => {
         this.setState({
             data : res,
             tabs : tabsActive,
@@ -152,7 +111,6 @@ class BerkahInput extends Component {
   }
 
   handleUpdateP = (data) => {
-    console.log(data)
     this.setState({
       formPotongan: data,
       isUpdate: true,
@@ -186,7 +144,6 @@ class BerkahInput extends Component {
   }
 
   setLocalStorage = () => {
-    localStorage.setItem('lmg', this.state.dataDate.lembaga)
     localStorage.setItem('startD', this.state.cutOffActive.start)
     localStorage.setItem('endD', this.state.cutOffActive.end)
   }
@@ -227,12 +184,11 @@ class BerkahInput extends Component {
     if(!localStorage.idp){
       this.getIdFirst()
     }
-    if(localStorage.startD){
+    if(localStorage.idp){
       this.tampilkanHistory()
     }
     this.getDataCutOff()
     this.getallPotongan()
-    this.getLembaga()
   }
 
   render() {
@@ -250,16 +206,10 @@ class BerkahInput extends Component {
                   <Row>
                     <Col md="12" sm="6" className="text-left">
                       <h3 className="mb-0">Potongan Berkah</h3>
-                      <Badge color="info">
-                        <strong className="mr-2">{Moment(this.state.cutOffActive.start).format('DD MMMM YYYY')}</strong>
-                        sampai 
-                        <strong className="ml-2">{Moment(this.state.cutOffActive.end).format('DD MMMM YYYY')}</strong>
-                      </Badge>
                     </Col>
                   </Row>
                 </CardHeader>
                 <CardBody>
-                 {/* <TableLedger data={datapost} format={this.format} /> */}
                 <div className="nav-wrapper mt--5">
                 <Nav
                     className="nav-fill flex-column flex-md-row"
@@ -290,41 +240,15 @@ class BerkahInput extends Component {
               <Card className="shadow">
                 <CardBody>
                   <TabContent activeTab={"tabs" + this.state.tabs}>
-                  {this.state.post.map((row,index) => {
+                  {this.state.post.length > 0 ? this.state.post.map((row,index) => {
                       let no = index+1
                       return (
                           <TabPane tabId={"tabs"+no} key={index}>
                               <h1 className="text-center mb-3"><u>{row.potongan}</u></h1>
-                              <FormGroup>
-                                  <Row>
-                                      <Col md="6">
-                                        <InputGroup className="input-group-alternative">
-                                            <InputGroupAddon addonType="prepend">
-                                            <InputGroupText>
-                                                <i className="ni ni-building" />
-                                            </InputGroupText>
-                                            </InputGroupAddon>
-                                            <Input className="form-control-alternative" name="lembaga" onChange={this.handleUpdate} value={!this.state.dataDate.lembaga ? this.state.l : this.state.dataDate.lembaga} type="select" >
-                                                <option> --- Pilih Lembaga --- </option>
-                                                {this.state.lembaga.map((prop, index,) => {
-                                                  return (
-                                                    <option key={index} value={prop.id} > {prop.nama_lembaga} </option>
-                                                  )
-                                                })}
-                                            </Input>
-                                        </InputGroup>
-                                      </Col>
-                                      <Col md="6" className="mt--3">
-                                          <Button color="success" className="mt-3" size="md" type="button" onClick={this.tampilkan} >Tampilkan</Button>
-                                      </Col>
-                                  </Row>
-                              </FormGroup>
-                              {this.state.data.length > 0 ? 
-                              <Button className="mb-2" color="success" type="button" size="md" onClick={() => this.toggleModalAdd("exampleModal")} >
-                                <i className="fa fa-plus"></i> Create
-                              </Button>
-                              : ""}
-
+                              {this.state.data.length > 0 ?
+                              <Button className="mb-2" color="success" type="button" size="sm" onClick={() => this.toggleModalAdd("exampleModal")} >
+                                <i className="fa fa-plus"></i> Tambah
+                              </Button> :""}
                               <TableBerkah 
                               data={this.state.data}
                               format={this.format}
@@ -339,15 +263,15 @@ class BerkahInput extends Component {
                               />
                           </TabPane>
                       )
-                  })}
+                  }) :
+                    <div className="text-center">
+                      <img alt="loading ..." width="200" height="120" src={require("assets/img/brand/loading.gif").default}/>
+                    </div>
+                  }
                   </TabContent>
                 </CardBody>
               </Card>
-      
               </CardBody>
-                {/* <Col className="modal-footer">
-                  {role === 'admin' ? <Button color="success" className="mt-3" size="md" type="button" onClick={this.simpanLedger}>Simpan</Button> :''}
-                </Col> */}
               </Card>
             </div>
           </Row>
@@ -355,7 +279,6 @@ class BerkahInput extends Component {
 
         <ModalBerkah
         data={this.state.formPotongan} 
-        idlmg={this.state.dataDate.lembaga}
         stateExample={this.state.exampleModal} 
         modalBuka={this.toggleModal} 
         modalTutup={this.toggleClose} 
