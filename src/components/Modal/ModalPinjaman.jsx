@@ -15,7 +15,8 @@ import API from '../../service'
 import Moment from 'moment'
 class ModalPinjaman extends Component {
   state = {
-    dataPegawai: []
+    dataPegawai: [],
+    detail : []
   }
 
   onFormSubmit = (e) => {
@@ -25,7 +26,7 @@ class ModalPinjaman extends Component {
   getPegawai = () => {
     API.getDataPegawai().then((res) => {
       this.setState({
-        dataPegawai : res
+        dataPegawai : res,
       })
     })
   }
@@ -35,6 +36,20 @@ class ModalPinjaman extends Component {
   }
 
   render() {
+    const formdata = this.props.namaPegawai
+    let nama,kredit
+    if(formdata){
+      nama = formdata
+    }else{
+      nama = ""
+    }
+
+    const dataKredit = this.props.dataDetail
+    if(dataKredit){
+      kredit = dataKredit
+    }else{
+      kredit = 0
+    }
     return (
       <>
         <Modal
@@ -58,7 +73,7 @@ class ModalPinjaman extends Component {
             </button>
           </div>
           <div className="modal-body">
-              <h3 className="text-center mt--3">{this.props.dataDetail.nama}</h3>
+              <h3 className="text-center mt--3">{nama}</h3>
               {!this.props.status ? 
               <Form>
                 <Row>
@@ -107,7 +122,7 @@ class ModalPinjaman extends Component {
                   </tr>
                 </thead>
                 <tbody>
-                  {this.props.dataDetail.kredit.map((row,index) => {
+                  {kredit.length >= 1 ? kredit.map((row,index) => {
                     return (
                     <tr key={index}>
                       <td><b>{this.props.format(row.nominal)}</b></td>
@@ -117,7 +132,8 @@ class ModalPinjaman extends Component {
                       <td><b>{Moment(row.date).format('DD MMMM YYYY')}</b></td>
                     </tr>
                     )
-                  })}
+                  })
+                 : ""}
                 </tbody>
               </Table> 
               }

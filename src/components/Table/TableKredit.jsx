@@ -77,7 +77,7 @@ const TableKredit = ({data,modal,format,remove}) => {
                                 type="button"
                                 size="sm"
                                 onClick={() =>
-                                  modal("exampleModal", post)
+                                  modal("exampleModal", post, post.kredit, post.nama)
                                 }
                               >
                                 <i className="fa fa-eye"></i> Detail

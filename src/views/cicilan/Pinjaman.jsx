@@ -24,7 +24,9 @@ class Pinjaman extends Component {
       tenor: "",
       date: "",
     },
+    formData : [],
     detailKredit: [],
+    namaPegawai : "",
     isUpdate: false,
   }
 
@@ -92,13 +94,14 @@ class Pinjaman extends Component {
     return Number(amount).toFixed().replace(/\D/g, "").replace(/\B(?=(\d{3})+(?!\d))/g, ".")
   }
 
-  toggleModal = (state, post,e) => {
+  toggleModal = (state, post,kredit,nama,e) => {
     this.setState({
       exampleModal: !this.state[state],
     })
     this.setState({
-      formPegawai: post,
-      detailKredit: post,
+      formData: post,
+      detailKredit: kredit,
+      namaPegawai : nama,
       isUpdate: true,
     })
   }
@@ -163,7 +166,8 @@ class Pinjaman extends Component {
         modalBuka={this.toggleModal}
         modalTutup={this.toggleClose}
         save={this.handleSimpan}
-        dataKredit={datapost}
+        dataKredit={this.state.formData}
+        namaPegawai={this.state.namaPegawai}
         ubah={this.handleUbah}
         dataDetail={this.state.detailKredit}
         status={this.state.isUpdate}
