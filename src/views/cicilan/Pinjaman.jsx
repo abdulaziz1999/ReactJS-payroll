@@ -1,15 +1,10 @@
 import React, { Component } from "react";
-// import axios from "axios";
 // reactstrap components
 import {
   Card,
   CardHeader,
-  Modal,
   Button,
   Container,
-  FormGroup,
-  Form,
-  Input,
   Col,
   Row,
   CardBody,
@@ -18,6 +13,7 @@ import {
 import '../examples/css/Style.css';
 import TableComp from "components/Table/TableKredit";
 import API from '../../service';
+import ModalPinjaman from "../../components/Modal/ModalPinjaman";
 // import Swal from 'sweetalert2'
 class Pinjaman extends Component {
   state = {
@@ -28,23 +24,15 @@ class Pinjaman extends Component {
       tenor: "",
       date: "",
     },
-    dataPegawai:[],
+    detailKredit: [],
     isUpdate: false,
-  };
-
-  getPegawai = () => {
-    API.getDataPegawai().then((res) => {
-      this.setState({
-        dataPegawai : res
-      })
-    })
   }
 
   getKreditAPI = async() => {
     await API.getDataKredit().then((result) => {
       this.setState({
         post: result
-      });
+      })
     }).catch((err) => {
       console.log("ini eror :"+err)
   })
@@ -52,53 +40,43 @@ class Pinjaman extends Component {
 
   postDataToAPI = async() => {
     await API.postDataKredit(this.state.formPegawai).then((result) => { 
-        this.getPostAPI();
-        this.hadleFromClear();
+        this.getKreditAPI();
+        this.handleFormClear();
     }).catch((err) => {
         console.log("ini eror :"+err)
     })
-  };
-
-  putDataToAPI = () => {
-    const postData = {
-      idpegawai: this.state.formPegawai.idguru,
-      total: this.state.formPegawai.total,
-    };
-    API.putPegawai(postData,this.state.formPegawai.idguru).then((res) => {
-        this.getPostAPI();
-        this.hadleFromClear();
-      });
-  };
+  }
 
   handleRemove = (data) => {
     API.deletePegawai(data).then((res) => {
       this.getPostAPI();
-    });
-  };
+    })
+  }
 
   handleUpdate = (data) => {
     console.log(data);
     this.setState({
       formPegawai: data,
       isUpdate: true,
-    });
-  };
+    })
+  }
 
-  hadleUbah = (event) => {
+  handleUbah = (event) => {
     let formPegawaiNew = { ...this.state.formPegawai };
     formPegawaiNew[event.target.name] = event.target.value;
     this.setState(
       {
         formPegawai: formPegawaiNew,
       }
-    );
-  };
+    )
+  }
 
-  handleSimpan = () => {
+  handleSimpan = (modal) => {
       this.postDataToAPI()
-  };
+      this.toggleClose(modal)
+  }
 
-  hadleFromClear = () => {
+  handleFormClear = () => {
     this.setState({
       isUpdate: false,
       formPegawai: {
@@ -107,36 +85,45 @@ class Pinjaman extends Component {
         tenor: "",
         date: "",
       },
-    }); 
-  };
+    })
+  }
 
-  format = amount => {
-    return Number(amount)
-      .toFixed(2)
-      .replace(/\d(?=(\d{3})+\.)/g, '$&,');
-  };
+  format = (amount) => {
+    return Number(amount).toFixed().replace(/\D/g, "").replace(/\B(?=(\d{3})+(?!\d))/g, ".")
+  }
 
   toggleModal = (state, post,e) => {
     this.setState({
       exampleModal: !this.state[state],
-    });
+    })
     this.setState({
       formPegawai: post,
+      detailKredit: post,
       isUpdate: true,
+    })
+  }
+
+  toggleModalAdd = (state, e) => {
+    this.setState({
+      exampleModal: !this.state[state],
     });
-  
-  };
+    this.handleFormClear()
+    this.setState({
+      isUpdate: false,
+    },(err) => {
+      console.log('error : ', err)
+    })
+  }
 
   toggleClose = (state) => {
     this.setState({
       [state]: !this.state[state],
-    });
-  };
+    })
+  }
 
   
   componentDidMount() {
     this.getKreditAPI()
-    this.getPegawai()
   }
 
   render() {
@@ -152,112 +139,36 @@ class Pinjaman extends Component {
             <div className="col">
               <Card className="shadow">
                 <CardHeader className="border-0">
-                  <h3 className="mb-0">Data Pinjaman Pegawai</h3>
+                  <Row>
+                    <Col md="6" sm="6" className="text-left">
+                      <h3 className="mb-0">Data Pinjaman Pegawai</h3>
+                    </Col>
+                    <Col md="6" sm="6" className="text-right">
+                      <Button color="success" type="button" size="sm" onClick={() => this.toggleModalAdd("exampleModal") }>
+                        <i className="fa fa-plus"></i> Tambah
+                      </Button>
+                    </Col>
+                  </Row>
                 </CardHeader>
                 <CardBody>
-                <div className="modal-body">
-            <Form>
-              <Row>
-              <Col md="12">
-                  <FormGroup>
-                  <label>Pegawai :</label>
-                    <Input name="idpegawai" type="select" onChange={this.hadleUbah} required>
-                      <option disabled selected value={""}>Pilih Nama Pegawai</option>
-                      {this.state.dataPegawai.map((row, index) => {
-                          return (
-                            <option key={index} value={row.idguru}>{row.nama}</option>
-                          )
-                      })}
-                    </Input>
-                  </FormGroup>
-                </Col>
-                <Col md="12">
-                  <FormGroup>
-                  <label>Tanggal :</label>
-                    <Input name="date" value={!this.state.formPegawai.date ? '' : this.state.formPegawai.date} autoComplete="off" placeholder="Tenor" type="date" onChange={this.hadleUbah}  />
-                  </FormGroup>
-                </Col>
-                <Col md="12">
-                  <FormGroup>
-                    <label>Besaran Pinjaman :</label>
-                    <Input name="nominal" value={this.state.formPegawai.nominal} autoComplete="off" placeholder="Besaran Pinjaman" type="number" onChange={this.hadleUbah} />
-                  </FormGroup>
-                </Col>
-                <Col md="12">
-                  <FormGroup>
-                  <label>Tenor :</label>
-                    <Input name="tenor" value={this.state.formPegawai.tenor} autoComplete="off" placeholder="Tenor" type="number" onChange={this.hadleUbah}  />
-                  </FormGroup>
-                </Col>
-              </Row>
-            </Form>
-          </div>
-          <div className="modal-footer mt--5 mb-2">
-            <Button color="info" type="button" size="md" onClick={this.handleSimpan} > 
-            <i className="ni ni-air-baloon"></i> Simpan
-            </Button>
-          </div>
-                 <TableComp data={datapost} modal={this.toggleModal} />
+                 <TableComp data={datapost} modal={this.toggleModal} format={this.format}/>
                 </CardBody>
               </Card>
             </div>
           </Row>
         </Container>
 
-        <Modal
-          className="modal-dialog-centered"
-          isOpen={this.state.exampleModal}
-          toggle={() => this.toggleModal("exampleModal")}
-          size="lg"
-        >
-          <div className="modal-header">
-            <h5 className="modal-title" id="exampleModalLabel">
-              Update data Pinjaman
-            </h5>
-            <button
-              aria-label="Close"
-              className="close"
-              data-dismiss="modal"
-              type="button"
-              onClick={() => this.toggleClose("exampleModal")}
-            >
-              <span aria-hidden={true}>×</span>
-            </button>
-          </div>
-          <div className="modal-body">
-            {/* <Form>
-              <Row>
-                <Col md="6">
-                  <FormGroup>
-                    <label>Besaran Pinjaman :</label>
-                    <Input name="nama" id="exampleFormControlInput1" placeholder="nama" onChange={this.hadleUbah} type="text" />
-                  </FormGroup>
-                </Col>
-                <Col md="6">
-                  <FormGroup>
-                  <label>Tenor :</label>
-                    <Input placeholder="Regular" name="nama_lembaga" type="text" onChange={this.hadleUbah}  />
-                  </FormGroup>
-                </Col>
-              </Row>
-              <Row>
-                <Col md="12">
-                  <FormGroup>
-                  <label>Pegawai :</label>
-                    <Input placeholder="Kredit" autoComplete="off" name="total" type="text" onChange={this.hadleUbah} />
-                  </FormGroup>
-                </Col>
-              </Row>
-            </Form> */}
-          </div>
-          <div className="modal-footer">
-            <Button color="danger" data-dismiss="modal" type="button" size="sm" onClick={() => this.toggleClose("exampleModal")} >
-              Close
-            </Button>
-            <Button color="info" type="button" size="sm" onClick={() => this.handleSimpan("exampleModal")} > <i className="ni ni-air-baloon"></i> Update
-            </Button>
-          </div>
-        </Modal>
+        <ModalPinjaman 
+        stateExample={this.state.exampleModal}
+        modalBuka={this.toggleModal}
+        modalTutup={this.toggleClose}
+        save={this.handleSimpan}
+        dataKredit={datapost}
+        ubah={this.handleUbah}
+        dataDetail={this.state.detailKredit}
+        status={this.state.isUpdate}
+        format={this.format}
+        />
       </>
     );
   }

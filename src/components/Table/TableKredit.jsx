@@ -16,7 +16,7 @@ import {
   Button} from "reactstrap";
   import '../../views/examples/css/fixedcolumn.css'
 
-const TableKredit = ({data,modal,remove}) => {
+const TableKredit = ({data,modal,format,remove}) => {
     const [searchTerm, setSearchTerm] = useState("")
     
     return (
@@ -66,8 +66,8 @@ const TableKredit = ({data,modal,remove}) => {
                           <td><b>{post.nama}</b></td>
                           <td>
                             <Badge color="" className="badge-dot">
-                              <i className="bg-info" />
-                               <b>{post.total_kredit != null ? 'Rp. '+post.total_kredit : '-'}</b>
+                              <i className="bg-danger" />
+                               <b>{post.total_kredit != null ? 'Rp. '+format(post.total_kredit) : '-'}</b>
                             </Badge>
                           </td>
                           <td>
@@ -80,7 +80,7 @@ const TableKredit = ({data,modal,remove}) => {
                                   modal("exampleModal", post)
                                 }
                               >
-                                <i className="fa fa-plus"></i> Detail
+                                <i className="fa fa-eye"></i> Detail
                               </Button>
                               &nbsp;
                               {/* <Button

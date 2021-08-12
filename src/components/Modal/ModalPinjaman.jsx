@@ -8,13 +8,14 @@ import {
   Input,
   Col,
   Row,
+  Table,
 } from "reactstrap";
 
 import API from '../../service'
+import Moment from 'moment'
 class ModalPinjaman extends Component {
   state = {
-    dataPegawai: [],
-    jenisTunjangan : []
+    dataPegawai: []
   }
 
   onFormSubmit = (e) => {
@@ -29,22 +30,11 @@ class ModalPinjaman extends Component {
     })
   }
 
-  getJenisTunjangan = (event) => {
-    let id = event.target.value
-    API.getDetailTunjangan(id).then((res) => {
-      this.setState({
-        jenisTunjangan: res
-      })
-    })
-  }
-
   componentDidMount() {
     this.getPegawai()
-    console.log()
   }
 
   render() {
-    const uri = parseInt(this.props.uri)
     return (
       <>
         <Modal
@@ -53,9 +43,9 @@ class ModalPinjaman extends Component {
           toggle={() => this.props.modalBuka("exampleModal")}
           size="lg"
         >
-          <div className="modal-header">
+          <div className="modal-header mb--3">
             <h5 className="modal-title" id="exampleModalLabel">
-              Tambah Tunjangan
+               {this.props.status === true ? 'Detail Pinjaman ' : 'Tambah Pinjaman'}
             </h5>
             <button
               aria-label="Close"
@@ -68,53 +58,79 @@ class ModalPinjaman extends Component {
             </button>
           </div>
           <div className="modal-body">
-            <Form>
-              <Row>
+              <h3 className="text-center mt--3">{this.props.dataDetail.nama}</h3>
+              {!this.props.status ? 
+              <Form>
+                <Row>
                 <Col md="12">
-                  <FormGroup>
-                    <label htmlFor="exampleFormControlSelect1">Nama Pegawai :</label>
-                    <Input name="idguru" id="guruid" type="select" onChange={this.getJenisTunjangan} required>
-                      <option disabled selected value={""}>Pilih Nama Pegawai</option>
-                      {this.state.dataPegawai.filter(row => row.idlembaga === uri)
-                      .map((row, index) => {
-                          return (
-                            <option key={index} value={row.idguru}>{row.nama}</option>
-                          )
-                      })}
-                    </Input>
-                  </FormGroup>
-                </Col>
-                <Col md="12">
-                  <FormGroup>
-                  <label htmlFor="exampleFormControlSelect2">Jenis Tunjangan:</label>
-                    <Input name="idtunjangan" id="tunjanganid" type="select" required>
-                      <option value="">Pilih Jenis Tunjangan</option>
-                      {this.state.jenisTunjangan.map((row, index) => {
-                          return (
-                            <option key={index} value={row.idtunjangan}>{row.tunjangan}</option>
-                          )
-                      })}
-                    </Input>
-                  </FormGroup>
-                </Col>
-              </Row>
-              <Row>
-                <Col md="12">
-                  <FormGroup>
-                  <label>Nominal :</label>
-                    <Input autoComplete="off" placeholder="Nominal" id="nomtunjangan" name="nominal" type="number" required/>
-                  </FormGroup>
-                </Col>
-              </Row>
-            </Form>
+                    <FormGroup>
+                    <label>Pegawai :</label>
+                      <Input name="idpegawai" type="select" onChange={this.props.ubah} required>
+                        <option disabled selected value={""}>Pilih Nama Pegawai</option>
+                        {this.state.dataPegawai.map((row, index) => {
+                            return (
+                              <option key={index} value={row.idguru}>{row.nama}</option>
+                            )
+                        })}
+                      </Input>
+                    </FormGroup>
+                  </Col>
+                  <Col md="12">
+                    <FormGroup>
+                    <label>Tanggal :</label>
+                      <Input name="date" autoComplete="off" placeholder="Tenor" type="date" onChange={this.props.ubah}  />
+                    </FormGroup>
+                  </Col>
+                  <Col md="12">
+                    <FormGroup>
+                      <label>Besaran Pinjaman :</label>
+                      <Input name="nominal" autoComplete="off" placeholder="Besaran Pinjaman" type="number" onChange={this.props.ubah} />
+                    </FormGroup>
+                  </Col>
+                  <Col md="12">
+                    <FormGroup>
+                    <label>Tenor :</label>
+                      <Input name="tenor" autoComplete="off" placeholder="Tenor" type="number" onChange={this.props.ubah}  />
+                    </FormGroup>
+                  </Col>
+                </Row>
+              </Form>
+              : 
+              <Table className="align-items-center" responsive>
+                <thead className="thead-light">
+                  <tr>
+                    <th>Nominal Pinjaman</th>
+                    <th>Tenor</th>
+                    <th>Angsuran</th>
+                    <th>Sisa Bayar</th>
+                    <th>Tanggal</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {this.props.dataDetail.kredit.map((row,index) => {
+                    return (
+                    <tr key={index}>
+                      <td><b>{this.props.format(row.nominal)}</b></td>
+                      <td><b>{row.tenor}</b></td>
+                      <td><b>{this.props.format(row.angsuran)}</b></td>
+                      <td><b>{this.props.format(row.sisa_bayar)}</b></td>
+                      <td><b>{Moment(row.date).format('DD MMMM YYYY')}</b></td>
+                    </tr>
+                    )
+                  })}
+                </tbody>
+              </Table> 
+              }
           </div>
-          <div className="modal-footer">
+          <div className="modal-footer mt--3">
             <Button color="danger" data-dismiss="modal" type="button" size="sm" onClick={() => this.props.modalTutup("exampleModal")} >
               <i className="ni ni-fat-remove"></i>Close
             </Button>
+            {!this.props.status ?
             <Button color="info" type="submit" size="sm" onClick={() => this.props.save("exampleModal")} >
               <i className="ni ni-fat-add"></i> Tambah
             </Button>
+            :""}
           </div>
         </Modal>
       </>
