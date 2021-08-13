@@ -102,6 +102,9 @@ const getReviewLedger = (idlembaga,idcutoff) => Get(`review/${idlembaga}/${idcut
 //API Clear Chache
 const hapusChache = () => GetClear('clear-cache',true)
 
+//API Import Plafon
+const importPlafon = (data) => Post(`import-plafon`,true,data)
+
 const API = {
     //API User
     getDataUser,
@@ -191,7 +194,10 @@ const API = {
     getReviewLedger,
     getPegawai,
     kreditPegawai,
-    hapusChache
+    hapusChache,
+
+    //API Import Plafon
+    importPlafon
 }
 
 export default API
