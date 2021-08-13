@@ -45,6 +45,13 @@ const Admin = (props) => {
         return routes[i].name;
       }
     }
+    for (let i = 0; i < routesmaster.length; i++) {
+      if (
+        props.location.pathname.indexOf(routesmaster[i].layout + routesmaster[i].path) !== -1
+      ) {
+        return routesmaster[i].name;
+      }
+    }
     return "Brand";
   };
 
