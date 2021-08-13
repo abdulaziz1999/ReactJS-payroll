@@ -8,7 +8,7 @@ import Swal from 'sweetalert2'
 import TableInsentif from "components/Table/TableInsentifUnit";
 import TableDetail from "components/Table/TableDetailInsentif";
 import ModaAddInsentif from "components/Modal/ModalInputInsentif";
-// import ModalInsentif  from "components/Modal/ModalInsentifActive"
+import ModaImport from "components/Modal/ModalImportInsentif";
 
 class Insentif extends Component {
   state = {
@@ -28,7 +28,8 @@ class Insentif extends Component {
     isUpdate: false,
     namaDetail: "",
     insentifAll: [],
-    insentifActive: []
+    insentifActive: [],
+    selectedFile: null
   }
 
   getUriSegment3 = () => {
@@ -243,6 +244,12 @@ class Insentif extends Component {
     })
   }
 
+  toggleModalAdd2 = (state, e) => {
+    this.setState({
+      exampleModal2: !this.state[state],
+    });
+  }
+
   toggleModalAct = (state, e) => {
     this.setState({
       exampleModal1: !this.state[state],
@@ -292,8 +299,11 @@ class Insentif extends Component {
                   </Col>
                   <Col md="6" sm="6" className="text-right">
                     <input type="hidden" id="uri" value="" />
-                  <Button color="success" type="button" size="sm" onClick={() => this.toggleModalAdd("exampleModal")} >
-                    <i className="fa fa-plus"></i> Create
+                    <Button color="success" type="button" size="sm" onClick={() => this.toggleModalAdd2("exampleModal2")} >
+                      <i className="fa fa-download"></i> Import
+                    </Button>
+                    <Button color="success" type="button" size="sm" onClick={() => this.toggleModalAdd("exampleModal")} >
+                      <i className="fa fa-plus"></i> Create
                     </Button>
                   </Col>
                   </Row>
@@ -347,6 +357,16 @@ class Insentif extends Component {
         />
         }
 
+        <ModaImport 
+        data2={this.state.formDetail} 
+        stateExample={this.state.exampleModal2} 
+        modalBuka={this.toggleModal} 
+        modalTutup={this.toggleClose} 
+        updateField={this.handleUbah} 
+        save={this.handleSimpan} 
+        status={this.state.isUpdate}
+        uri={this.getUriSegment3()}
+        />
       
       </>
     );
