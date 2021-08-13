@@ -119,6 +119,7 @@ class ModalPinjaman extends Component {
                     <th className="text-white">Angsuran</th>
                     <th className="text-white">Sisa Bayar</th>
                     <th className="text-white">Tanggal</th>
+                    <th className="text-white">Status</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -130,6 +131,11 @@ class ModalPinjaman extends Component {
                       <td><b>{this.props.format(row.angsuran)}</b></td>
                       <td><b>{this.props.format(row.sisa_bayar)}</b></td>
                       <td><b>{Moment(row.date).format('DD MMMM YYYY')}</b></td>
+                      <td>
+                        <Button color={row.status === 'Belum Lunas' ? 'danger' : 'success'} size="sm" type="button">
+                          <b>{row.status}</b>
+                        </Button>
+                      </td>
                     </tr>
                     )
                   })
