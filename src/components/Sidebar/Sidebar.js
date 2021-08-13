@@ -189,8 +189,12 @@ const Sidebar = (props) => {
           {/* Divider */}
           <hr className="my-3" />
           {/* Heading */}
-          <h6 className="navbar-heading text-muted">Master Data</h6>
-          <Nav navbar>{createLinks(routesmaster)}</Nav>
+          {role === 'admin' ? 
+          <Fragment>
+            <h6 className="navbar-heading text-muted">Master Data</h6>
+            <Nav navbar>{createLinks(routesmaster)}</Nav>
+          </Fragment>
+           : "" }
         </Collapse>
       </Container>
     </Navbar>
