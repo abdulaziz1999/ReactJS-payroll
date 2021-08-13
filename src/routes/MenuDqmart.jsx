@@ -1,5 +1,5 @@
 import Index from "views/Dash/DashDqmart";
-import Kredit from "views/kredit/Kredit";
+import Berkah from "views/masterData/BerkahInput"
 
 var routes = [
   {
@@ -10,10 +10,10 @@ var routes = [
     layout: "/dqmart",
   },
   {
-    path: "/kredit",
+    path: "/berkah",
     name: "Potongan",
     icon: "ni ni-credit-card text-red",
-    component: Kredit,
+    component: Berkah,
     layout: "/dqmart",
   }
 ];

@@ -15,7 +15,7 @@ var routes = [
     name: "Insentif Pegawai - Unit",
     icon: "ni ni-credit-card text-primary",
     component: InsentifPegawai,
-    layout: "/admin",
+    layout: "/unit",
   },
 ];
 
