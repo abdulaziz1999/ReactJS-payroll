@@ -73,7 +73,7 @@ class ModalPinjaman extends Component {
             </button>
           </div>
           <div className="modal-body">
-              <h3 className="text-center mt--3">{nama}</h3>
+              <h3 style={{ color: 'white',backgroundColor: '#1c345d',borderRadius: '0.25em' , fontSize:"20pt"}} className="text-center mt--3">{nama}</h3>
               {!this.props.status ? 
               <Form>
                 <Row>
