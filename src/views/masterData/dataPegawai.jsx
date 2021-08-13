@@ -10,29 +10,20 @@ import Swal from 'sweetalert2'
 class Review extends Component {
   state = {
     dataPegawai: [],
-    namaLembaga:[]
   };
 
-  getPegawai = () => {
-    API.getDataPegawai().then((res) => {
+  getPegawai = async() => {
+    await API.getDataPegawai().then((res) => {
       this.setState({
         dataPegawai : res
       })
     })
   }
 
-  getSycnPegawai = () => {
+  getSycnPegawai = async() => {
     this.loadingData()
-    API.getSycnPegawai().then((res) => {
+    await API.getSycnPegawai().then((res) => {
       this.getPegawai()
-    })
-  }
-
-  getDataCutOff = async() => {
-    await API.getDataCutOff().then((res) => {
-      this.setState({
-        cutOffActiv: res
-      })
     })
   }
 
@@ -85,7 +76,6 @@ class Review extends Component {
   
   componentDidMount() {
       this.getPegawai()
-
   }
 
   render() {
@@ -123,14 +113,6 @@ class Review extends Component {
             </div>
           </Row>
         </Container>
-        
-        {/* <ModalTunjangan
-        stateExample={this.state.exampleModal}
-        modalBuka={this.toggleModal}
-        modalTutup={this.toggleClose}
-        save={this.handleSimpan}
-        uri={this.getUriSegment3()}
-        /> */}
       </>
     );
   }
