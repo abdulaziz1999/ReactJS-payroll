@@ -238,8 +238,9 @@ class Insentif extends Component {
   };
 
   tampilkan = () => {
+    let role = JSON.parse(localStorage.user).role
     this.getDataInsentif(this.state.dataLembaga.lembaga)
-    this.props.history.push('/admin/insentifPegawai/'+this.state.dataLembaga.lembaga) 
+    this.props.history.push('/'+role+'/insentifPegawai/'+this.state.dataLembaga.lembaga) 
   }
 
   handleLocalStorage = () => {
