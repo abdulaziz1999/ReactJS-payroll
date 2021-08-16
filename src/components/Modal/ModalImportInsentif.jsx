@@ -9,45 +9,12 @@ import {
   Col,
   Row,
 } from "reactstrap";
-import API from "service";
 class ModalImport extends Component {
   state = {
     post: [],
     insentifAll: [],
   }
 
-   // On file select (from the pop up)
-   onFileChange = event => {
-    
-    // Update the state
-    this.setState({ selectedFile: event.target.files[0] })
-  
-  };
-  
-  // On file upload (click the upload button)
-  onFileUpload = () => {
-  
-    // Create an object of formData
-    const formData = new FormData()
-  
-    // Update the formData object
-    formData.append(
-      "myFile",
-      this.state.selectedFile,
-      this.state.selectedFile.name,
-      this.state.selectedFile.pasth
-    );
-  
-    // Details of the uploaded file
-    console.log(this.state.selectedFile)
-  
-    // Request made to the backend api
-    // Send formData object
-    // axios.post("api/uploadfile", formData)
-    API.importPlafon(formData)
-  }
-  
-  // File content to be displayed after
   // file upload is complete
   fileData = () => {
   
@@ -74,17 +41,12 @@ class ModalImport extends Component {
       )
     }
   }
-  
+
 
   componentDidMount() {
   }
 
   render() {
-    // const status    = this.props.status
-    // const formdata  = this.props.data
-    // const formdata2 = this.props.data2
-    // const ubah      = this.props.updateField
-    // const uri       = this.props.uri
 
     return (
       <>
@@ -98,27 +60,21 @@ class ModalImport extends Component {
             </button>
           </div>
           <div className="modal-body">
-                {/* <div>
-                    <input type="file" onChange={this.onFileChange} />
-                    <button >
-                    Upload!
-                    </button>
-                </div> */}
                 <Form>
-              <Row>
-                <Col md="6">
-                  <FormGroup>
-                    <Input name="file" type="file" onChange={this.onFileChange}/>
-                  </FormGroup>
-                </Col>
-                <Col md="6">
-                <Button color="success" data-dismiss="modal" type="button" size="sm" onClick={this.onFileUpload} >
-                    <i className="fa fa-download"></i> Upload
-                </Button>
-                </Col>
-              </Row>
-            </Form>
-            {this.fileData()}
+                  <Row>
+                    <Col md="6">
+                      <FormGroup>
+                        <Input name="file" type="file" onChange={this.props.updateField} required/>
+                      </FormGroup>
+                    </Col>
+                    <Col md="6">
+                    <Button color="success" data-dismiss="modal" type="button" size="sm" onClick={() => this.props.save("exampleModal2")} >
+                        <i className="fa fa-download"></i> Upload
+                    </Button>
+                    </Col>
+                  </Row>
+                </Form>
+                {/* {this.fileData()} */}
           </div>
           <div className="modal-footer">
             <Button color="danger" data-dismiss="modal" type="button" size="sm" onClick={() => this.props.modalTutup("exampleModal2")} >
