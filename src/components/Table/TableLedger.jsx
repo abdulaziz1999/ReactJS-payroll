@@ -52,7 +52,7 @@ const TableLedger = ({data,format}) => {
                     </tr>
                   </thead>
                   <tbody >
-                  {data.filter((val) => {
+                  {data.length > 0 ? data.filter((val) => {
                         if(searchTerm === ""){
                             return val
                         }else if(val.nama.toLowerCase().includes(searchTerm.toLowerCase())){
@@ -75,7 +75,16 @@ const TableLedger = ({data,format}) => {
                           <td><b>{post.no_rek}</b></td>
                         </tr>
                       );
-                    })}
+                    })
+                    :
+                    <tr>
+                        <td colSpan="9">
+                            <div className="text-center">
+                            <img alt="loading ..." width="200" height="120" src={require("assets/img/brand/loading.gif").default}/>
+                            </div>
+                        </td>
+                    </tr>
+                    }
                   </tbody>
                 </Table>
             </div>
