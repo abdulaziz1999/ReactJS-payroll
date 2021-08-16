@@ -30,7 +30,7 @@ class TableCutoff extends Component {
               </tr>
             </thead>
             <tbody>
-              {this.props.data.map((row, index) => {
+              {this.props.data.length > 0 ? this.props.data.map((row, index) => {
                 return (
                   <tr key={index}>
                     <td>{Moment(row.start).format('DD MMMM YYYY')} - {Moment(row.end).format('DD MMMM YYYY')}</td>
@@ -47,7 +47,16 @@ class TableCutoff extends Component {
                     </td>
                   </tr>
                 )
-              })}
+              })
+              :
+                <tr>
+                    <td colSpan="3">
+                        <div className="text-center">
+                          <img alt="loading ..." width="200" height="120" src={require("assets/img/brand/loading.gif").default}/>
+                        </div>
+                    </td>
+                </tr>
+              }
             </tbody>
           </Table>
         </CardBody>
