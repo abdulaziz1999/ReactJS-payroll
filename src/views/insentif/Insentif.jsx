@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { Component, Fragment } from "react";
 // reactstrap components
 import { Card, CardHeader, Button, Container, Col, Row, CardBody} from "reactstrap";
 // core components
@@ -195,6 +195,35 @@ class Insentif extends Component {
     }
   }
 
+  downloadFile = () => {
+    window.location.href = "https://assets.darulquran.sch.id/img/Format_Import_Plafon.xlsx"
+  }
+
+  onFileChange = (event) => {
+    // Update the state
+    this.setState({ selectedFile: event.target.files[0] })
+  };
+
+  onFileUpload = async(modal) => {
+    const formData = new FormData()
+    if(this.state.selectedFile){
+      formData.append(
+        "file",
+        this.state.selectedFile,
+        this.state.selectedFile.name,
+        this.state.selectedFile.pasth
+      );
+      await API.importPlafon(formData).then((res) =>{
+      }).catch((error) => {
+        this.getDataInsentifAll()
+        this.toggleClose(modal)
+        this.setState({ selectedFile: "" })
+      })
+    }else{
+      alert('silahkan masukan file')
+    }
+  }
+
   handleFromClear = () => {
     let uri = this.getUriSegment3()
     if(!uri){
@@ -299,12 +328,24 @@ class Insentif extends Component {
                   </Col>
                   <Col md="6" sm="6" className="text-right">
                     <input type="hidden" id="uri" value="" />
-                    <Button color="success" type="button" size="sm" onClick={() => this.toggleModalAdd2("exampleModal2")} >
-                      <i className="fa fa-download"></i> Import
-                    </Button>
+                    {!uri ?
+                    <Fragment>
+                      <div className="btn-group">
+                        <Button color="success" type="button" size="sm" onClick={() => this.downloadFile()} >
+                          <i className="fa fa-file-excel"></i> Download Format
+                        </Button> &nbsp;
+                        <Button color="success" type="button" size="sm" onClick={() => this.toggleModalAdd2("exampleModal2")} >
+                          <i className="fa fa-download"></i> Import Excel
+                        </Button> &nbsp;
+                      </div>
+                    </Fragment>
+                    : ""
+                    }
+                    <div className="btn-group">
                     <Button color="success" type="button" size="sm" onClick={() => this.toggleModalAdd("exampleModal")} >
                       <i className="fa fa-plus"></i> Create
                     </Button>
+                    </div>
                   </Col>
                   </Row>
                 </CardHeader>
@@ -362,9 +403,10 @@ class Insentif extends Component {
         stateExample={this.state.exampleModal2} 
         modalBuka={this.toggleModal} 
         modalTutup={this.toggleClose} 
-        updateField={this.handleUbah} 
-        save={this.handleSimpan} 
+        updateField={this.onFileChange} 
+        save={this.onFileUpload} 
         status={this.state.isUpdate}
+        reloadData={this.getDataInsentifAll}
         uri={this.getUriSegment3()}
         />
       
