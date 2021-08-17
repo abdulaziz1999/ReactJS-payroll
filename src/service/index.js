@@ -38,6 +38,7 @@ const postDataGapok = (id) => Post(`gapok/${id}`,true)
 
 //API Review Jam Tambahan (Summary)
 const getDataSummary = (id) => Get(`summary/${id}`,true)
+const getSyncSummary = (id) => Get(`summary/sync/${id}`,true)
 
 //API Review Insentif / Kegiatan
 const getAllInsentif = () => Get(`kegiatan`,true)
@@ -105,6 +106,12 @@ const hapusChache = () => GetClear('clear-cache',true)
 //API Import Plafon
 const importPlafon = (data) => Post(`import-plafon`,true,data)
 
+//API master jam wajib
+const getJamWajib = () => Get(`master/jamwajib`,true)
+const postJamWajib = (data) => Post(`master/jamwajib`,true,data)
+const putJamWajib = (data) => Put(`master/jamwajib`,true,data)
+const delJamWajib = (id) => Delete(`master/jamwajib/${id}`,true)
+
 const API = {
     //API User
     getDataUser,
@@ -132,6 +139,7 @@ const API = {
 
     //API Summary
     getDataSummary,
+    getSyncSummary,
 
     //API Tunjangan
     getDataTunjangan,
@@ -197,7 +205,13 @@ const API = {
     hapusChache,
 
     //API Import Plafon
-    importPlafon
+    importPlafon,
+
+    //API master jam wajib
+    getJamWajib,
+    postJamWajib,
+    putJamWajib,
+    delJamWajib,
 }
 
 export default API
