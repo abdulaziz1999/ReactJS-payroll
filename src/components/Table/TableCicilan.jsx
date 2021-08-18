@@ -69,7 +69,7 @@ const TableInsentif = ({ data,  format }) => {
                     <td><strong>{post.nama}</strong></td>
                     <td><strong>{post.kredit}</strong></td>
                     <td><strong>{format(post.laundry)}</strong></td>
-                    <td className="text-dark text-center" style={{backgroundColor:"#96E6C4 !important"}}>
+                    <td className="text-dark text-center" style={{backgroundColor:"#96E6C4"}}>
                       <strong>{format(post.total)}</strong>
                     </td>
                   </tr>
