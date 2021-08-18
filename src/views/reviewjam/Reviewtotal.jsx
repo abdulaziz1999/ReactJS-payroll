@@ -94,6 +94,18 @@ class ReviewTotal extends Component {
     }
   }
 
+  getSyncronJam = async() => {
+    let id = this.getUriSegment3()
+    await API.getSyncSummary(id).then((result) => {
+      this.setState({
+        post: result
+      })
+    }).catch((err) => {
+      console.log("ini eror : "+err)
+    })
+    this.getDataSummary()
+  }
+
   getStepInsentif = async() => {
     let id = this.getUriSegment3()
     let data = {
@@ -161,18 +173,27 @@ class ReviewTotal extends Component {
             <div className="col">
               <Card className="shadow">
                 <CardHeader className="border-0">
-                  <h3 className="mb-0">Data Total Jam Tambahan Lembaga - {this.state.namaLembaga}
-                      <Badge className="ml-3" color="info">
-                        <strong className="mr-2">{Moment(this.state.cutOffActive.start).format('DD MMMM YYYY')}</strong>
-                        sampai 
-                        <strong className="ml-2">{Moment(this.state.cutOffActive.end).format('DD MMMM YYYY')}</strong>
-                      </Badge>
-                      {role === 'keuangan' ? 
-                      <Badge className="ml-3" color="success">
-                          Read Only
-                      </Badge>
-                      :''}
-                  </h3>
+                <Row>
+                    <Col md="6" sm="6" className="text-left">
+                      <h3 className="mb-0">Data Total Jam Tambahan Lembaga - {this.state.namaLembaga}
+                          <Badge className="ml-3" color="info">
+                            <strong className="mr-2">{Moment(this.state.cutOffActive.start).format('DD MMMM YYYY')}</strong>
+                            sampai 
+                            <strong className="ml-2">{Moment(this.state.cutOffActive.end).format('DD MMMM YYYY')}</strong>
+                          </Badge>
+                          {role === 'keuangan' ? 
+                          <Badge className="ml-3" color="success">
+                              Read Only
+                          </Badge>
+                          :''}
+                      </h3>
+                    </Col>
+                    <Col md="6" sm="6" className="text-right">
+                      <Button color="success" type="button" size="sm" onClick={this.getSyncronJam}>
+                        <i className="ni ni-cloud-upload-96"></i> Sikronisasi Data
+                      </Button> 
+                    </Col>
+                  </Row>
                 </CardHeader>
                 <CardBody>
                  <ReviewGapok data={datapost} modal={this.toggleModal} format={this.format} />
