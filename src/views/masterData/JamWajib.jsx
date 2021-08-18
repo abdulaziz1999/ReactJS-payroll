@@ -41,7 +41,7 @@ class JamWajib extends Component {
       this.getJamWajib()
       Swal.fire(
         'Deleted!',
-        'Your User '+ id +' been deleted.',
+        'Your Jam Wajib '+ id +' been deleted.',
         'success'
       )
     })
@@ -64,7 +64,7 @@ class JamWajib extends Component {
       confirmButtonText: 'Yes, delete it!'
     }).then((result) => {
       if (result.isConfirmed) {
-        // this.deleteJamWajib(id)
+        this.deleteJamWajib(id)
       }
     })
   }

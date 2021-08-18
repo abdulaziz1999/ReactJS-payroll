@@ -47,7 +47,7 @@ const TableUser = ({data,modal,remove}) => {
                     }).map((post, index) => {
                       return (
                         <tr key={index} className="text-left">
-                          <td><b>{post.idlembaga}</b></td>
+                          <td><b>{post.nama_lembaga}</b></td>
                           <td><b>{post.idstatus}</b></td>
                           <td><b>{post.jamwajib}</b></td>
                           <td><b>{post.jammax}</b></td>
