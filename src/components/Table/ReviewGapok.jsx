@@ -76,7 +76,7 @@ const TableGapok = ({data,format,listTunjangan}) => {
                           <td><b>{post.idstatus}</b></td>
                           <td><b>{format(post.gapok)}</b></td>
                           {elements}
-                          <td className="text-dark text-center" style={{backgroundColor:"#96E6C4 !important"}}>
+                          <td className="text-dark text-center" style={{backgroundColor:"#96E6C4"}}>
                             <b>{format(post.total_gapok_tunjangan)}</b>
                           </td>
                         </tr>
