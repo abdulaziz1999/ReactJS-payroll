@@ -1,4 +1,5 @@
 import Berkah from "views/masterData/BerkahInput"
+import JamWajib from "views/masterData/JamWajib"
 import MasterTunjangan from "views/masterData/MasterTunjangan"
 import BerkahMaster from "views/masterData/BerkahMaster"
 import InputInsentif from "views/insentif/Insentif"
@@ -13,6 +14,13 @@ var routesmaster = [
         name: "Data Pegawai",
         icon: "fa fa-users text-green",
         component: DataPegawai,
+        layout: "/admin",
+      },
+      {
+        path: "/jamwajib",
+        name: "Data Jam Wajib",
+        icon: "ni ni-time-alarm text-primary",
+        component: JamWajib,
         layout: "/admin",
       },
       {
