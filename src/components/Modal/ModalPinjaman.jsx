@@ -79,7 +79,7 @@ class ModalPinjaman extends Component {
                 <Row>
                 <Col md="12">
                     <FormGroup>
-                    <label>Pegawai {this.props.dataKredit.idguru} :</label>
+                    <label>Pegawai :</label>
                       <Input disabled name="idpegawai" type="select" id="idpegawai" value={this.props.dataKredit.idguru} required>
                         <option disabled >Pilih Nama Pegawai</option>
                         {this.state.dataPegawai.map((row, index) => {
