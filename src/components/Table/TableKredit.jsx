@@ -16,7 +16,7 @@ import {
   Button} from "reactstrap";
   import '../../views/examples/css/fixedcolumn.css'
 
-const TableKredit = ({data,modal,format,remove}) => {
+const TableKredit = ({data,modal,modalAdd,format,remove}) => {
     const [searchTerm, setSearchTerm] = useState("")
     
     return (
@@ -74,7 +74,7 @@ const TableKredit = ({data,modal,format,remove}) => {
                             <div className="btn-group">
                               <Button
                                 color="success"
-                                type="button"
+                                type="button" 
                                 size="sm"
                                 onClick={() =>
                                   modal("exampleModal", post, post.kredit, post.nama)
@@ -83,6 +83,16 @@ const TableKredit = ({data,modal,format,remove}) => {
                                 <i className="fa fa-eye"></i> Detail
                               </Button>
                               &nbsp;
+                              <Button
+                                color="primary"
+                                type="button" 
+                                size="sm"
+                                onClick={() =>
+                                  modalAdd("exampleModal", post)
+                                }
+                              >
+                                <i className="fa fa-plus"></i> Tambah
+                              </Button>
                               {/* <Button
                                 color="danger"
                                 type="button"

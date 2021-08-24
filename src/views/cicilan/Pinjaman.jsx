@@ -3,7 +3,7 @@ import React, { Component } from "react";
 import {
   Card,
   CardHeader,
-  Button,
+  // Button,
   Container,
   Col,
   Row,
@@ -41,7 +41,13 @@ class Pinjaman extends Component {
 }
 
   postDataToAPI = async() => {
-    await API.postDataKredit(this.state.formPegawai).then((result) => { 
+    let data = {
+      idpegawai: document.getElementById("idpegawai").value,
+      date     : document.getElementById("tanggal").value,
+      nominal  :document.getElementById("nom_pinjaman").value,
+      tenor    :document.getElementById("tenor").value
+    }
+    await API.postDataKredit(data).then((result) => { 
         this.getKreditAPI();
         this.handleFormClear();
     }).catch((err) => {
@@ -106,10 +112,14 @@ class Pinjaman extends Component {
     })
   }
 
-  toggleModalAdd = (state, e) => {
+  toggleModalAdd = (state,post, e) => {
     this.setState({
       exampleModal: !this.state[state],
     });
+    this.setState({
+      formData: post,
+    })
+    console.log(post)
     this.handleFormClear()
     this.setState({
       isUpdate: false,
@@ -147,14 +157,14 @@ class Pinjaman extends Component {
                       <h3 className="mb-0">Data Pinjaman Pegawai</h3>
                     </Col>
                     <Col md="6" sm="6" className="text-right">
-                      <Button color="success" type="button" size="sm" onClick={() => this.toggleModalAdd("exampleModal") }>
+                      {/* <Button color="success" type="button" size="sm" onClick={() => this.toggleModalAdd("exampleModal") }>
                         <i className="fa fa-plus"></i> Tambah
-                      </Button>
+                      </Button> */}
                     </Col>
                   </Row>
                 </CardHeader>
                 <CardBody>
-                 <TableComp data={datapost} modal={this.toggleModal} format={this.format}/>
+                 <TableComp data={datapost} modal={this.toggleModal} modalAdd={this.toggleModalAdd} format={this.format}/>
                 </CardBody>
               </Card>
             </div>

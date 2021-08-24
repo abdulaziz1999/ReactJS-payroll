@@ -79,9 +79,9 @@ class ModalPinjaman extends Component {
                 <Row>
                 <Col md="12">
                     <FormGroup>
-                    <label>Pegawai :</label>
-                      <Input name="idpegawai" type="select" onChange={this.props.ubah} required>
-                        <option disabled selected value={""}>Pilih Nama Pegawai</option>
+                    <label>Pegawai {this.props.dataKredit.idguru} :</label>
+                      <Input disabled name="idpegawai" type="select" id="idpegawai" value={this.props.dataKredit.idguru} required>
+                        <option disabled >Pilih Nama Pegawai</option>
                         {this.state.dataPegawai.map((row, index) => {
                             return (
                               <option key={index} value={row.idguru}>{row.nama}</option>
@@ -93,19 +93,19 @@ class ModalPinjaman extends Component {
                   <Col md="12">
                     <FormGroup>
                     <label>Tanggal :</label>
-                      <Input name="date" autoComplete="off" placeholder="Tenor" type="date" onChange={this.props.ubah}  />
+                      <Input name="date" autoComplete="off" placeholder="Tenor" type="date" id="tanggal"  />
                     </FormGroup>
                   </Col>
                   <Col md="12">
                     <FormGroup>
                       <label>Besaran Pinjaman :</label>
-                      <Input name="nominal" autoComplete="off" placeholder="Besaran Pinjaman" type="number" onChange={this.props.ubah} />
+                      <Input name="nominal" autoComplete="off" placeholder="Besaran Pinjaman" type="number" id="nom_pinjaman" />
                     </FormGroup>
                   </Col>
                   <Col md="12">
                     <FormGroup>
                     <label>Tenor :</label>
-                      <Input name="tenor" autoComplete="off" placeholder="Tenor" type="number" onChange={this.props.ubah}  />
+                      <Input name="tenor" autoComplete="off" placeholder="Tenor" type="number" id="tenor"  />
                     </FormGroup>
                   </Col>
                 </Row>
