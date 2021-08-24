@@ -10,7 +10,6 @@ import {
     NavLink,
     TabContent,
     TabPane , 
-    Button, 
 } from "reactstrap"
 import '../examples/css/Style.css'
 import API from '../../service';
@@ -34,6 +33,7 @@ class BerkahInput extends Component {
     jenis : "",
     firstJenis : [],
     value : "",
+    dataPeg : [],
     isUpdate: false,
   };
 
@@ -105,7 +105,12 @@ class BerkahInput extends Component {
 
   postPotonganPegawai = async() => {
     let id   = localStorage.idp
-    await API.postPotonganPegawai(id,this.state.formPotongan).then((res) => {
+    let data = {
+      idguru : document.getElementById("guruId").value,
+      nominal : document.getElementById("nominalId").value,
+      tanggal : document.getElementById("tanggalId").value
+    }
+    await API.postPotonganPegawai(id,data).then((res) => {
        this.tampilkanHistory()
     })
   }
@@ -160,10 +165,13 @@ class BerkahInput extends Component {
     })
   }
 
-  toggleModalAdd = (state, e) => {
+  toggleModalAdd = (state,row, e) => {
     this.setState({
       exampleModal: !this.state[state],
     });
+    this.setState({
+      dataPeg : row
+    })
     this.handleFromClear()
     this.setState({
       isUpdate: false,
@@ -245,10 +253,10 @@ class BerkahInput extends Component {
                       return (
                           <TabPane tabId={"tabs"+no} key={index}>
                               <h1 className="text-center mb-3"><u>{row.potongan}</u></h1>
-                              {this.state.data.length > 0 ?
+                              {/* {this.state.data.length > 0 ?
                               <Button className="mb-2" color="success" type="button" size="sm" onClick={() => this.toggleModalAdd("exampleModal")} >
                                 <i className="fa fa-plus"></i> Tambah
-                              </Button> :""}
+                              </Button> :""} */}
                               <TableBerkah 
                               data={this.state.data}
                               format={this.format}
@@ -260,6 +268,7 @@ class BerkahInput extends Component {
                               updateField={this.handleUbah} 
                               save={this.handleSimpan} 
                               status={this.state.isUpdate}
+                              modalAdd={this.toggleModalAdd}
                               />
                           </TabPane>
                       )
@@ -285,6 +294,7 @@ class BerkahInput extends Component {
         updateField={this.handleUbah} 
         save={this.handleSimpan} 
         status={this.state.isUpdate}
+        dataPeg={this.state.dataPeg}
         />
       </>
     );

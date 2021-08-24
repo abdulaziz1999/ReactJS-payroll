@@ -31,18 +31,9 @@ class ModalBerkah extends Component {
 
   render() {
     const status = this.props.status
-    const formdata = this.props.data
-    const ubah = this.props.updateField
-    let idguru, nominal, tanggal
-    if(formdata){
-      idguru = formdata.idguru
-      nominal = formdata.nominal
-      tanggal = formdata.tanggal
-    }else{
-      idguru = ""
-      nominal = ""
-      tanggal = ""
-    }
+    // const formdata = this.props.data
+    // const ubah = this.props.updateField
+   
     return (
       <>
         <Modal className="modal-dialog-centered" isOpen={this.props.stateExample} toggle={() => this.props.modalBuka("exampleModal")} size="lg">
@@ -59,9 +50,9 @@ class ModalBerkah extends Component {
             <Row>
                 <Col md="12">
                   <FormGroup>
-                    <label htmlFor="exampleFormControlSelect1" id={idguru}>Nama Pegawai :</label>
-                    <Input name="idguru" id="guruId" type="select" onChange={ubah} required>
-                      <option disabled selected value={""}>Pilih Nama Pegawai</option>
+                    <label htmlFor="exampleFormControlSelect1" >Nama Pegawai :</label>
+                    <Input disabled name="idguru" id="guruId" type="select" value={this.props.dataPeg.idguru} required>
+                      <option disabled value={""}>Pilih Nama Pegawai</option>
                       {this.state.dataPegawai.map((row, index) => {
                             return (
                                 <option key={index} value={row.idguru} >{row.nama}</option>
@@ -75,13 +66,13 @@ class ModalBerkah extends Component {
                 <Col md="12">
                   <FormGroup>
                   <label>Nominal :</label>
-                    <Input autoComplete="off" placeholder="Nominal" id="nominalId" name="nominal" type="number" onChange={ubah} value={nominal} required/>
+                    <Input autoComplete="off" placeholder="Nominal" id="nominalId" name="nominal" type="number"  required/>
                   </FormGroup>
                 </Col>
                 <Col md="12">
                   <FormGroup>
                   <label>Tanggal :</label>
-                    <Input autoComplete="off" id="tanggalId" name="tanggal" type="date" onChange={ubah} value={tanggal} required/>
+                    <Input autoComplete="off" id="tanggalId" name="tanggal" type="date" required/>
                   </FormGroup>
                 </Col>
               </Row>

@@ -2,10 +2,10 @@
 
 import React from "react";
 import { useState } from "react";
-import { Col, Form, FormGroup , Input,InputGroup, InputGroupAddon,InputGroupText, Row, Table} from "reactstrap";
+import { Col, Form, FormGroup , Input,InputGroup, InputGroupAddon,InputGroupText, Row, Table, Button} from "reactstrap";
 
 
-const TableUser = ({data,modal,remove,format}) => {
+const TableUser = ({data,modal,remove,format,modalAdd}) => {
     const [searchTerm, setSearchTerm] = useState("")
 
     return (
@@ -35,7 +35,7 @@ const TableUser = ({data,modal,remove,format}) => {
                     <th scope="col">Nama</th>
                     <th scope="col">Nama Lembaga</th>
                     <th scope="col">Jumlah</th>
-                    {/* <th scope="col" className="text-center">Act</th> */}
+                    <th scope="col" className="text-center">Act</th>
                     </tr>
                 </thead>
                 <tbody >
@@ -54,27 +54,27 @@ const TableUser = ({data,modal,remove,format}) => {
                                 <td><b>{row.nama}</b></td>
                                 <td><b>{row.nama_lembaga}</b></td>
                                 <td><b>{format(row.total)}</b></td>
-                                {/* <td>
+                                <td>
                                     <div className="btn-group">
                                         <Button
-                                            color="info"
+                                            color="primary"
                                             type="button"
                                             size="sm"
-                                            onClick={() => modal("exampleModal", post)}
+                                            onClick={() => modalAdd("exampleModal", row)}
                                         >
-                                            <i className="ni ni-ruler-pencil"></i> Update
+                                            <i className="fa fa-plus"></i> Tambah
                                         </Button>
                                         &nbsp;
-                                        <Button
+                                        {/* <Button
                                             color="danger"
                                             type="button"
                                             size="sm"
                                             onClick={() => remove(post.id)}
                                         >
                                             <i className="fa fa-trash"></i> Delete
-                                        </Button>
+                                        </Button> */}
                                     </div>
-                                </td> */}
+                                </td>
                             </tr>
                         )
                     })
