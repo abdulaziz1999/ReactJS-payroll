@@ -141,6 +141,35 @@ class Insentif extends Component {
     })
   }
 
+  handleDelete = async(postInsentif) => {
+    await API.postInsentifPegawai(postInsentif).then((result) => {
+        this.getDataInsentif()
+        Swal.fire(
+          'Deleted!',
+          'Your Data Insentif been deleted.',
+          'success'
+        )
+      }).catch((err) => {
+          console.log("ini eror :"+err)
+      })
+  }
+
+  handleRemove = (id) => {
+    Swal.fire({
+    title: 'Are you sure?',
+    text: "You won't be able to revert this!",
+    icon: 'warning',
+    showCancelButton: true,
+    confirmButtonColor: '#3085d6',
+    cancelButtonColor: '#d33',
+    confirmButtonText: 'Yes, delete it!'
+  }).then((result) => {
+    if (result.isConfirmed) {
+      this.handleDelete(id)
+    }
+  })
+}
+
 
   getSimpan = async() => {
     let id  = this.getUriSegment3()
@@ -282,7 +311,7 @@ class Insentif extends Component {
                   </Row>
                 </CardHeader>
                 <CardBody>
-                 <TableComp data={this.state.post} insentif={this.state.insentif} format={this.format}/>
+                 <TableComp data={this.state.post} insentif={this.state.insentif} format={this.format} remove={this.handleRemove}/>
                 </CardBody>
                 <Col className="modal-footer">
                   {role === 'admin' ? <Button color="success" className="mt-3" size="md" type="button" onClick={this.getSimpan}>Simpan & Lanjutkan</Button> : ''}
