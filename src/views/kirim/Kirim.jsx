@@ -150,6 +150,15 @@ class KirimData extends Component {
     let id = this.getUriSegment3()
     let idcut = this.state.cutOffActive.id
     window.location.href = "http://biznet.dqakses.id:8002/api/export-review/"+id+"/"+idcut;
+    let data = {
+      idmenu: 6,
+      idcutoff: this.state.cutOffActive.id,
+      idlembaga: this.getUriSegment3()
+    }
+    await API.postLogMenu(data).then((res) => {
+    }).catch((err) => {
+      console.log("ini eror : "+err)
+    })
   }
 
   handleLocalStorage = () => {

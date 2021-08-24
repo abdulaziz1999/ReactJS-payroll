@@ -82,7 +82,7 @@ class ReviewLedger extends Component {
       'Data Ledger <br> Berhasil Disimpan.',
       'success'
     )
-    this.props.history.push('/admin/unit')
+    this.props.history.push('/admin/kirim')
   }
 
   loadingData = () => {
