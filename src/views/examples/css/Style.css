@@ -28,3 +28,8 @@ table.scroll th, td {
 }
 
 .table-responsive thead th { position: sticky; top: 0; font-weight: bold; }
+
+.imgresponsive {
+    max-width: 100%;
+    height: auto;
+  }
