@@ -84,9 +84,15 @@ const TableInsentif = ({ data, insentif, format ,remove}) => {
                     let split = post.insentif[i]
                     let arr   = split.split('_')
                     let detailIns = 'Kegiatan : '+arr[1]+', Jabatan : '+arr[2] 
+                    let deleteInf = {
+                      idguru : post.idguru,
+                      idinsentif : arr[3],
+                      nominal: 0
+                    }
                     elements.push(
                     <td key={i} >
-                    <strong title={detailIns}>{format(arr[0])}</strong>
+                    <strong title={detailIns}>{format(arr[0])}</strong>&nbsp; &nbsp;
+                    <i className="fa fa-trash text-red" id="cursor" title="delete" onClick={() => remove(deleteInf)}></i>
                     </td>);
                   }else{
                     elements.push(<td key={i} ><strong>{post.insentif[i]}</strong></td>);
