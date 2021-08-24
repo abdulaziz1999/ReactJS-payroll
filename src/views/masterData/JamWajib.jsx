@@ -1,12 +1,12 @@
 import React, { Component } from "react";
 // reactstrap components
-import { Card, CardHeader, Button, Container, Col, Row, CardBody} from "reactstrap";
+import { Card, CardHeader, Button, Container, Col, Row, CardBody} from "reactstrap"
 // core components
-import '../examples/css/Style.css';
-import API from '../../service';
+import '../examples/css/Style.css'
+import API from '../../service'
 import Swal from 'sweetalert2'
-import TableJamWajib from "components/Table/TableJamWajib";
-import ModalJamWajib from "components/Modal/ModalJamWajib";
+import TableJamWajib from "components/Table/TableJamWajib"
+import ModalJamWajib from "components/Modal/ModalJamWajib"
 
 class JamWajib extends Component {
   state = {
@@ -30,7 +30,7 @@ class JamWajib extends Component {
   }
 
   putJamWajib = async() => {
-    await API.putJamWajib(this.state.formJam).then((res) => {
+    await API.putJamWajib(this.state.formJam.id,this.state.formJam).then((res) => {
         this.getJamWajib()
         this.handleFromClear()
       })
@@ -88,7 +88,7 @@ class JamWajib extends Component {
 
   handleSimpan = (modal) => {
     if (this.state.isUpdate) {
-      // this.putJamWajib()
+      this.putJamWajib()
       this.toggleClose(modal)
     } else {
       this.postJamWajib()
