@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { Component, Fragment } from "react";
 // reactstrap components
 import {
   Modal,
@@ -73,7 +73,6 @@ class ModalPinjaman extends Component {
             </button>
           </div>
           <div className="modal-body">
-              <h3 style={{ color: 'white',backgroundColor: '#1c345d',borderRadius: '0.25em' , fontSize:"20pt"}} className="text-center mt--3">{nama}</h3>
               {!this.props.status ? 
               <Form>
                 <Row>
@@ -111,37 +110,40 @@ class ModalPinjaman extends Component {
                 </Row>
               </Form>
               : 
-              <Table className="align-items-center" responsive>
-                <thead className="thead-dark">
-                  <tr>
-                    <th className="text-white">Nominal Pinjaman</th>
-                    <th className="text-white">Tenor</th>
-                    <th className="text-white">Angsuran</th>
-                    <th className="text-white">Sisa Bayar</th>
-                    <th className="text-white">Tanggal</th>
-                    <th className="text-white">Status</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {kredit.length >= 1 ? kredit.map((row,index) => {
-                    return (
-                    <tr key={index}>
-                      <td><b>{this.props.format(row.nominal)}</b></td>
-                      <td><b>{row.tenor}</b></td>
-                      <td><b>{this.props.format(row.angsuran)}</b></td>
-                      <td><b>{this.props.format(row.sisa_bayar)}</b></td>
-                      <td><b>{Moment(row.date).format('DD MMMM YYYY')}</b></td>
-                      <td>
-                        <Button color={row.status === 'Belum Lunas' ? 'danger' : 'success'} size="sm" type="button">
-                          <b>{row.status}</b>
-                        </Button>
-                      </td>
+              <Fragment>
+                <h3 style={{ color: 'white',backgroundColor: '#1c345d',borderRadius: '0.25em' , fontSize:"20pt"}} className="text-center mt--3">{nama}</h3>
+                <Table className="align-items-center" responsive>
+                  <thead className="thead-dark">
+                    <tr>
+                      <th className="text-white">Nominal Pinjaman</th>
+                      <th className="text-white">Tenor</th>
+                      <th className="text-white">Angsuran</th>
+                      <th className="text-white">Sisa Bayar</th>
+                      <th className="text-white">Tanggal</th>
+                      <th className="text-white">Status</th>
                     </tr>
-                    )
-                  })
-                 : ""}
-                </tbody>
-              </Table> 
+                  </thead>
+                  <tbody>
+                    {kredit.length >= 1 ? kredit.map((row,index) => {
+                      return (
+                      <tr key={index}>
+                        <td><b>{this.props.format(row.nominal)}</b></td>
+                        <td><b>{row.tenor}</b></td>
+                        <td><b>{this.props.format(row.angsuran)}</b></td>
+                        <td><b>{this.props.format(row.sisa_bayar)}</b></td>
+                        <td><b>{Moment(row.date).format('DD MMMM YYYY')}</b></td>
+                        <td>
+                          <Button color={row.status === 'Belum Lunas' ? 'danger' : 'success'} size="sm" type="button">
+                            <b>{row.status}</b>
+                          </Button>
+                        </td>
+                      </tr>
+                      )
+                    })
+                  : ""}
+                  </tbody>
+                </Table> 
+              </Fragment>
               }
           </div>
           <div className="modal-footer mt--3">
