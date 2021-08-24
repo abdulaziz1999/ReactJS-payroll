@@ -109,7 +109,7 @@ const importPlafon = (data) => Post(`import-plafon`,true,data)
 //API master jam wajib
 const getJamWajib = () => Get(`master/jamwajib`,true)
 const postJamWajib = (data) => Post(`master/jamwajib`,true,data)
-const putJamWajib = (data) => Put(`master/jamwajib`,true,data)
+const putJamWajib = (id,data) => Put(`master/jamwajib/${id}`,true,data)
 const delJamWajib = (id) => Delete(`master/jamwajib/${id}`,true)
 
 const API = {
