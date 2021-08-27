@@ -42,10 +42,12 @@ class Pinjaman extends Component {
 
   postDataToAPI = async() => {
     let data = {
-      idpegawai: document.getElementById("idpegawai").value,
-      date     : document.getElementById("tanggal").value,
-      nominal  :document.getElementById("nom_pinjaman").value,
-      tenor    :document.getElementById("tenor").value
+      idpegawai : document.getElementById("idpegawai").value,
+      date      : document.getElementById("tanggal").value,
+      nominal   :document.getElementById("nom_pinjaman").value,
+      tenor     :document.getElementById("tenor").value,
+      type      :document.getElementById("typeP").value,
+      keterangan:document.getElementById("ket").value
     }
     await API.postDataKredit(data).then((result) => { 
         this.getKreditAPI();

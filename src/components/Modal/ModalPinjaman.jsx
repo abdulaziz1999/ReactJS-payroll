@@ -107,6 +107,22 @@ class ModalPinjaman extends Component {
                       <Input name="tenor" autoComplete="off" placeholder="Tenor" type="number" id="tenor"  />
                     </FormGroup>
                   </Col>
+                  <Col md="12">
+                    <FormGroup>
+                    <label>Type :</label>
+                      <Input name="type" autoComplete="off" placeholder="type" type="select" id="typeP" >
+                        <option selected disabled>Pilih Type</option>
+                        <option value="1">Konsumtif</option>
+                        <option value="2">Non-Konsumtif</option>
+                      </Input>
+                    </FormGroup>
+                  </Col>
+                  <Col md="12">
+                    <FormGroup>
+                    <label>Keterangan :</label>
+                      <Input name="ket" autoComplete="off" placeholder="Keterangan" type="text" id="ket"  />
+                    </FormGroup>
+                  </Col>
                 </Row>
               </Form>
               : 
@@ -115,6 +131,7 @@ class ModalPinjaman extends Component {
                 <Table className="align-items-center" responsive>
                   <thead className="thead-dark">
                     <tr>
+                      <th className="text-white">Type</th>
                       <th className="text-white">Nominal Pinjaman</th>
                       <th className="text-white">Tenor</th>
                       <th className="text-white">Angsuran</th>
@@ -127,6 +144,7 @@ class ModalPinjaman extends Component {
                     {kredit.length >= 1 ? kredit.map((row,index) => {
                       return (
                       <tr key={index}>
+                        <td><b>{row.type}</b></td>
                         <td><b>{this.props.format(row.nominal)}</b></td>
                         <td><b>{row.tenor}</b></td>
                         <td><b>{this.props.format(row.angsuran)}</b></td>

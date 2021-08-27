@@ -49,6 +49,7 @@ const TableKredit = ({data,modal,modalAdd,format,remove}) => {
                     <tr >
                       <th scope="col"><b>Nama Pegawai</b></th>
                       <th scope="col"><b>Pinjaman</b></th>
+                      <th scope="col"><b>Keterangan</b></th>
                       <th scope="col"><b>Act</b></th>
                     </tr>
                   </thead>
@@ -70,6 +71,11 @@ const TableKredit = ({data,modal,modalAdd,format,remove}) => {
                                <b>{post.total_kredit != null ? 'Rp. '+format(post.total_kredit) : '-'}</b>
                             </Badge>
                           </td>
+                          <td>{post.kredit.map((detail, index) => {
+                            return(
+                              <b>{detail.keterangan}</b>
+                            )
+                          })}</td>
                           <td>
                             <div className="btn-group">
                               <Button
