@@ -6,6 +6,7 @@ import ReviewJam from "views/reviewjam/Reviewtotal"
 import ReviewInsentif from "views/reviewinsentif/Insentif"
 import ReviewCicilan from "views/reviewcicilan/ReviewCicilan"
 import ReviewLedger from "views/reviewledger/ReviewLedger"
+import KirimData from "views/kirim/Kirim"
 
 var routes = [
   {
@@ -62,6 +63,13 @@ var routes = [
     name: "Review Ledger - 7",
     icon: "ni ni-map-big text-blue",
     component: ReviewLedger,
+    layout: "/keuangan",
+  },
+  {
+    path: "/kirim",
+    name: "Lihat Data - 7",
+    icon: "ni ni-collection text-blue",
+    component: KirimData,
     layout: "/keuangan",
   },
 ];
