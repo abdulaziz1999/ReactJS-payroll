@@ -135,7 +135,7 @@ class Unit extends Component {
                                       {row.log === 1 ?  
                                       <Button className="btn-icon btn-2 mt-1" color="success" onClick={() => this.getLinkMenu(row.link,post.id)}  >
                                         <span className="btn-inner--icon">
-                                          {row.menu} 
+                                          {row.menu === '6 - Kirim Data' ? '6 - Lihat Data Excel' : row.menu} 
                                         </span>
                                       </Button> : ''} 
                                     </Fragment> 

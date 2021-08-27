@@ -203,7 +203,8 @@ class KirimData extends Component {
                 <CardHeader className="border-0">
                   <Row>
                     <Col md="6" sm="6" className="text-left">
-                      <h3 className="mb-0">Kirim Data Lembaga - {this.state.namaLembaga}
+                      <h3 className="mb-0">
+                      {role === 'admin' ? 'Kirim Data Lembaga' : 'Lihat Data Excel' } - {this.state.namaLembaga}
                       <Badge className="ml-3" color="info">
                         <strong className="mr-2">{Moment(this.state.cutOffActive.start).format('DD MMMM YYYY')}</strong>
                         sampai 
