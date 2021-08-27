@@ -125,7 +125,8 @@ class Insentif extends Component {
     let postInsentif = {
       idguru: document.getElementById("idguru").value,
       idinsentif: id_insentif,
-      nominal: nom 
+      nominal: nom,
+      frekuensi : document.getElementById("frekuensi").value
     }
     await API.postInsentifPegawai(postInsentif).then((result) => {
         this.toggleClose(modal);

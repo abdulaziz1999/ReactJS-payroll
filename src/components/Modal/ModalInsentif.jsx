@@ -128,6 +128,14 @@ class ModalTunjangan extends Component {
                   </FormGroup>
                 </Col>
               </Row>
+              <Row>
+                <Col md="12">
+                  <FormGroup>
+                  <label>Frekuensi :</label>
+                    <Input name="frekuensi" id="frekuensi" type="number" autocomplete="off" onChange={ubah} required/>
+                  </FormGroup>
+                </Col>
+              </Row>
             </Form>
           </div>
           <div className="modal-footer">
