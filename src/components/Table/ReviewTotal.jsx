@@ -55,6 +55,8 @@ const TableGapok = ({data,format,remove}) => {
                             return val
                         }else if(val.nama.toLowerCase().includes(searchTerm.toLowerCase())){
                             return val
+                        }else if(val.idstatus.toLowerCase().includes(searchTerm.toLowerCase())){
+                            return val
                         }
                         return ""
                     }).map((post, index) => {

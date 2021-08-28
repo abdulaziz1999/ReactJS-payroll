@@ -59,6 +59,8 @@ const TableGapok = ({data,format,listTunjangan}) => {
                             return val
                         }else if(val.nama.toLowerCase().includes(searchTerm.toLowerCase())){
                             return val
+                        }else if(val.golongan.toLowerCase().includes(searchTerm.toLowerCase())){
+                            return val
                         }
                         return ""
                     }).map((post, index) => {
