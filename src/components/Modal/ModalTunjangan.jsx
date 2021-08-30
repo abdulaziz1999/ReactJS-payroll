@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { Component , Fragment} from "react";
 // reactstrap components
 import {
   Modal,
@@ -14,28 +14,42 @@ import API from '../../service'
 class ModalTunjangan extends Component {
   state = {
     dataPegawai: [],
-    jenisTunjangan : []
+    jenisTunjangan : [],
+    idt:"",
+    nominal : ""
   }
 
   onFormSubmit = (e) => {
     e.preventDefault()
   }
 
-  getPegawai = () => {
-    API.getDataPegawai().then((res) => {
+  getPegawai = async() => {
+    await API.getDataPegawai().then((res) => {
       this.setState({
-        dataPegawai : res
+        dataPegawai : res,
+        nominal : ""
       })
     })
   }
 
-  getJenisTunjangan = (event) => {
+  getJenisTunjangan = async(event) => {
     let id = event.target.value
-    API.getDetailTunjangan(id).then((res) => {
+    await API.getDetailTunjangan(id).then((res) => {
       this.setState({
         jenisTunjangan: res
       })
     })
+  }
+
+  getNominal = (event) => {
+    let dataNom = event.target.value
+    let arr = dataNom.split('_')
+    let id = arr[0]
+    let nom = arr[1]
+    this.setState({
+        idt: id,
+        nominal: nom
+      })
   }
 
   componentDidMount() {
@@ -87,11 +101,11 @@ class ModalTunjangan extends Component {
                 <Col md="12">
                   <FormGroup>
                   <label htmlFor="exampleFormControlSelect2">Jenis Tunjangan:</label>
-                    <Input name="idtunjangan" id="tunjanganid" type="select" required>
+                    <Input name="idtunjangan" id="tunjanganid" type="select" onChange={this.getNominal} required>
                       <option value="">Pilih Jenis Tunjangan</option>
                       {this.state.jenisTunjangan.map((row, index) => {
                           return (
-                            <option key={index} value={row.idtunjangan}>{row.tunjangan}</option>
+                            <option key={index} value={row.idtunjangan+'_'+row.nominal}>{row.tunjangan}</option>
                           )
                       })}
                     </Input>
@@ -101,8 +115,15 @@ class ModalTunjangan extends Component {
               <Row>
                 <Col md="12">
                   <FormGroup>
-                  <label>Nominal :</label>
-                    <Input autoComplete="off" placeholder="Nominal" id="nomtunjangan" name="nominal" type="number" required/>
+                    {/* <Input autoComplete="off" placeholder="Nominal" id="nomtunjangan" name="nominal" type="number" required/> */}
+                    {this.state.idt ? this.state.jenisTunjangan.filter(row => row.id === parseInt(this.state.idt)).map((row, index) => {
+                          return (
+                            <Fragment key={index}>
+                              <label>Nominal :</label>
+                              <Input autoComplete="off" placeholder="Nominal" id="nomtunjangan" name="nominal" type="number" value={this.state.nominal} onChange={(e) => {this.setState({ nominal : e.target.value})}}/>
+                            </Fragment>
+                          )
+                      }) : ""}
                   </FormGroup>
                 </Col>
               </Row>

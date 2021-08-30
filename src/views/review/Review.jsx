@@ -126,10 +126,13 @@ class Review extends Component {
   }
 
   handleSimpan = async(modal) => {
+    let dataNom = document.getElementById("tunjanganid").value
+    let arr = dataNom.split('_')
+    let idtunjangan = arr[0]
     let data = {
-      idtunjangan: document.getElementById("tunjanganid").value,
-      idguru: document.getElementById("guruid").value,
-      nominal:document.getElementById("nomtunjangan").value
+      idtunjangan : idtunjangan,
+      idguru      : document.getElementById("guruid").value,
+      nominal     : document.getElementById("nomtunjangan").value
     }
     await API.postTunjanganPegawai(data).then((res) => {
       this.toggleClose(modal);
@@ -243,7 +246,7 @@ class Review extends Component {
                     </Col>
                     <Col md="6" sm="6" className="text-right">
                       {role === 'admin' ? 
-                      <Button color="success" type="button" size="sm" onClick={() =>   this.toggleModal("exampleModal") }>
+                      <Button color="success" type="button" size="sm" onClick={() => this.toggleModal("exampleModal") }>
                         <i className="fa fa-plus"></i> Tunjangan
                       </Button> 
                       : '' }
