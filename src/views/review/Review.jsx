@@ -121,8 +121,10 @@ class Review extends Component {
     let id = this.getUriSegment3()
     await API.postDataGapok(id).then((result) => {
       if(this.state.log === 1){
-      this.props.history.push('/admin/rev_jam/'+id) 
-      }else{}
+        this.props.history.push('/admin/rev_jam/'+id) 
+      }else{
+        this.handleLocalStorage()
+      }
     }).catch((err) => {
       console.log("ini eror : "+err)
     })
