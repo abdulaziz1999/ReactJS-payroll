@@ -1,4 +1,4 @@
-import React, { Component } from "react"
+import React, { Component, Fragment } from "react"
 // reactstrap components
 import { Card, CardHeader, Container, Row, Col, Button, CardBody ,Badge} from "reactstrap"
 // core components
@@ -16,6 +16,8 @@ class Review extends Component {
     listTunjangan:[],
     cutOffActive: [],
     namaLembaga : "",
+    listMenu    : [],
+    log         : "",
     dataTunjangan : {
       idtunjangan: "",
       idguru: "",
@@ -39,6 +41,24 @@ class Review extends Component {
     await API.getDataCutOff().then((res) => {
       this.setState({
         cutOffActive: res
+      })
+    })
+    this.getMenu()
+  }
+
+  getMenu = async() => {
+    let id = this.state.cutOffActive.id
+    let uri = this.getUriSegment3()
+    await API.getMenu(id).then((res) => {
+      this.setState({
+        listMenu: res
+      })
+      this.state.listMenu.filter(row => row.id === uri).map((row, index) => {
+        return(
+          this.setState({
+            log: row.menu[0]['log'] 
+          })
+        )
       })
     })
   }
@@ -100,7 +120,9 @@ class Review extends Component {
     this.loadingData()
     let id = this.getUriSegment3()
     await API.postDataGapok(id).then((result) => {
-      this.props.history.push('/admin/rev_jam/'+id)
+      if(this.state.log === 1){
+      this.props.history.push('/admin/rev_jam/'+id) 
+      }else{}
     }).catch((err) => {
       console.log("ini eror : "+err)
     })
@@ -219,6 +241,7 @@ class Review extends Component {
   render() {
     let datapost =  this.state.post
     let role = JSON.parse(localStorage.user).role
+    let log  = this.state.log
     return (
       <>
         <div className="header bg-gradient-info pb-8 pt-5 pt-md-8">   
@@ -246,9 +269,13 @@ class Review extends Component {
                     </Col>
                     <Col md="6" sm="6" className="text-right">
                       {role === 'admin' ? 
-                      <Button color="success" type="button" size="sm" onClick={() => this.toggleModal("exampleModal") }>
-                        <i className="fa fa-plus"></i> Tunjangan
-                      </Button> 
+                      <Fragment>
+                        {log === 1 ?
+                        <Button color="success" type="button" size="sm" onClick={() => this.toggleModal("exampleModal") }>
+                          <i className="fa fa-plus"></i> Tunjangan
+                        </Button> : ""
+                        }
+                      </Fragment>
                       : '' }
                     </Col>
                   </Row>
@@ -257,7 +284,14 @@ class Review extends Component {
                  <ReviewGapok data={datapost} save={this.simpanGapok} format={this.format} listTunjangan={this.state.listTunjangan}/>
                 </CardBody>
                 <Col className="modal-footer">
-                  {role === 'admin' ? <Button color="success" className="mt-3" size="md" type="button" onClick={this.simpanGapok}>Simpan & Lanjutkan</Button>:''}
+                  {role === 'admin' ? 
+                  <Fragment>
+                  {log === 1 ? 
+                    <Button color="success" className="mt-3" size="md" type="button" onClick={this.simpanGapok}>Lanjutkan</Button>
+                  : 
+                    <Button color="success" className="mt-3" size="md" type="button" onClick={this.simpanGapok}>Simpan</Button>}
+                  </Fragment>
+                  :''}
                 </Col>
               </Card>
             </div>
