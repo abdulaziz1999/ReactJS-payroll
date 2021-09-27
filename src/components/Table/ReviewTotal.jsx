@@ -43,7 +43,7 @@ const TableGapok = ({data,format,remove}) => {
                       <th scope="col"><b>Jam Quran</b></th>
                       <th scope="col"><b>Jam Kelas</b></th>
                       <th scope="col"><b>Jam Asrama</b></th>
-                      <th scope="col"><b>Total Jam</b></th>
+                      <th scope="col"><b>Total Transport</b></th>
                       <th scope="col"><b>Kelebihan Jam</b></th>
                       <th scope="col"><b>Transport</b></th>
                       <th scope="col" className="bg-success text-white text-center"><b>Total</b></th>
@@ -60,9 +60,10 @@ const TableGapok = ({data,format,remove}) => {
                         }
                         return ""
                     }).map((post, index) => {
+                      let no = index+1
                       return (
                         <tr key={index}>
-                          <td><b>{post.nama}</b></td>
+                          <td><b>{no++}. | {post.nama}</b></td>
                           <td><b>{post.idstatus}</b></td>
                           <td><b>{post.quran}</b></td>
                           <td><b>{post.kelas}</b></td>

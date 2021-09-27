@@ -64,9 +64,10 @@ const TableInsentif = ({ data,  format }) => {
                 return "";
               })
               .map((post, index) => {
+                let no = index+1
                 return (
                   <tr key={index}>
-                    <td><strong>{post.nama}</strong></td>
+                    <td><strong>{no++}. | {post.nama}</strong></td>
                     <td><strong>{post.kredit}</strong></td>
                     <td><strong>{format(post.laundry)}</strong></td>
                     <td className="text-dark text-center" style={{backgroundColor:"#96E6C4"}}>

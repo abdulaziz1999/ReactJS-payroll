@@ -68,9 +68,10 @@ const TableGapok = ({data,format,listTunjangan}) => {
                       for(var i=0;i<post.tunjangan.length;i++){
                         elements.push(<td key={i}><strong>{format(post.tunjangan[i])}</strong></td>);
                       }
+                      let no = index+1
                       return (
                         <tr key={index}>
-                          <td className="zui-sticky-col"><b>{post.nama}</b></td>
+                          <td><b>{no++}. | {post.nama}</b></td>
                           <td><b>{post.tahunmasuk}</b></td>
                           <td><b>{post.golongan}</b></td>
                           <td><b>{format(post.satuanindex)}</b></td>

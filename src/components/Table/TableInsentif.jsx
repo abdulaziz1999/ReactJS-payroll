@@ -98,9 +98,10 @@ const TableInsentif = ({ data, insentif, format ,remove}) => {
                     elements.push(<td key={i} ><strong>{post.insentif[i]}</strong></td>);
                   }
                 }
+                let no = index+1
                 return (
                   <tr key={index}>
-                    <td><strong>{post.nama}</strong></td>
+                    <td><strong>{no++}. | {post.nama}</strong></td>
                     {/* <td>1</td>
                     <td>2</td>
                     <td>3</td>

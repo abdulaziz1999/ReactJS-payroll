@@ -62,9 +62,10 @@ const TableLedger = ({data,format}) => {
                         }
                         return ""
                     }).map((post, index) => {
+                      let no = index+1
                       return (
                         <tr key={index}>
-                          <td><b>{post.nama}</b></td>
+                          <td><b>{no++}. | {post.nama}</b></td>
                           <td><b>{post.idstatus}</b></td>
                           <td><b>{format(post.gapoktunjangan)}</b></td>
                           <td><b>{format(post.transport)}</b></td>
