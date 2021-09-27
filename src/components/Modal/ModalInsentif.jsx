@@ -121,7 +121,7 @@ class ModalTunjangan extends Component {
                       <option value="">Pilih Jabatan</option>
                       {this.props.kegiatanId.map((row, index) => {
                           return (
-                            <option key={index} value={row.id+'_'+row.nominal}>{row.jabatan}</option>
+                            <option key={index} value={row.id+'_'+row.nominal}>{row.jabatan} [ {row.nominal} ]</option>
                           )
                       })}
                     </Input>
