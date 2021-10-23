@@ -8,12 +8,7 @@ import {
   Col,
   Row,
   CardBody,
-  Badge,
-  FormGroup,
-  InputGroup,
-  InputGroupAddon,
-  InputGroupText,
-  Input,
+  Badge
 } from "reactstrap";
 // core components
 import '../examples/css/Style.css';
@@ -74,7 +69,7 @@ class Insentif extends Component {
   }
 
   getNamaLembaga = async(uri=false) => {
-    let id = this.getUriSegment3() 
+    let id = JSON.parse(localStorage.user).idlembaga
     if(uri){
       await API.getUnitById(uri).then((result) => {
         this.setState({
@@ -261,18 +256,19 @@ class Insentif extends Component {
   }
 
   componentDidMount() {
+      let idlembaga = JSON.parse(localStorage.user).idlembaga
       this.getDataCutOff()
       this.getLembaga()
       this.getNamaLembaga()
       this.getInsentif()
-      this.getDataInsentif()
+      this.getDataInsentif(idlembaga)
       this.getClearChache()
   }
 
   render() {
     const awal = Moment(this.state.cutOffActive.start).format('DD MMMM YYYY')
     const akhir = Moment(this.state.cutOffActive.end).format('DD MMMM YYYY')
-    // const role  = JSON.parse(localStorage.user).role
+    const idl  = JSON.parse(localStorage.user).idlembaga
     return (
       <>
         <div className="header bg-gradient-info pb-8 pt-5 pt-md-8">   
@@ -304,7 +300,7 @@ class Insentif extends Component {
                   </Row>
                 </CardHeader>
                 <CardBody>
-                    <FormGroup>
+                    {/* <FormGroup>
                         <Row>
                             <Col md="9">
                               <InputGroup className="input-group-alternative">
@@ -327,7 +323,7 @@ class Insentif extends Component {
                                 <Button color="success" className="mt-3" size="md" type="button" onClick={this.tampilkan} >Tampilkan</Button>
                             </Col>
                         </Row>
-                    </FormGroup>
+                    </FormGroup> */}
                  <TableComp data={this.state.post} insentif={this.state.insentif} format={this.format} remove={this.handleRemove}/>
                 </CardBody>
                 {/* <Col className="modal-footer">
@@ -343,7 +339,7 @@ class Insentif extends Component {
         modalBuka={this.toggleModal}
         modalTutup={this.toggleClose}
         save={this.handleSimpan}
-        uri={this.getUriSegment3()}
+        uri={idl}
         dataInsentif={this.getDataInsentif}
         ubah={this.handleUbah}
         kegiatanId={this.state.kegiatanId}
