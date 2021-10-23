@@ -4,4 +4,6 @@ COPY ./ ./
 COPY package.json ./
 RUN npm install
 RUN npm run build
-CMD ["npm", "run", "start"]
+RUN npm i -g serve
+EXPOSE 5000/tcp
+CMD ["serve", "-s", "build"]
