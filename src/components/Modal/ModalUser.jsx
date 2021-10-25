@@ -1,5 +1,6 @@
 import React, { Component, Fragment } from "react";
 // reactstrap components
+import API from '../../service'
 import {
   Modal,
   Button,
@@ -13,28 +14,41 @@ import {
 class ModalUser extends Component {
   state = {
     post: [],
+    unit:false,
+    listUnit:[]
+  }
+
+  getUnit = async() => {
+    await API.getUnit().then((res) =>{
+      this.setState({
+        listUnit : res
+      })
+    })
   }
 
   componentDidMount() {
+    this.getUnit()
   }
 
   render() {
     const status = this.props.status
     const formdata = this.props.data
     const ubah = this.props.updateField
-    let nama, role, email, password
+    const listunit = this.state.listUnit
+    let nama, role, email, idlembaga, password
     if(formdata){
       nama = formdata.name
       role = formdata.role
       email = formdata.email
+      idlembaga = formdata.idlembaga
       password = formdata.password
     }else{
       nama = ""
       role = ""
       email = ""
       password = ""
+      idlembaga = ""
     }
-
     return (
       <>
         <Modal className="modal-dialog-centered" isOpen={this.props.stateExample} toggle={() => this.props.modalBuka("exampleModal")} size="lg">
@@ -65,7 +79,7 @@ class ModalUser extends Component {
                         <option value="admin" >Admin</option>
                         <option value="dqmart" >DQ Mart</option>
                         <option value="keuangan" >Keuangan</option>
-                        <option value="unit" >Unit</option>
+                        <option value="unit">Unit</option>
                       </Fragment>
                       :
                       <Fragment>
@@ -115,18 +129,31 @@ class ModalUser extends Component {
                 <Col md="6">
                   <FormGroup>
                   <label>Email :</label>
-                  <Input placeholder="Email" name="email" autoComplete="off" type="text"  onChange={ubah}  value={email} required/>
-                    {/* <Input placeholder="Email" name="email" type="text" /> */}
+                    <Input placeholder="Email" name="email" autoComplete="off" type="email"  onChange={ubah}  value={email} required/>
                   </FormGroup>
                 </Col>
-                {!status ?
                   <Col md="6">
                     <FormGroup>
                     <label>Password :</label>
                       <Input placeholder="Password" autoComplete="off" name="password" type="text" id="passwordUser" onChange={ubah} value={password} required/>
                     </FormGroup>
                   </Col>
-                  : ""}
+                  {role === 'unit' ?
+                <Col md={!status ? '12' : '12'}>
+                  <FormGroup>
+                  <label>Pilih Unit :</label>
+                    <Input name="idlembaga" autoComplete="off" type="select"  onChange={ubah} value={idlembaga} required>
+                    {listunit.map((row, index) => {
+                        return (
+                          <Fragment>
+                            <option value={row.id}>{row.nama_lembaga}</option>
+                          </Fragment>
+                        )
+                    })}
+                    </Input>
+                  </FormGroup>
+                </Col>
+                : ''}
               </Row>
             </Form>
           </div>
