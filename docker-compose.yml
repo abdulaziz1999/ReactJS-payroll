@@ -1,0 +1,14 @@
+version: "3.5"
+services:
+  payroll-frontend:
+    image: payroll-frontend:23.10.1
+    build: .
+    hostname: payroll-fe.app1.ibm-gs-max-86.dqakses.id
+    networks:
+      traefik_default:
+    labels:
+      - "traefik.http.routers.payroll-frontend.rule=Host(`payroll-fe.app1.ibm-gs-max-86.dqakses.id`)"
+
+networks:
+  traefik_default:
+    external: true
