@@ -16,7 +16,8 @@ class User extends Component {
       name: "",
       role: "",
       email: "",
-      password: ""
+      password: "",
+      idlembaga: ""
     },
     isUpdate: false,
   }
