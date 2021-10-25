@@ -8,7 +8,12 @@ import {
   Col,
   Row,
   CardBody,
-  Badge
+  Badge,
+  Input,
+  FormGroup,
+  InputGroup,
+  InputGroupAddon,
+  InputGroupText
 } from "reactstrap";
 // core components
 import '../examples/css/Style.css';
@@ -269,6 +274,7 @@ class Insentif extends Component {
     const awal = Moment(this.state.cutOffActive.start).format('DD MMMM YYYY')
     const akhir = Moment(this.state.cutOffActive.end).format('DD MMMM YYYY')
     const idl  = JSON.parse(localStorage.user).idlembaga
+    const role  = JSON.parse(localStorage.user).role
     return (
       <>
         <div className="header bg-gradient-info pb-8 pt-5 pt-md-8">   
@@ -300,7 +306,8 @@ class Insentif extends Component {
                   </Row>
                 </CardHeader>
                 <CardBody>
-                    {/* <FormGroup>
+                  {role === 'admin' ? 
+                    <FormGroup>
                         <Row>
                             <Col md="9">
                               <InputGroup className="input-group-alternative">
@@ -323,7 +330,8 @@ class Insentif extends Component {
                                 <Button color="success" className="mt-3" size="md" type="button" onClick={this.tampilkan} >Tampilkan</Button>
                             </Col>
                         </Row>
-                    </FormGroup> */}
+                    </FormGroup>
+                    : ''}
                  <TableComp data={this.state.post} insentif={this.state.insentif} format={this.format} remove={this.handleRemove}/>
                 </CardBody>
                 {/* <Col className="modal-footer">
@@ -339,7 +347,7 @@ class Insentif extends Component {
         modalBuka={this.toggleModal}
         modalTutup={this.toggleClose}
         save={this.handleSimpan}
-        uri={idl}
+        uri={idl !== null ? idl : this.getUriSegment3()}
         dataInsentif={this.getDataInsentif}
         ubah={this.handleUbah}
         kegiatanId={this.state.kegiatanId}
