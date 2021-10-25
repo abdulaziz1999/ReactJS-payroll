@@ -50,6 +50,13 @@ class ModalTunjangan extends Component {
     })
   }
 
+  getUriSegment3 = () => {
+    let URL= this.props.location.pathname
+    let arr= URL.split('/')
+    let id = arr[3]
+    return id
+  }
+
   componentDidMount() {
     this.getPegawai()
     this.getAllInsentif()
@@ -60,6 +67,7 @@ class ModalTunjangan extends Component {
     const uri = parseInt(this.props.uri)
     const ubah = this.props.ubah
     const save = this.props.save
+    console.log(this.props.uri);
     return (
       <>
         <Modal
