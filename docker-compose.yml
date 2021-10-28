@@ -7,7 +7,7 @@ services:
     networks:
       traefik_default:
     labels:
-      - "traefik.http.routers.payroll-frontend.rule=Host(`payroll-fe.app1.ibm-gs-max-86.dqakses.id`)"
+      - "traefik.http.routers.payroll-frontend.rule=Host(`payroll.live.dqakses.id`)"
 
 networks:
   traefik_default:
