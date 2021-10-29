@@ -17,6 +17,7 @@ import API from '../../service';
 import Swal from 'sweetalert2'
 import ModalInsentif from "../../components/Modal/ModalInsentif";
 import Moment from 'moment'
+import {removeUserSession} from '../../Utils/Common';
 
 class Insentif extends Component {
   state = {
@@ -55,11 +56,16 @@ class Insentif extends Component {
     })
   }
 
-  getDataCutOff = () => {
-    API.getDataCutOff().then((res) => {
+  getDataCutOff = async() => {
+    await API.getDataCutOff().then((res) => {
       this.setState({
         cutOffActive: res
       })
+    }).catch((res) => {
+      if(res.response.status === 401){
+        removeUserSession()
+        this.props.history.push('/auth/login');
+      }
     })
   }
 
