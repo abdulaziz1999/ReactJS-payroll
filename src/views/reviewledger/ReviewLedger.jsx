@@ -7,7 +7,7 @@ import API from '../../service';
 import Swal from 'sweetalert2'
 import TableLedger from "components/Table/TableLedger"
 import Moment from 'moment'
-// import Cookies from "js-cookie"
+import {removeUserSession} from '../../Utils/Common';
 
 class ReviewLedger extends Component {
   state = {
@@ -40,6 +40,11 @@ class ReviewLedger extends Component {
       this.setState({
         cutOffActive: res
       })
+    }).catch((res) => {
+      if(res.response.status === 401){
+        removeUserSession()
+        this.props.history.push('/auth/login');
+      }
     })
     this.getLedger()
   }
