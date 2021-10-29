@@ -8,7 +8,7 @@ import Swal from 'sweetalert2'
 import ReviewGapok from "components/Table/ReviewGapok"
 import ModalTunjangan from "../../components/Modal/ModalTunjangan"
 import Moment from 'moment'
-// import Cookies from "js-cookie"
+import {removeUserSession} from '../../Utils/Common';
 
 class Review extends Component {
   state = {
@@ -42,6 +42,11 @@ class Review extends Component {
       this.setState({
         cutOffActive: res
       })
+    }).catch((res) => {
+      if(res.response.status === 401){
+        removeUserSession()
+        this.props.history.push('/auth/login');
+      }
     })
     this.getMenu()
   }
