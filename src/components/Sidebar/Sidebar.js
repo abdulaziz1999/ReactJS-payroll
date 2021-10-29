@@ -18,6 +18,7 @@
 /*eslint-disable*/
 import React, { Fragment, useState } from "react";
 import { NavLink as NavLinkRRD, Link } from "react-router-dom";
+import { getUser,removeUserSession } from '../../Utils/Common';
 // nodejs library to set properties for components
 import { PropTypes } from "prop-types";
 // reactstrap components
@@ -69,6 +70,11 @@ const Sidebar = (props) => {
     setCollapseOpen(false);
   };
 
+  const user = getUser();
+  const handleLogout = () => {
+      removeUserSession();
+      props.history.push('/auth/login');
+    }
   
   // creates the links that appear in the left menu / Sidebar
   const createLinks = (routes) => {
@@ -147,7 +153,7 @@ const Sidebar = (props) => {
             </DropdownToggle>
             <DropdownMenu className="dropdown-menu-arrow" right>
               <DropdownItem divider />
-              <DropdownItem href="#pablo" onClick={(e) => e.preventDefault()}>
+              <DropdownItem onClick={handleLogout}>
                 <i className="ni ni-user-run" />
                 <span>Logout</span>
               </DropdownItem>
