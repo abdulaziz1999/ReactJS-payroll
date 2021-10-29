@@ -16,6 +16,7 @@ import TableComp from "components/Table/TableCicilan";
 import API from '../../service';
 import Swal from 'sweetalert2'
 import Moment from 'moment'
+import {removeUserSession} from '../../Utils/Common';
 
 class ReviewCicilan extends Component {
   state = {
@@ -51,6 +52,11 @@ class ReviewCicilan extends Component {
       this.setState({
         cutOffActive: res
       })
+    }).catch((res) => {
+      if(res.response.status === 401){
+        removeUserSession()
+        this.props.history.push('/auth/login');
+      }
     })
     this.getPotonganAll()
   }
