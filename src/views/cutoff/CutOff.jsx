@@ -17,6 +17,8 @@ import Calendar from "../../components/Calendar/Calendar"
 import TableCutoff from "../../components/Table/CutOff"
 import ModalCutOff from "components/Modal/ModalCutoff"
 import Moment from 'moment'
+import {removeUserSession} from '../../Utils/Common';
+
 class CutOff extends Component {
   
   state = {
@@ -55,6 +57,11 @@ class CutOff extends Component {
       this.setState({
         post: res
       })
+    }).catch((res) => {
+      if(res.response.status === 401){
+        removeUserSession()
+        this.props.history.push('/auth/login');
+      }
     })
   }
 
