@@ -26,3 +26,7 @@ export const setUserSession = (token, user) => {
   localStorage.setItem('user', JSON.stringify(user));
 }
 
+export const setLogout = (props) => {
+  this.removeUserSession()
+  props.history.push('/auth/login');
+}
