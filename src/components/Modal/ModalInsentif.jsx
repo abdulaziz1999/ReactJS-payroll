@@ -67,7 +67,6 @@ class ModalTunjangan extends Component {
     const uri = parseInt(this.props.uri)
     const ubah = this.props.ubah
     const save = this.props.save
-    console.log(this.props.uri);
     return (
       <>
         <Modal
