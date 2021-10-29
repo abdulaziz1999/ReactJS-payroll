@@ -16,6 +16,8 @@ import ReviewGapok from "components/Table/ReviewTotal";
 import API from '../../service';
 import Swal from 'sweetalert2'
 import Moment from 'moment'
+import {removeUserSession} from '../../Utils/Common';
+
 class ReviewTotal extends Component {
   state = {
     post: [],
@@ -35,11 +37,16 @@ class ReviewTotal extends Component {
     })
   }
  
-  getDataCutOff = () => {
-    API.getDataCutOff().then((res) => {
+  getDataCutOff = async() => {
+    await API.getDataCutOff().then((res) => {
       this.setState({
         cutOffActive: res
       })
+    }).catch((res) => {
+      if(res.response.status === 401){
+        removeUserSession()
+        this.props.history.push('/auth/login');
+      }
     })
   }
 
