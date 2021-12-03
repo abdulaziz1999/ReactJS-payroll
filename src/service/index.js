@@ -64,6 +64,11 @@ const getDetailTunjangan  = (id) => Get(`tunjangan/${id}`,true)
 const postDataTunjangan = (data) => Post(`tunjangan`,true,data)
 const postTunjanganPegawai = (data) => Post(`tunjangan/pegawai`,true,data)
 
+//API Tunjangan Role
+const postRoleTunjangan = (data) => Post(`tunjangan/role`,true,data)
+const putRoleTunjangan = (data) => Put(`tunjangan/role/update`,true,data)
+const deleteRoleTunjangan = (id) => Delete(`tunjangan/role/${id}`,true)
+
 // API Master Tunjangan
 const getTunjangan = () => Get(`tunjangan`,true)
 const postTunjangan = (data) => Post(`tunjangan`,true,data)
@@ -152,6 +157,11 @@ const API = {
     postTunjangan,
     putTunjangan,
     deleteTunjangan,
+
+    //API role tunjangan
+    postRoleTunjangan,
+    putRoleTunjangan,
+    deleteRoleTunjangan,
 
     //API Insentif
     getAllInsentif,
