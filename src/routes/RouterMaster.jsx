@@ -1,6 +1,7 @@
 import Berkah from "views/masterData/BerkahInput"
 import JamWajib from "views/masterData/JamWajib"
 import MasterTunjangan from "views/masterData/MasterTunjangan"
+import RoleTunjangan from "views/masterData/RoleTunjangan"
 import BerkahMaster from "views/masterData/BerkahMaster"
 import InputInsentif from "views/insentif/Insentif"
 import InsentifPegawai from "views/insentif/InsentifPegawai"
@@ -28,6 +29,13 @@ var routesmaster = [
         name: "Master Tunjangan",
         icon: "fa fa-users text-green",
         component: MasterTunjangan,
+        layout: "/admin",
+      },
+      {
+        path: "/roletunjangan",
+        name: "Role Tunjangan",
+        icon: "fa fa-users text-green",
+        component: RoleTunjangan,
         layout: "/admin",
       },
       {
