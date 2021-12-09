@@ -55,8 +55,8 @@ const TableIndex = ({data,modal,remove}) => {
                         <tr key={index} className="text-left">
                           <td><b>{post.type}</b></td>
                           <td><b>{post.nominal}</b></td>
-                          <td><b>{post.idstatus}</b></td>
-                          <td><b>{post.golongan}</b></td>
+                          <td><b>{post.idstatus ? post.idstatus : '-'}</b></td>
+                          <td><b>{post.golongan ? post.golongan : '-'}</b></td>
                           <td>
                             <div className="btn-group">
                               <Button
