@@ -36,6 +36,9 @@ const AdminNavbar = (props) => {
       removeUserSession();
       props.history.push('/auth/login');
     }
+  const profile = () => {
+      props.history.push('/'+user.role+'/profile');
+  }
   return (
     <>
       <Navbar className="navbar-top navbar-dark" expand="md" id="navbar-main">
@@ -69,6 +72,10 @@ const AdminNavbar = (props) => {
               <DropdownMenu className="dropdown-menu-arrow" right>
                 <DropdownItem className="noti-title" header tag="div">
                   <h6 className="text-overflow m-0">Welcome!</h6>
+                </DropdownItem>
+                <DropdownItem onClick={profile}>
+                  <i className="ni ni-circle-08" />
+                  <span>Profile</span>
                 </DropdownItem>
                 <DropdownItem  onClick={handleLogout}>
                   <i className="ni ni-user-run" />
