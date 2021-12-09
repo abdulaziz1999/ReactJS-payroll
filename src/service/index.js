@@ -117,6 +117,12 @@ const postJamWajib = (data) => Post(`master/jamwajib`,true,data)
 const putJamWajib = (id,data) => Put(`master/jamwajib/${id}`,true,data)
 const delJamWajib = (id) => Delete(`master/jamwajib/${id}`,true)
 
+//API master index
+const getMasterIndex = () => Get(`master/index`,true)
+const postMasterIndex = (data) => Post(`master/index`,true,data)
+const putMasterIndex = (id,data) => Put(`master/index/${id}`,true,data)
+const delMasterIndex = (id) => Delete(`master/index/${id}`,true)
+
 const API = {
     //API User
     getDataUser,
@@ -222,6 +228,12 @@ const API = {
     postJamWajib,
     putJamWajib,
     delJamWajib,
+
+    //API master index
+    getMasterIndex,
+    postMasterIndex,
+    putMasterIndex,
+    delMasterIndex,
 }
 
 export default API
