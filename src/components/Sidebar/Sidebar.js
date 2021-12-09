@@ -153,6 +153,10 @@ const Sidebar = (props) => {
             </DropdownToggle>
             <DropdownMenu className="dropdown-menu-arrow" right>
               <DropdownItem divider />
+              <DropdownItem >
+                  <i className="ni ni-circle-08" />
+                  <span>Profile</span>
+              </DropdownItem>
               <DropdownItem onClick={handleLogout}>
                 <i className="ni ni-user-run" />
                 <span>Logout</span>
