@@ -1,5 +1,6 @@
 import Berkah from "views/masterData/BerkahInput"
 import JamWajib from "views/masterData/JamWajib"
+import MasterIndex from "views/masterData/MasterIndex"
 import MasterTunjangan from "views/masterData/MasterTunjangan"
 import RoleTunjangan from "views/masterData/RoleTunjangan"
 import BerkahMaster from "views/masterData/BerkahMaster"
@@ -8,6 +9,7 @@ import InsentifPegawai from "views/insentif/InsentifPegawai"
 import Pinjaman from "views/cicilan/Pinjaman"
 import DataPegawai from "views/masterData/dataPegawai"
 import User from "views/user/User"
+import Profile from "views/profile/Profile"
 
 var routesmaster = [
       {
@@ -22,6 +24,13 @@ var routesmaster = [
         name: "Data Jam Wajib",
         icon: "ni ni-time-alarm text-primary",
         component: JamWajib,
+        layout: "/admin",
+      },
+      {
+        path: "/masterindex",
+        name: "Data Index",
+        icon: "ni ni-time-alarm text-primary",
+        component: MasterIndex,
         layout: "/admin",
       },
       {
@@ -78,6 +87,13 @@ var routesmaster = [
         name: "Pengguna",
         icon: "ni ni-circle-08 text-green",
         component: User,
+        layout: "/admin",
+      },
+      {
+        path: "/profile",
+        name: "Profile",
+        icon: "ni ni-circle-08",
+        component: Profile,
         layout: "/admin",
       },
 ];
