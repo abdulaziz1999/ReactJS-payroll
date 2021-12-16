@@ -33,7 +33,9 @@ class Profile extends Component {
   }
 
   putDataUser = async() => {
+    const user = getUser();
     await API.putDataUser(this.state.formUser).then((res) => {
+        this.history.push('/'+user.role+'/profile');
       })
   }
 
@@ -44,6 +46,9 @@ class Profile extends Component {
       {
         formUser: formUserNew,
       })
+  }
+
+  componentDidMount() {
   }
 
   render() {
@@ -340,14 +345,16 @@ class Profile extends Component {
                         />
                       </FormGroup>
                     </div> */}
+                    <Col className="text-right" md="12">
                     <Button
                         color="primary"
                         href="#pablo"
-                        onClick={(e) => e.preventDefault()}
-                        size="sm"
+                        onClick={this.putDataUser}
+                        size="md"
                       >
                         Simpan
                       </Button>
+                    </Col>
                   </Form>
                 </CardBody>
               </Card>
